@@ -9,12 +9,12 @@ ARG DFSET
 ARG PACKAGER
 ARG PG_LBL
 
-MAINTAINER Crunchy Data <info@crunchydata.com>
+MAINTAINER Qingcloud Data <info@qingcloud.com>
 
-LABEL vendor="Crunchy Data" \
-	url="https://crunchydata.com" \
+LABEL vendor="Qingcloud Data" \
+	url="https://qingcloud.com" \
 	release="${RELVER}" \
-	org.opencontainers.image.vendor="Crunchy Data" \
+	org.opencontainers.image.vendor="Qingcloud Data" \
 	os.version="7.7"
 
 COPY redhat/atomic/help.1 /help.1
@@ -42,7 +42,10 @@ ENV LANG en_US.utf-8
 
 ARG EPEL7_RPM=https://dl.fedoraproject.org/pub/epel/epel-release-latest-7.noarch.rpm
 ARG EPEL8_RPM=https://dl.fedoraproject.org/pub/epel/epel-release-latest-8.noarch.rpm
-
+ENV TZ=Asia/Shanghai
+COPY conf/pip.conf pip.conf
+ENV PIP_CONFIG_FILE pip.conf
+ADD conf/Centos-8.repo /etc/yum.repos.d/
 RUN if [ "$BASEOS" = "rhel7" ] ; then \
 	${PACKAGER} -y --enablerepo=rhel-7-server-ose-3.11-rpms update \
         && ${PACKAGER} -y install ${EPEL7_RPM} \
@@ -114,17 +117,15 @@ RUN if [ "$BASEOS" = "centos8" ] ; then \
 	&& ${PACKAGER} -y clean all ; \
 fi
 
-# Crunchy Postgres repo GPG Keys
+# Qingcloud Postgres repo GPG Keys
 # Both keys are added to support building all PG versions
-# of this container. PG 11+ requires RPM-GPG-KEY-crunchydata
-# PG 9.5, 9.6 and 10 require CRUNCHY-GPG-KEY.public on RHEL machines
-ADD conf/*KEY* /
+# of this container. PG 11+ requires RPM-GPG-KEY-qingcloud
+# PG 9.5, 9.6 and 10 require QiNGCLOUD-GPG-KEY.public on RHEL machines
 
-# Add any available Crunchy PG repo files
-ADD conf/crunchypg${PG_LBL}.repo /etc/yum.repos.d/
+# Add any available Qingcloud PG repo files
+ADD conf/qingcloudpg${PG_LBL}.repo /etc/yum.repos.d/
 # Import both keys to support all required repos
-RUN rpm --import RPM-GPG-KEY-crunchydata*
-RUN if [ "$DFSET" = "rhel" ] ; then rpm --import CRUNCHY-GPG-KEY.public ; fi
+RUN if [ "$DFSET" = "rhel" ] ; then rpm --import QiNGCLOUD-GPG-KEY.public ; fi
 
 RUN if [ "$BASEOS" = "centos8" ] ; then \
 	${PACKAGER} -qy module disable postgresql ; \

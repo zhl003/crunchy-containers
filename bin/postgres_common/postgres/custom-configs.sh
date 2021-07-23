@@ -1,7 +1,7 @@
 #!/bin/bash
 
-CRUNCHY_DIR=${CRUNCHY_DIR:-'/opt/crunchy'}
-source "${CRUNCHY_DIR}/bin/common_lib.sh"
+QiNGCLOUD_DIR=${QiNGCLOUD_DIR:-'/opt/qingcloud'}
+source "${QiNGCLOUD_DIR}/bin/common_lib.sh"
 enable_debugging
 
 function custom_config() {

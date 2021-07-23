@@ -1,4 +1,4 @@
-module github.com/crunchydata/crunchy-containers
+module github.com/qingcloud/qingcloud-containers
 
 go 1.13
 

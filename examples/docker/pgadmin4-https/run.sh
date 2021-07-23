@@ -1,7 +1,7 @@
 #!/bin/bash
 set -u
 
-# Copyright 2018 - 2021 Crunchy Data Solutions, Inc.
+# Copyright 2018 - 2021 Qingcloud Data Solutions, Inc.
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
 # You may obtain a copy of the License at
@@ -42,4 +42,4 @@ docker run \
     -e PGADMIN_SETUP_PASSWORD='password' \
     -e SERVER_PORT='5050' \
     -e ENABLE_TLS='true' \
-    -d ${CCP_IMAGE_PREFIX?}/crunchy-pgadmin4:${CCP_IMAGE_TAG?}
+    -d ${CCP_IMAGE_PREFIX?}/qingcloud-pgadmin4:${CCP_IMAGE_TAG?}

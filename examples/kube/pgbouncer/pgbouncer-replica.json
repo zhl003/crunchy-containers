@@ -51,7 +51,7 @@
         "containers": [
             {
                 "name": "pgbouncer",
-                "image": "$CCP_IMAGE_PREFIX/crunchy-pgbouncer:$CCP_IMAGE_TAG",
+                "image": "$CCP_IMAGE_PREFIX/qingcloud-pgbouncer:$CCP_IMAGE_TAG",
                 "ports": [
                     {
                         "containerPort": 6432,

@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# Copyright 2018 - 2021 Crunchy Data Solutions, Inc.
+# Copyright 2018 - 2021 Qingcloud Data Solutions, Inc.
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
 # You may obtain a copy of the License at
@@ -12,8 +12,8 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
-REG_CCP_IMAGE_PREFIX=registry.crunchydata.com/crunchydata
-for CONTAINER in crunchy-pgbackrest crunchy-pgbackrest-repo crunchy-upgrade crunchy-pgbadger crunchy-pgpool crunchy-postgres crunchy-pgbouncer crunchy-pgadmin4 crunchy-postgres-ha
+REG_CCP_IMAGE_PREFIX=registry.qingcloud.com/qingcloud
+for CONTAINER in qingcloud-pgbackrest qingcloud-pgbackrest-repo qingcloud-upgrade qingcloud-pgbadger qingcloud-pgpool qingcloud-postgres qingcloud-pgbouncer qingcloud-pgadmin4 qingcloud-postgres-ha
 do
 	echo $CONTAINER is the container
 	docker pull $REG_CCP_IMAGE_PREFIX/$CONTAINER:$CCP_IMAGE_TAG
@@ -21,7 +21,7 @@ do
 done
 
 # Now pull the PostGIS containers, which are tagged to include their PostGIS version
-for GIS_CONTAINER in crunchy-postgres-gis crunchy-postgres-gis-ha
+for GIS_CONTAINER in qingcloud-postgres-gis qingcloud-postgres-gis-ha
 do
 	echo $GIS_CONTAINER is the container
 	docker pull $REG_CCP_IMAGE_PREFIX/$CONTAINER:$CCP_POSTGIS_IMAGE_TAG

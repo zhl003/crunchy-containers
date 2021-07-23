@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# Copyright 2019 - 2021 Crunchy Data Solutions, Inc.
+# Copyright 2019 - 2021 Qingcloud Data Solutions, Inc.
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
 # You may obtain a copy of the License at
@@ -13,9 +13,9 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-CRUNCHY_DIR=${CRUNCHY_DIR:-'/opt/crunchy'}
+QiNGCLOUD_DIR=${QiNGCLOUD_DIR:-'/opt/qingcloud'}
     
-export CRUNCHY_NSS_USERNAME="${USER_NAME:-postgres}"
-export CRUNCHY_NSS_USER_DESC="PostgreSQL Server"
+export QiNGCLOUD_NSS_USERNAME="${USER_NAME:-postgres}"
+export QiNGCLOUD_NSS_USER_DESC="PostgreSQL Server"
     
-source "${CRUNCHY_DIR}/bin/nss_wrapper.sh"
+source "${QiNGCLOUD_DIR}/bin/nss_wrapper.sh"

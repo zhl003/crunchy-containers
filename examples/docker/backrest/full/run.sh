@@ -20,4 +20,4 @@ docker run \
     --env PGBACKREST_REPO1_PATH=/backrestrepo/backrest-backups \
     --name=backrest-full-restore \
     --hostname=backrest-full-restore \
-    --detach ${CCP_IMAGE_PREFIX?}/crunchy-backrest-restore:${CCP_IMAGE_TAG?}
+    --detach ${CCP_IMAGE_PREFIX?}/qingcloud-backrest-restore:${CCP_IMAGE_TAG?}

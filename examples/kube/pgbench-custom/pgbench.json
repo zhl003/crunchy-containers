@@ -22,7 +22,7 @@
                 "containers": [
                     {
                         "name": "pgbench",
-                        "image": "$CCP_IMAGE_PREFIX/crunchy-pgbench:$CCP_IMAGE_TAG",
+                        "image": "$CCP_IMAGE_PREFIX/qingcloud-pgbench:$CCP_IMAGE_TAG",
                         "env": [
                             {
                                 "name": "PG_DATABASE",

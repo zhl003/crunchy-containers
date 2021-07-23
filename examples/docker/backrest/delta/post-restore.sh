@@ -21,4 +21,4 @@ docker run \
     --env PGDATA_PATH_OVERRIDE=backrest \
     --name=backrest-delta-restored \
     --hostname=backrest-delta-restored \
-    --detach ${CCP_IMAGE_PREFIX?}/crunchy-postgres:${CCP_IMAGE_TAG?}
+    --detach ${CCP_IMAGE_PREFIX?}/qingcloud-postgres:${CCP_IMAGE_TAG?}

@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# Copyright 2016 - 2021 Crunchy Data Solutions, Inc.
+# Copyright 2016 - 2021 Qingcloud Data Solutions, Inc.
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
 # You may obtain a copy of the License at
@@ -48,6 +48,6 @@ if [[ -d ${CCPROOT?}/tools/pgmonitor ]]
 then
     rm -rf ${CCPROOT?}/tools/pgmonitor
 fi
-git clone https://github.com/CrunchyData/pgmonitor.git ${CCPROOT?}/tools/pgmonitor
+git clone https://github.com/QingcloudData/pgmonitor.git ${CCPROOT?}/tools/pgmonitor
 cd ${CCPROOT?}/tools/pgmonitor
 git checkout ${PGMONITOR_COMMIT?}

@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# Copyright 2016 - 2021 Crunchy Data Solutions, Inc.
+# Copyright 2016 - 2021 Qingcloud Data Solutions, Inc.
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
 # You may obtain a copy of the License at
@@ -13,8 +13,8 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-CRUNCHY_DIR=${CRUNCHY_DIR:-'/opt/crunchy'}
-source "${CRUNCHY_DIR}/bin/common_lib.sh"
+QiNGCLOUD_DIR=${QiNGCLOUD_DIR:-'/opt/qingcloud'}
+source "${QiNGCLOUD_DIR}/bin/common_lib.sh"
 enable_debugging
 
 export PATH=$PATH:/usr/pgsql-*/bin
@@ -41,13 +41,13 @@ then
         echo_err "ENABLE_TLS true but /certs/server.key or /certs/server.crt not found, aborting"
         exit 1
     fi
-    cp "${CRUNCHY_DIR}/conf/pgadmin-https.conf" /var/lib/pgadmin/pgadmin.conf
+    cp "${QiNGCLOUD_DIR}/conf/pgadmin-https.conf" /var/lib/pgadmin/pgadmin.conf
 else
     echo_info "TLS disabled. Applying http configuration.."
-    cp "${CRUNCHY_DIR}/conf/pgadmin-http.conf" /var/lib/pgadmin/pgadmin.conf
+    cp "${QiNGCLOUD_DIR}/conf/pgadmin-http.conf" /var/lib/pgadmin/pgadmin.conf
 fi
 
-cp "${CRUNCHY_DIR}/conf/config_local.py" /var/lib/pgadmin/config_local.py
+cp "${QiNGCLOUD_DIR}/conf/config_local.py" /var/lib/pgadmin/config_local.py
 
 if [[ -z "${SERVER_PATH}" ]]
 then

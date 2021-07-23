@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# Copyright 2018 - 2021 Crunchy Data Solutions, Inc.
+# Copyright 2018 - 2021 Qingcloud Data Solutions, Inc.
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
 # You may obtain a copy of the License at
@@ -18,10 +18,10 @@ GREEN="\033[0;32m"
 YELLOW="\033[0;33m"
 RESET="\033[0m"
 
-CRUNCHY_DIR=${CRUNCHY_DIR:-'/opt/crunchy'}
+QiNGCLOUD_DIR=${QiNGCLOUD_DIR:-'/opt/qingcloud'}
 
 function enable_debugging() {
-    if [[ ${CRUNCHY_DEBUG:-false} == "true" ]]
+    if [[ ${QiNGCLOUD_DEBUG:-false} == "true" ]]
     then
         echo_info "Turning debugging on.."
         export PS4='+(${BASH_SOURCE}:${LINENO})> ${FUNCNAME[0]:+${FUNCNAME[0]}(): }'

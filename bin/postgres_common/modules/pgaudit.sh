@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# Copyright 2016 - 2021 Crunchy Data Solutions, Inc.
+# Copyright 2016 - 2021 Qingcloud Data Solutions, Inc.
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
 # You may obtain a copy of the License at
@@ -13,10 +13,10 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-CRUNCHY_DIR=${CRUNCHY_DIR:-'/opt/crunchy'}
+QiNGCLOUD_DIR=${QiNGCLOUD_DIR:-'/opt/qingcloud'}
 if [[ -v PGAUDIT_ANALYZE ]]
 then
-    source "${CRUNCHY_DIR}/bin/common_lib.sh"
+    source "${QiNGCLOUD_DIR}/bin/common_lib.sh"
     echo_info "Applyed pgaudit module.."
     pgaudit_analyze ${PATRONI_POSTGRESQL_DATA_DIR:-$PGDATA}/pg_log --user=postgres --log-file /tmp/pgaudit_analyze.log &
 fi

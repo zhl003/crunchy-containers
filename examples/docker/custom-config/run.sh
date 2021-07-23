@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# Copyright 2016 - 2021 Crunchy Data Solutions, Inc.
+# Copyright 2016 - 2021 Qingcloud Data Solutions, Inc.
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
 # You may obtain a copy of the License at
@@ -47,4 +47,4 @@ docker run \
     --env=PGHOST=/tmp \
     --env=XLOGDIR=true \
     --env=PGBACKREST=true \
-    --detach ${CCP_IMAGE_PREFIX?}/crunchy-postgres:${CCP_IMAGE_TAG?}
+    --detach ${CCP_IMAGE_PREFIX?}/qingcloud-postgres:${CCP_IMAGE_TAG?}

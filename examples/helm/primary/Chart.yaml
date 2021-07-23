@@ -8,7 +8,7 @@ keywords:
 - postgres
 - database
 - sql
-home: https://www.crunchydata.com/
-icon: https://www.crunchydata.com/images/logo.svg
+home: https://www.qingcloud.com/
+icon: https://www.qingcloud.com/images/logo.svg
 sources:
-- https://github.com/CrunchyData/crunchy-containers
+- https://github.com/QingcloudData/qingcloud-containers

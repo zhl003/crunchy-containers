@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# Copyright 2016 - 2021 Crunchy Data Solutions, Inc.
+# Copyright 2016 - 2021 Qingcloud Data Solutions, Inc.
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
 # You may obtain a copy of the License at
@@ -19,7 +19,7 @@ PGDATA_VOL="${CONTAINER_NAME?}-pgdata"
 BACKUP_VOL="${CONTAINER_NAME?}-backup"
 
 ${DIR?}/cleanup.sh
-${DIR?}/../../ssl-creator.sh "testuser@crunchydata.com" "${CONTAINER_NAME?}" "$(pwd)"
+${DIR?}/../../ssl-creator.sh "testuser@qingcloud.com" "${CONTAINER_NAME?}" "$(pwd)"
 if [[ $? -ne 0 ]]
 then
     echo "Failed to create certs, exiting.."
@@ -53,7 +53,7 @@ docker run \
     --env=PGHOST=/tmp \
     --env=XLOGDIR=true \
     --env=PGBACKREST=true \
-    --detach ${CCP_IMAGE_PREFIX?}/crunchy-postgres:${CCP_IMAGE_TAG?}
+    --detach ${CCP_IMAGE_PREFIX?}/qingcloud-postgres:${CCP_IMAGE_TAG?}
 
 echo ""
 echo "To connect via SSL, run the following once the DB is ready: "

@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# Copyright 2016 - 2021 Crunchy Data Solutions, Inc.
+# Copyright 2016 - 2021 Qingcloud Data Solutions, Inc.
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
 # You may obtain a copy of the License at
@@ -32,4 +32,4 @@ docker run \
 	--env PGDATA_PATH=pgbasebackup-full-restored \
 	--name="${CONTAINER_NAME}" \
 	--hostname="${CONTAINER_NAME}" \
-	--detach "${CCP_IMAGE_PREFIX}"/crunchy-pgbasebackup-restore:"${CCP_IMAGE_TAG}"
+	--detach "${CCP_IMAGE_PREFIX}"/qingcloud-pgbasebackup-restore:"${CCP_IMAGE_TAG}"

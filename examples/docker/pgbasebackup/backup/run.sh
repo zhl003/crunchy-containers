@@ -1,7 +1,7 @@
 #!/bin/bash
 
 
-# Copyright 2016 - 2021 Crunchy Data Solutions, Inc.
+# Copyright 2016 - 2021 Qingcloud Data Solutions, Inc.
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
 # You may obtain a copy of the License at
@@ -38,4 +38,4 @@ docker run \
 	--name=$CONTAINER_NAME \
 	--hostname=$CONTAINER_NAME \
 	--network=pgnet \
-	-d $CCP_IMAGE_PREFIX/crunchy-backup:$CCP_IMAGE_TAG
+	-d $CCP_IMAGE_PREFIX/qingcloud-backup:$CCP_IMAGE_TAG

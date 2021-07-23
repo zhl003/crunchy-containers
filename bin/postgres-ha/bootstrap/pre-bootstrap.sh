@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# Copyright 2019 - 2021 Crunchy Data Solutions, Inc.
+# Copyright 2019 - 2021 Qingcloud Data Solutions, Inc.
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
 # You may obtain a copy of the License at
@@ -15,8 +15,8 @@
 
 export PGHOST="/tmp"
 
-CRUNCHY_DIR=${CRUNCHY_DIR:-'/opt/crunchy'}
-source "${CRUNCHY_DIR}/bin/common_lib.sh"
+QiNGCLOUD_DIR=${QiNGCLOUD_DIR:-'/opt/qingcloud'}
+source "${QiNGCLOUD_DIR}/bin/common_lib.sh"
 
 echo_info "postgres-ha pre-bootstrap starting..."
 
@@ -84,7 +84,7 @@ set_default_pgha_autoconfig_env()  {
     fi
 }
 
-# Set defaults for the custom crunchy-postgres-ha env vars required to bootstrap a cluster
+# Set defaults for the custom qingcloud-postgres-ha env vars required to bootstrap a cluster
 set_default_pgha_env()  {
 
     if [[ ! -v PGHA_PATRONI_PORT ]]
@@ -265,12 +265,12 @@ build_bootstrap_config_file() {
     echo "---" > "${bootstrap_file}"
 
     pghba_file="/tmp/postgres-ha-pghba.yaml"
-    cat "${CRUNCHY_DIR}/conf/postgres-ha/postgres-ha-pghba-bootstrap.yaml" > "${pghba_file}"
+    cat "${QiNGCLOUD_DIR}/conf/postgres-ha/postgres-ha-pghba-bootstrap.yaml" > "${pghba_file}"
 
     if [[ "${PGHA_BASE_BOOTSTRAP_CONFIG}" == "true" ]]
     then
         echo_info "Applying base bootstrap config to postgres-ha configuration"
-        "${CRUNCHY_DIR}/bin/yq" m -i -x "${bootstrap_file}" "${CRUNCHY_DIR}/conf/postgres-ha/postgres-ha-bootstrap.yaml"
+        "${QiNGCLOUD_DIR}/bin/yq" m -i -x "${bootstrap_file}" "${QiNGCLOUD_DIR}/conf/postgres-ha/postgres-ha-bootstrap.yaml"
         # set the configured bootstrap method (e.g. initdb or pgbackrest)
         sed -i "s/PGHA_BOOTSTRAP_METHOD/$PGHA_BOOTSTRAP_METHOD/g" "${bootstrap_file}"
     else
@@ -280,7 +280,7 @@ build_bootstrap_config_file() {
     if [[ "${PGHA_BASE_PG_CONFIG}" == "true" ]]
     then
         echo_info "Applying base postgres config to postgres-ha configuration"
-        "${CRUNCHY_DIR}/bin/yq" m -i -x "${bootstrap_file}" "${CRUNCHY_DIR}/conf/postgres-ha/postgres-ha-pgconf.yaml"
+        "${QiNGCLOUD_DIR}/bin/yq" m -i -x "${bootstrap_file}" "${QiNGCLOUD_DIR}/conf/postgres-ha/postgres-ha-pgconf.yaml"
     else
         echo_info "Base PG config for postgres-ha configuration disabled"
     fi
@@ -288,14 +288,14 @@ build_bootstrap_config_file() {
     if [[ "${PGHA_PGBACKREST}" == "true" ]]
     then
         echo_info "Applying pgbackrest config to postgres-ha configuration"
-        "${CRUNCHY_DIR}/bin/yq" m -i -x "${bootstrap_file}" "${CRUNCHY_DIR}/conf/postgres-ha/postgres-ha-pgbackrest.yaml"
+        "${QiNGCLOUD_DIR}/bin/yq" m -i -x "${bootstrap_file}" "${QiNGCLOUD_DIR}/conf/postgres-ha/postgres-ha-pgbackrest.yaml"
         if [[ "${PGHA_PGBACKREST_LOCAL_S3_STORAGE}" == "true" ]]
         then
-            ${CRUNCHY_DIR}/bin/yq m -i -x "${bootstrap_file}" "${CRUNCHY_DIR}/conf/postgres-ha/postgres-ha-pgbackrest-local-s3.yaml"
+            ${QiNGCLOUD_DIR}/bin/yq m -i -x "${bootstrap_file}" "${QiNGCLOUD_DIR}/conf/postgres-ha/postgres-ha-pgbackrest-local-s3.yaml"
         fi
         if [[ "${PGHA_PGBACKREST_LOCAL_GCS_STORAGE}" == "true" ]]
         then
-            ${CRUNCHY_DIR}/bin/yq m -i -x "${bootstrap_file}" "${CRUNCHY_DIR}/conf/postgres-ha/postgres-ha-pgbackrest-local-gcs.yaml"
+            ${QiNGCLOUD_DIR}/bin/yq m -i -x "${bootstrap_file}" "${QiNGCLOUD_DIR}/conf/postgres-ha/postgres-ha-pgbackrest-local-gcs.yaml"
         fi
     else
         echo_info "pgBackRest config for postgres-ha configuration disabled"
@@ -303,16 +303,16 @@ build_bootstrap_config_file() {
 
     if [[ "${PGHA_INIT}" == "true" ]]
     then
-        "${CRUNCHY_DIR}/bin/yq" m -i -x "${bootstrap_file}" "${CRUNCHY_DIR}/conf/postgres-ha/postgres-ha-initdb.yaml"
+        "${QiNGCLOUD_DIR}/bin/yq" m -i -x "${bootstrap_file}" "${QiNGCLOUD_DIR}/conf/postgres-ha/postgres-ha-initdb.yaml"
 
         if [[ -n "${PGHA_WALDIR}" ]]
         then
             echo_info "Applying custom WAL dir to postgres-ha configuration"
             if printf '10\n'${PGVERSION} | sort -VC
             then
-                "${CRUNCHY_DIR}/bin/yq" w -i "${bootstrap_file}" 'bootstrap.initdb[+].waldir' "${PGHA_WALDIR}"
+                "${QiNGCLOUD_DIR}/bin/yq" w -i "${bootstrap_file}" 'bootstrap.initdb[+].waldir' "${PGHA_WALDIR}"
             else
-                "${CRUNCHY_DIR}/bin/yq" w -i "${bootstrap_file}" 'bootstrap.initdb[+].xlogdir' "${PGHA_WALDIR}"
+                "${QiNGCLOUD_DIR}/bin/yq" w -i "${bootstrap_file}" 'bootstrap.initdb[+].xlogdir' "${PGHA_WALDIR}"
             fi
         fi
     fi
@@ -320,13 +320,13 @@ build_bootstrap_config_file() {
     if [[ "${PGHA_STANDBY}" == "true" ]]
     then
         echo_info "Applying configuration to bootstrap a standby cluster"
-        "${CRUNCHY_DIR}/bin/yq" m -i -x "${bootstrap_file}" "${CRUNCHY_DIR}/conf/postgres-ha/postgres-ha-standby.yaml"
+        "${QiNGCLOUD_DIR}/bin/yq" m -i -x "${bootstrap_file}" "${QiNGCLOUD_DIR}/conf/postgres-ha/postgres-ha-standby.yaml"
     fi
 
     if [[ "${PGHA_SYNC_REPLICATION}" == "true" ]]
     then
         echo_info "Applying synchronous replication settings to postgres-ha configuration"
-        "${CRUNCHY_DIR}/bin/yq" m -i -x "${bootstrap_file}" "${CRUNCHY_DIR}/conf/postgres-ha/postgres-ha-sync.yaml"
+        "${QiNGCLOUD_DIR}/bin/yq" m -i -x "${bootstrap_file}" "${QiNGCLOUD_DIR}/conf/postgres-ha/postgres-ha-sync.yaml"
     fi
 
     # set up the pg_hba.conf file, based on if the user has enabled TLS, and if
@@ -338,7 +338,7 @@ build_bootstrap_config_file() {
     if [[ "${PGHA_TLS_ENABLED}" == "true" ]]
     then
       echo_info "Enabling TLS"
-      pghba_tls_file="${CRUNCHY_DIR}/conf/postgres-ha/postgres-ha-pghba-tls.yaml"
+      pghba_tls_file="${QiNGCLOUD_DIR}/conf/postgres-ha/postgres-ha-pghba-tls.yaml"
 
       # if there is a TLS keypair for a replication user detected, we will need
       # to copy this to a special mount in order to properly enable
@@ -359,47 +359,47 @@ build_bootstrap_config_file() {
 
         # update the bootstrap parameters to set the certificate-based
         # authentication settings
-        "${CRUNCHY_DIR}/bin/yq" w -i "${bootstrap_file}" postgresql.authentication.replication.sslkey "${tls_replication_key_file}"
-        "${CRUNCHY_DIR}/bin/yq" w -i "${bootstrap_file}" postgresql.authentication.replication.sslcert "${tls_replication_cert_file}"
-        "${CRUNCHY_DIR}/bin/yq" w -i "${bootstrap_file}" postgresql.authentication.replication.sslrootcert "/pgconf/tls/ca.crt"
+        "${QiNGCLOUD_DIR}/bin/yq" w -i "${bootstrap_file}" postgresql.authentication.replication.sslkey "${tls_replication_key_file}"
+        "${QiNGCLOUD_DIR}/bin/yq" w -i "${bootstrap_file}" postgresql.authentication.replication.sslcert "${tls_replication_cert_file}"
+        "${QiNGCLOUD_DIR}/bin/yq" w -i "${bootstrap_file}" postgresql.authentication.replication.sslrootcert "/pgconf/tls/ca.crt"
         # as we have the CA available, we can make the TLS mode "verify-ca" by
         # default
-        "${CRUNCHY_DIR}/bin/yq" w -i "${bootstrap_file}" postgresql.authentication.replication.sslmode "verify-ca"
+        "${QiNGCLOUD_DIR}/bin/yq" w -i "${bootstrap_file}" postgresql.authentication.replication.sslmode "verify-ca"
         # if a CRL file is provided, add this to the stanza as well
         if [[ -f "/pgconf/tls/ca.crl" ]]
         then
-          "${CRUNCHY_DIR}/bin/yq" w -i "${bootstrap_file}" postgresql.authentication.replication.sslcrl "/pgconf/tls/ca.crl"
+          "${QiNGCLOUD_DIR}/bin/yq" w -i "${bootstrap_file}" postgresql.authentication.replication.sslcrl "/pgconf/tls/ca.crl"
         fi
 
         # use an updated pg_hba.conf file that enforces certificate based
         # authentication
-        pghba_tls_file="${CRUNCHY_DIR}/conf/postgres-ha/postgres-ha-pghba-tls-auth.yaml"
+        pghba_tls_file="${QiNGCLOUD_DIR}/conf/postgres-ha/postgres-ha-pghba-tls-auth.yaml"
       fi
 
       echo_info "Applying TLS remote connection configuration to pg_hba.conf"
-      "${CRUNCHY_DIR}/bin/yq" m -i -a "${pghba_file}" "${pghba_tls_file}"
+      "${QiNGCLOUD_DIR}/bin/yq" m -i -a "${pghba_file}" "${pghba_tls_file}"
       echo_info "Enabling TLS in postgresql.conf"
-      "${CRUNCHY_DIR}/bin/yq" m -i -a "${bootstrap_file}" "${CRUNCHY_DIR}/conf/postgres-ha/postgres-ha-pgconf-tls.yaml"
+      "${QiNGCLOUD_DIR}/bin/yq" m -i -a "${bootstrap_file}" "${QiNGCLOUD_DIR}/conf/postgres-ha/postgres-ha-pgconf-tls.yaml"
 
       # The CRL file may not be present, so we only want to apply if if we have
       # the CRL file present
       if [[ -f "/pgconf/tls/ca.crl" ]]
       then
-        "${CRUNCHY_DIR}/bin/yq" w -i "${bootstrap_file}" bootstrap.dcs.postgresql.parameters.ssl_crl_file "/pgconf/tls/ca.crl"
+        "${QiNGCLOUD_DIR}/bin/yq" w -i "${bootstrap_file}" bootstrap.dcs.postgresql.parameters.ssl_crl_file "/pgconf/tls/ca.crl"
       fi
     fi
 
     if [[ "${PGHA_TLS_ONLY}" != "true" ]]
     then
       echo_info "Applying standard (non-TLS) remote connection configuration to pg_hba.conf"
-      "${CRUNCHY_DIR}/bin/yq" m -i -a "${pghba_file}" "${CRUNCHY_DIR}/conf/postgres-ha/postgres-ha-pghba-notls.yaml"
+      "${QiNGCLOUD_DIR}/bin/yq" m -i -a "${pghba_file}" "${QiNGCLOUD_DIR}/conf/postgres-ha/postgres-ha-pghba-notls.yaml"
     fi
 
     # If SCRAM passwords are selected, set this as part of the bootstrapped
     # password parameter
     if [[ "${PGHA_PASSWORD_TYPE}" == "scram-sha-256" ]]
     then
-      "${CRUNCHY_DIR}/bin/yq" w -i "${bootstrap_file}" bootstrap.dcs.postgresql.parameters.password_encryption "scram-sha-256"
+      "${QiNGCLOUD_DIR}/bin/yq" w -i "${bootstrap_file}" bootstrap.dcs.postgresql.parameters.password_encryption "scram-sha-256"
     fi
 
     # If this is being restored to a new cluster, disable archive_mode to
@@ -425,18 +425,18 @@ build_bootstrap_config_file() {
         if [[ "${bootstrap_cluster_source}" != "${bootstrap_cluster_target}" ]];
         then
             echo_info "Disabling archiving for bootstrap method ${PGHA_BOOTSTRAP_METHOD}"
-            "${CRUNCHY_DIR}/bin/yq" w -i --style=single "${bootstrap_file}" postgresql.parameters.archive_command "false"
+            "${QiNGCLOUD_DIR}/bin/yq" w -i --style=single "${bootstrap_file}" postgresql.parameters.archive_command "false"
         fi
     fi
 
     # merge the pg_hba.conf settings into the main bootstrap file
     sed -i "s/PATRONI_REPLICATION_USERNAME/$PATRONI_REPLICATION_USERNAME/g" "${pghba_file}"
-    "${CRUNCHY_DIR}/bin/yq" m -i -x "${bootstrap_file}" "${pghba_file}"
+    "${QiNGCLOUD_DIR}/bin/yq" m -i -x "${bootstrap_file}" "${pghba_file}"
 
     if [[ -f "/pgconf/postgres-ha.yaml" ]]
     then
         echo_info "Applying custom postgres-ha configuration file"
-        "${CRUNCHY_DIR}/bin/yq" m -i -x "${bootstrap_file}" "/pgconf/postgres-ha.yaml"
+        "${QiNGCLOUD_DIR}/bin/yq" m -i -x "${bootstrap_file}" "/pgconf/postgres-ha.yaml"
     else
         echo_info "Custom postgres-ha configuration file not detected"
     fi
@@ -500,7 +500,7 @@ else
 fi
 
 # create any tablespace directories, if they have not been created yet
-source "${CRUNCHY_DIR}/bin/postgres-ha/common/pgha-tablespaces.sh"
+source "${QiNGCLOUD_DIR}/bin/postgres-ha/common/pgha-tablespaces.sh"
 tablespaces_create_directory
 
 echo_info "postgres-ha pre-bootstrap complete!  The following configuration will be utilized to initialize " \

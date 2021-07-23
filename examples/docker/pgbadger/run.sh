@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# Copyright 2016 - 2021 Crunchy Data Solutions, Inc.
+# Copyright 2016 - 2021 Qingcloud Data Solutions, Inc.
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
 # You may obtain a copy of the License at
@@ -28,7 +28,7 @@ docker run \
     --env-file=${DIR?}/env/pgsql-primary.list \
     --name=pg-primary \
     --hostname=pg-primary \
-    -d ${CCP_IMAGE_PREFIX?}/crunchy-postgres:${CCP_IMAGE_TAG?}
+    -d ${CCP_IMAGE_PREFIX?}/qingcloud-postgres:${CCP_IMAGE_TAG?}
 
 docker run \
     -p 10000:10000 \
@@ -39,6 +39,6 @@ docker run \
     --network=pgnet \
     --name='pgbadger' \
     --hostname='pgbadger' \
-    -d ${CCP_IMAGE_PREFIX?}/crunchy-pgbadger:${CCP_IMAGE_TAG?}
+    -d ${CCP_IMAGE_PREFIX?}/qingcloud-pgbadger:${CCP_IMAGE_TAG?}
 
 exit 0

@@ -2,10 +2,10 @@
 bootstrap:
   method: PGHA_BOOTSTRAP_METHOD
   pgbackrest_init:
-    command: '/opt/crunchy/bin/postgres-ha/pgbackrest/pgbackrest-create-replica.sh primary'
+    command: '/opt/qingcloud/bin/postgres-ha/pgbackrest/pgbackrest-create-replica.sh primary'
     keep_existing_recovery_conf: true
   existing_init:
-    command: '/opt/crunchy/bin/postgres-ha/bootstrap/create-from-existing.sh'
+    command: '/opt/qingcloud/bin/postgres-ha/bootstrap/create-from-existing.sh'
     keep_existing_recovery_conf: true
   dcs:
     postgresql:
@@ -13,4 +13,4 @@ bootstrap:
         jit: off
         unix_socket_directories: /tmp
         wal_level: logical
-  post_bootstrap: /opt/crunchy/bin/postgres-ha/bootstrap/post-bootstrap.sh
+  post_bootstrap: /opt/qingcloud/bin/postgres-ha/bootstrap/post-bootstrap.sh

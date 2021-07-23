@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# Copyright 2019 - 2021 Crunchy Data Solutions, Inc.
+# Copyright 2019 - 2021 Qingcloud Data Solutions, Inc.
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
 # You may obtain a copy of the License at
@@ -18,8 +18,8 @@
 # Used to run correct start script based on the MODE
 # environment variable
 
-CRUNCHY_DIR=${CRUNCHY_DIR:-'/opt/crunchy'}
-source "${CRUNCHY_DIR}/bin/common_lib.sh"
+QiNGCLOUD_DIR=${QiNGCLOUD_DIR:-'/opt/qingcloud'}
+source "${QiNGCLOUD_DIR}/bin/common_lib.sh"
 enable_debugging
 
 env_check_err "MODE"
@@ -29,7 +29,7 @@ echo_info "Image mode found: ${MODE}"
 case $MODE in
     pgbackrest)
       echo_info "Starting in 'pgbackrest' mode"
-      exec "${CRUNCHY_DIR}/bin/pgbackrest"
+      exec "${QiNGCLOUD_DIR}/bin/pgbackrest"
       ;;
     pgbackrest-repo)
       echo_info "Starting in 'pgbackrest-repo' mode"
@@ -37,7 +37,7 @@ case $MODE in
       ;;
     pgbackrest-restore)
       echo_info "Starting in 'pgbackrest-restore' mode"
-      exec "${CRUNCHY_DIR}/bin/pgbackrest-restore.sh"
+      exec "${QiNGCLOUD_DIR}/bin/pgbackrest-restore.sh"
       ;;
     *)
       echo_err "Invalid Image Mode; Please set the MODE environment variable to a supported mode"

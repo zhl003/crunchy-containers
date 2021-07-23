@@ -3,8 +3,8 @@ ARG BASEVER
 ARG PG_FULL
 ARG PREFIX
 
-FROM ${PREFIX}/crunchy-postgres:${BASEOS}-${PG_FULL}-${BASEVER}
-# crunchy-postgres image runs as USER 26, switch back to install packages
+FROM ${PREFIX}/qingcloud-postgres:${BASEOS}-${PG_FULL}-${BASEVER}
+# qingcloud-postgres image runs as USER 26, switch back to install packages
 USER 0
 
 # ===== Early lines ordered for leveraging cache, reorder carefully =====
@@ -24,9 +24,9 @@ ARG PATRONI_VER
 LABEL name="postgres-ha" \
 	summary="PostgreSQL ${PG_FULL} with Patroni" \
 	description="Used for the deployment and management of highly-available PostgreSQL clusters using Patroni." \
-	io.k8s.description="Crunchy PostgreSQL optimized for high-availability (HA)" \
-	io.k8s.display-name="Crunchy PostgreSQL - HA Optimized" \
-	io.openshift.tags="postgresql,postgres,postgis,sql,nosql,database,ha,crunchy"
+	io.k8s.description="Qingcloud PostgreSQL optimized for high-availability (HA)" \
+	io.k8s.display-name="Qingcloud PostgreSQL - HA Optimized" \
+	io.openshift.tags="postgresql,postgres,postgis,sql,nosql,database,ha,qingcloud"
 
 RUN if [ "$DFSET" = "centos" ] ; then \
 	${PACKAGER} -y install \
@@ -83,17 +83,17 @@ RUN chown -R postgres:postgres /tablespaces && \
 # open up the postgres port
 EXPOSE 5432
 
-ADD bin/postgres-ha /opt/crunchy/bin/postgres-ha
-ADD conf/postgres-ha /opt/crunchy/conf/postgres-ha
+ADD bin/postgres-ha /opt/qingcloud/bin/postgres-ha
+ADD conf/postgres-ha /opt/qingcloud/conf/postgres-ha
 
-ADD yq /opt/crunchy/bin
-RUN chmod +x /opt/crunchy/bin/yq
+ADD yq /opt/qingcloud/bin
+RUN chmod +x /opt/qingcloud/bin/yq
 
 # The VOLUME directive must appear after all RUN directives to ensure the proper
 # volume permissions are applied when building the image
 VOLUME ["/pgdata", "/pgwal", "/pgconf", "/backrestrepo", "/sshd"]
 
-ENTRYPOINT ["/opt/crunchy/bin/postgres-ha/bootstrap-postgres-ha.sh"]
+ENTRYPOINT ["/opt/qingcloud/bin/postgres-ha/bootstrap-postgres-ha.sh"]
 
 USER 26
 

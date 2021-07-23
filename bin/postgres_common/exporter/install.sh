@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# Copyright 2019 - 2021 Crunchy Data Solutions, Inc.
+# Copyright 2019 - 2021 Qingcloud Data Solutions, Inc.
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
 # You may obtain a copy of the License at
@@ -13,9 +13,9 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-CRUNCHY_DIR=${CRUNCHY_DIR:-'/opt/crunchy'}
+QiNGCLOUD_DIR=${QiNGCLOUD_DIR:-'/opt/qingcloud'}
 
-source "${CRUNCHY_DIR}/bin/common_lib.sh"
+source "${QiNGCLOUD_DIR}/bin/common_lib.sh"
 export PGHOST="/tmp"
 
 test_server "postgres" "${PGHOST?}" "${PGHA_PG_PORT}" "postgres"
@@ -23,19 +23,19 @@ VERSION=$(psql --port="${PG_PRIMARY_PORT}" -d postgres -qtAX -c "SELECT current_
 
 if (( ${VERSION?} >= 90600 )) && (( ${VERSION?} < 100000 ))
 then
-    function_file="${CRUNCHY_DIR}/bin/modules/pgexporter/pg96/setup.sql"
+    function_file="${QiNGCLOUD_DIR}/bin/modules/pgexporter/pg96/setup.sql"
 elif (( ${VERSION?} >= 100000 )) && (( ${VERSION?} < 110000 ))
 then
-    function_file="${CRUNCHY_DIR}/bin/modules/pgexporter/pg10/setup.sql"
+    function_file="${QiNGCLOUD_DIR}/bin/modules/pgexporter/pg10/setup.sql"
 elif (( ${VERSION?} >= 110000 )) && (( ${VERSION?} < 120000 ))
 then
-    function_file="${CRUNCHY_DIR}/bin/modules/pgexporter/pg11/setup.sql"
+    function_file="${QiNGCLOUD_DIR}/bin/modules/pgexporter/pg11/setup.sql"
 elif (( ${VERSION?} >= 120000 )) && (( ${VERSION?} < 130000 ))
 then
-    function_file="${CRUNCHY_DIR}/bin/modules/pgexporter/pg12/setup.sql"
+    function_file="${QiNGCLOUD_DIR}/bin/modules/pgexporter/pg12/setup.sql"
 elif (( ${VERSION?} >= 130000 ))
 then
-    function_file="${CRUNCHY_DIR}/bin/modules/pgexporter/pg13/setup.sql"
+    function_file="${QiNGCLOUD_DIR}/bin/modules/pgexporter/pg13/setup.sql"
 else
     echo_err "Unknown or unsupported version of PostgreSQL.  Exiting.."
     exit 1
@@ -43,7 +43,7 @@ fi
 
 echo_info "Using setup file '${function_file}' for pgMonitor"
 cp "${function_file}" "/tmp/setup_pg.sql"
-sed -i "s,/usr/bin/pgbackrest-info.sh,${CRUNCHY_DIR}/bin/postgres-ha/pgbackrest/pgbackrest_info.sh,g" "/tmp/setup_pg.sql"
+sed -i "s,/usr/bin/pgbackrest-info.sh,${QiNGCLOUD_DIR}/bin/postgres-ha/pgbackrest/pgbackrest_info.sh,g" "/tmp/setup_pg.sql"
 
 psql -U postgres --port="${PG_PRIMARY_PORT}" -d postgres \
     < "/tmp/setup_pg.sql" >> /tmp/pgmonitor-setup.stdout 2>> /tmp/pgmonitor-setup.stderr

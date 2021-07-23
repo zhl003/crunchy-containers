@@ -2,7 +2,7 @@ ARG BASEOS
 ARG BASEVER
 ARG PG_FULL
 ARG PREFIX
-FROM ${PREFIX}/crunchy-base:${BASEOS}-${PG_FULL}-${BASEVER}
+FROM ${PREFIX}/qingcloud-base:${BASEOS}-${PG_FULL}-${BASEVER}
 
 # For RHEL8 all arguments used in main code has to be specified after FROM
 ARG DFSET
@@ -11,11 +11,11 @@ ARG PACKAGER
 ARG PG_MAJOR
 
 LABEL name="pgbouncer" \
-	summary="Lightweight connection pooler for crunchy-postgres" \
-	description="The aim of crunchy-pgbouncer is to lower the performance impact of opening new connections to PostgreSQL; clients connect through this service. It offers session, transaction and statement pooling." \
+	summary="Lightweight connection pooler for qingcloud-postgres" \
+	description="The aim of qingcloud-pgbouncer is to lower the performance impact of opening new connections to PostgreSQL; clients connect through this service. It offers session, transaction and statement pooling." \
 	io.k8s.description="pgBouncer" \
 	io.k8s.display-name="pgBouncer" \
-	io.openshift.tags="postgresql,postgres,pooling,pgbouncer,database,crunchy"
+	io.openshift.tags="postgresql,postgres,pooling,pgbouncer,database,qingcloud"
 
 RUN ${PACKAGER} -y install \
 	--disablerepo="epel" \
@@ -25,14 +25,14 @@ RUN ${PACKAGER} -y install \
 # Preserving PGVERSION out of paranoia
 ENV PGVERSION="${PG_MAJOR}"
 
-RUN mkdir -p /opt/crunchy/bin /opt/crunchy/conf /pgconf
+RUN mkdir -p /opt/qingcloud/bin /opt/qingcloud/conf /pgconf
 
-ADD bin/pgbouncer /opt/crunchy/bin
-ADD bin/common /opt/crunchy/bin
-ADD conf/pgbouncer /opt/crunchy/conf
+ADD bin/pgbouncer /opt/qingcloud/bin
+ADD bin/common /opt/qingcloud/bin
+ADD conf/pgbouncer /opt/qingcloud/conf
 
-RUN chown -R 2:0 /opt/crunchy /pgconf && \
-	chmod -R g=u /opt/crunchy /pgconf
+RUN chown -R 2:0 /opt/qingcloud /pgconf && \
+	chmod -R g=u /opt/qingcloud /pgconf
 
 EXPOSE 6432
 
@@ -43,8 +43,8 @@ VOLUME ["/pgconf"]
 # Defines a unique directory name that will be utilized by the nss_wrapper in the UID script
 ENV NSS_WRAPPER_SUBDIR="pgbouncer"
 
-ENTRYPOINT ["opt/crunchy/bin/uid_daemon.sh"]
+ENTRYPOINT ["opt/qingcloud/bin/uid_daemon.sh"]
 
 USER 2
 
-CMD ["/opt/crunchy/bin/start.sh"]
+CMD ["/opt/qingcloud/bin/start.sh"]

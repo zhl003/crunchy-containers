@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# Copyright 2017 - 2021 Crunchy Data Solutions, Inc.
+# Copyright 2017 - 2021 Qingcloud Data Solutions, Inc.
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
 # You may obtain a copy of the License at
@@ -46,7 +46,7 @@ docker run \
 	-e PG_DATABASE=userdb \
 	--name=$PRIMARY_CONTAINER_NAME \
 	--hostname=$PRIMARY_CONTAINER_NAME \
-	-d $CCP_IMAGE_PREFIX/crunchy-postgres:$CCP_IMAGE_TAG
+	-d $CCP_IMAGE_PREFIX/qingcloud-postgres:$CCP_IMAGE_TAG
 
 REPLICA_CONTAINER_NAME=replica
 
@@ -79,4 +79,4 @@ docker run \
 	-e PG_DATABASE=userdb \
 	--name=${REPLICA_CONTAINER_NAME} \
 	--hostname=${REPLICA_CONTAINER_NAME} \
-	-d $CCP_IMAGE_PREFIX/crunchy-postgres:$CCP_IMAGE_TAG
+	-d $CCP_IMAGE_PREFIX/qingcloud-postgres:$CCP_IMAGE_TAG

@@ -2,14 +2,14 @@ ARG BASEOS
 ARG BASEVER
 ARG PG_FULL
 ARG PREFIX
-FROM ${PREFIX}/crunchy-pgbackrest:${BASEOS}-${PG_FULL}-${BASEVER}
+FROM ${PREFIX}/qingcloud-pgbackrest:${BASEOS}-${PG_FULL}-${BASEVER}
 
 LABEL name="pgbackrest-repo" \
-	summary="Crunchy pgBackRest-repo" \
+	summary="Qingcloud pgBackRest-repo" \
 	description="Capable of mounting the /backrestrepo for access to pgbackrest archives, while allowing for the configuration of pgBackRest using applicable pgBackRest environment variables." \
 	io.k8s.description="pgBackRest-repo" \
-	io.k8s.display-name="Crunchy pgBackRest-repo" \
-	io.openshift.tags="postgresql,postgres,pgbackrest,backup,database,crunchy"
+	io.k8s.display-name="Qingcloud pgBackRest-repo" \
+	io.openshift.tags="postgresql,postgres,pgbackrest,backup,database,qingcloud"
 
 # run the following at root user
 USER 0
@@ -24,11 +24,11 @@ fi
 RUN groupadd pgbackrest -g 2000 && useradd pgbackrest -u 2000 -g 2000
 
 # set ownership and permissions for pgbackrest user and group
-RUN chown -R pgbackrest:pgbackrest /opt/crunchy \
+RUN chown -R pgbackrest:pgbackrest /opt/qingcloud \
 	&& chown -R pgbackrest:root /etc/pgbackrest
 
 # add pgbackrest user and group script
-ADD bin/pgbackrest-repo/uid_pgbackrest.sh /opt/crunchy/bin
+ADD bin/pgbackrest-repo/uid_pgbackrest.sh /opt/qingcloud/bin
 
 # set permissions for pgbackrest user
 RUN chmod -R g=u /etc/pgbackrest \
@@ -43,6 +43,6 @@ USER 2000
 # Defines a unique directory name that will be utilized by the nss_wrapper in the UID script
 ENV NSS_WRAPPER_SUBDIR="pgbackrest-repo"
 
-ENTRYPOINT ["/opt/crunchy/bin/uid_pgbackrest.sh"]
+ENTRYPOINT ["/opt/qingcloud/bin/uid_pgbackrest.sh"]
 
 CMD ["pgbackrest-repo.sh"]

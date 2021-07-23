@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# Copyright 2016 - 2021 Crunchy Data Solutions, Inc.
+# Copyright 2016 - 2021 Qingcloud Data Solutions, Inc.
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
 # You may obtain a copy of the License at
@@ -15,11 +15,11 @@
 
 set -e
 
-CRUNCHY_DIR=${CRUNCHY_DIR:-'/opt/crunchy'}
-source "${CRUNCHY_DIR}/bin/common_lib.sh"
+QiNGCLOUD_DIR=${QiNGCLOUD_DIR:-'/opt/qingcloud'}
+source "${QiNGCLOUD_DIR}/bin/common_lib.sh"
 enable_debugging
 
-CONF_DIR="${CRUNCHY_DIR}/conf"
+CONF_DIR="${QiNGCLOUD_DIR}/conf"
 CONFIGS=/tmp
 PGPOOL_PIDFILE=/tmp/pgpool-script.pid
 

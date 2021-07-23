@@ -17,8 +17,8 @@ ARG PG_MAJOR
 ARG PG_LBL
 
 RUN ${PACKAGER} -y install \
-	--disablerepo=crunchypg* \
-	--enablerepo="crunchypg${PG_LBL}" \
+	--disablerepo=qingcloudpg* \
+	--enablerepo="qingcloudpg${PG_LBL}" \
 	postgresql${PG_LBL} \
  && ${PACKAGER} -y clean all
 
@@ -37,7 +37,7 @@ RUN if [ "$DFSET" = "centos" ] ; then \
         	pgaudit${PG_MAJOR//.}_set_user \
         	pg_partman_${PG_MAJOR//.} \
         	pg_cron_${PG_MAJOR//.} \
-        	crunchy-backrest-${BACKREST_VER} \
+        	qingcloud-backrest-${BACKREST_VER} \
         	postgresql${PG_MAJOR//.}-contrib \
         	postgresql${PG_MAJOR//.}-server \
         	postgresql${PG_MAJOR//.}-plpython* \
@@ -65,7 +65,7 @@ else \
 		pgaudit${PG_MAJOR//.}_set_user \
 		pg_partman_${PG_MAJOR//.} \
 		pg_cron_${PG_MAJOR//.} \
-		crunchy-backrest-${BACKREST_VER} \
+		qingcloud-backrest-${BACKREST_VER} \
 		postgresql${PG_MAJOR//.}-contrib \
 		postgresql${PG_MAJOR//.}-server \
 		postgresql${PG_MAJOR//.}-plpython* \
@@ -91,28 +91,28 @@ fi
 LABEL name="postgres" \
 	summary="PostgreSQL ${PG_FULL}" \
 	description="Allows multiple deployment methods for PostgreSQL, including basic single primary, streaming replication with synchronous and asynchronous replicas. Includes utilities and tools for Auditing (pgaudit), statement tracking,  Backup/Restore (pgbackrest, pg_basebackup, pgdump, pgrestore) and Benchmarking (pgbench)." \
-	io.k8s.description="Crunchy PostgreSQL is the trusted open source distribution of PostgreSQL" \
-	io.k8s.display-name="Crunchy PostgreSQL" \
-	io.openshift.tags="postgresql,postgres,sql,nosql,database,crunchy" \
+	io.k8s.description="Qingcloud PostgreSQL is the trusted open source distribution of PostgreSQL" \
+	io.k8s.display-name="Qingcloud PostgreSQL" \
+	io.openshift.tags="postgresql,postgres,sql,nosql,database,qingcloud" \
 	postgresql.version.major="${PG_MAJOR}" \
 	postgresql.version="${PG_FULL}"
 
-# set up crunchy directory
-RUN mkdir -p /opt/crunchy/bin /opt/crunchy/conf /pgdata /pgwal /pgconf /recover /backrestrepo
+# set up qingcloud directory
+RUN mkdir -p /opt/qingcloud/bin /opt/qingcloud/conf /pgdata /pgwal /pgconf /recover /backrestrepo
 
-RUN chown -R postgres:postgres /opt/crunchy /var/lib/pgsql \
+RUN chown -R postgres:postgres /opt/qingcloud /var/lib/pgsql \
 		/pgdata /pgwal /pgconf /recover /backrestrepo &&  \
-	chmod -R g=u /opt/crunchy /var/lib/pgsql \
+	chmod -R g=u /opt/qingcloud /var/lib/pgsql \
 		/pgdata /pgwal /pgconf /recover /backrestrepo
 
 # open up the postgres port
 EXPOSE 5432
 
-ADD bin/postgres_common /opt/crunchy/bin
-ADD bin/common /opt/crunchy/bin
-ADD conf/postgres_common /opt/crunchy/conf
-ADD tools/pgmonitor/postgres_exporter/common /opt/crunchy/bin/modules/pgexporter
-ADD tools/pgmonitor/postgres_exporter/linux /opt/crunchy/bin/modules/pgexporter
+ADD bin/postgres_common /opt/qingcloud/bin
+ADD bin/common /opt/qingcloud/bin
+ADD conf/postgres_common /opt/qingcloud/conf
+ADD tools/pgmonitor/postgres_exporter/common /opt/qingcloud/bin/modules/pgexporter
+ADD tools/pgmonitor/postgres_exporter/linux /opt/qingcloud/bin/modules/pgexporter
 
 RUN mkdir /.ssh && chown 26:0 /.ssh && chmod g+rwx /.ssh && rm -f /run/nologin
 
@@ -128,8 +128,8 @@ VOLUME ["/sshd", "/pgconf", "/pgdata", "/pgwal", "/recover", "/backrestrepo"]
 # Defines a unique directory name that will be utilized by the nss_wrapper in the UID script
 ENV NSS_WRAPPER_SUBDIR="postgres"
 
-ENTRYPOINT ["/opt/crunchy/bin/uid_postgres.sh"]
+ENTRYPOINT ["/opt/qingcloud/bin/uid_postgres.sh"]
 
 USER 26
 
-CMD ["/opt/crunchy/bin/start.sh"]
+CMD ["/opt/qingcloud/bin/start.sh"]

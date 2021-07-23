@@ -30,4 +30,4 @@ docker run \
     --env PGBACKREST_LOG_PATH=/tmp \
     --name=backrest-delta-restore \
     --hostname=backrest-delta-restore \
-    --detach ${CCP_IMAGE_PREFIX?}/crunchy-backrest-restore:${CCP_IMAGE_TAG?}
+    --detach ${CCP_IMAGE_PREFIX?}/qingcloud-backrest-restore:${CCP_IMAGE_TAG?}

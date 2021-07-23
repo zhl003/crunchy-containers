@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# Copyright 2017 - 2021 Crunchy Data Solutions, Inc.
+# Copyright 2017 - 2021 Qingcloud Data Solutions, Inc.
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
 # You may obtain a copy of the License at
@@ -20,7 +20,7 @@ CONTAINER_NAME='custom-config-ssl'
 
 ${DIR?}/cleanup.sh
 
-${DIR?}/../../ssl-creator.sh "testuser@crunchydata.com" "${CONTAINER_NAME?}" "${DIR}"
+${DIR?}/../../ssl-creator.sh "testuser@qingcloud.com" "${CONTAINER_NAME?}" "${DIR}"
 if [[ $? -ne 0 ]]
 then
     echo_err "Failed to create certs, exiting.."

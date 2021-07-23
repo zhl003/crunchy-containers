@@ -4,7 +4,7 @@ version: "3.3"
 services:
   primary:
     hostname: 'primary'
-    image: crunchydata/crunchy-postgres:centos8-13.3-4.7.1
+    image: qingcloud/qingcloud-postgres:centos8-13.3-4.7.1
     environment:
     - PGHOST=/tmp
     - MAX_CONNECTIONS=10
@@ -22,14 +22,14 @@ services:
     ports:
     - "5432"
     networks:
-    - crunchynet
+    - qingcloudnet
     deploy:
       placement:
         constraints:
         - node.labels.type == primary
         - node.role == worker
   replica:
-    image: crunchydata/crunchy-postgres:centos8-13.3-4.7.1
+    image: qingcloud/qingcloud-postgres:centos8-13.3-4.7.1
     environment:
     - PGHOST=/tmp
     - MAX_CONNECTIONS=10
@@ -48,14 +48,14 @@ services:
     ports:
     - "5432"
     networks:
-    - crunchynet
+    - qingcloudnet
     deploy:
       placement:
         constraints:
         - node.labels.type != primary
         - node.role == worker
 networks:
-  crunchynet:
+  qingcloudnet:
 
 volumes:
   pg-primary-vol:

@@ -41,7 +41,7 @@
         "containers": [
             {
                 "name": "postgres",
-                "image": "$CCP_IMAGE_PREFIX/crunchy-postgres:$CCP_IMAGE_TAG",
+                "image": "$CCP_IMAGE_PREFIX/qingcloud-postgres:$CCP_IMAGE_TAG",
                 "readinessProbe": {
                     "exec": {
                         "command": [

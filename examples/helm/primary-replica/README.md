@@ -1,4 +1,4 @@
-Crunchy Data Primary / Replica Helm Example
+Qingcloud Data Primary / Replica Helm Example
 =======
 
 [PostgreSQL](https://postgresql.org) is a powerful, open source object-relational database system. It has more than 15 years of active development and a proven architecture that has earned it a strong reputation for reliability, data integrity, and correctness.
@@ -14,7 +14,7 @@ $ helm install primary-replica --name primary-replica
 Introduction
 ------------
 
-This is an example of running the Crunchy PostgreSQL containers using the Helm project! More examples of the Crunchy Containers for PostgreSQL can be found at the [GitHub repository](https://github.com/CrunchyData/crunchy-containers).
+This is an example of running the Qingcloud PostgreSQL containers using the Helm project! More examples of the Qingcloud Containers for PostgreSQL can be found at the [GitHub repository](https://github.com/QingcloudData/qingcloud-containers).
 
 This example will create the following in your Kubernetes cluster:
 
@@ -119,8 +119,8 @@ The above command changes the image tag of the container to `centos8-13.3-4.7.1`
 | `.credentials.root`            | Password for the root user        | `password`                                                      |
 | `.credentials.user`            | Password for the standard user   | `password`                                                      |
 | `.serviceType`      | The type of service      | `ClusterIP`               
-| `.image.repository` | The repository on DockerHub where the images are found.    | `crunchydata`                                           |
-| `.image.container` | The container to be pulled from the repository.    | `crunchy-postgres`                                                    |
+| `.image.repository` | The repository on DockerHub where the images are found.    | `qingcloud`                                           |
+| `.image.container` | The container to be pulled from the repository.    | `qingcloud-postgres`                                                    |
 | `.image.tag` | The image tag to be used.    | `centos8-13.3-4.7.1`                                                    |
 | `.pv.storage` | Size of persistent volume     | 400M                                                    |
 | `.pv.name` | Name of persistent volume    | `primary-pv`                                                    |
@@ -140,8 +140,8 @@ $ helm install primary-replica --name primary-replica  \
 Legal Notices
 -------------
 
-Copyright 2017 - 2021 Crunchy Data Solutions, Inc.
+Copyright 2017 - 2021 Qingcloud Data Solutions, Inc.
 
-CRUNCHY DATA SOLUTIONS, INC. PROVIDES THIS GUIDE "AS IS" WITHOUT WARRANTY OF ANY KIND, EITHER EXPRESS OR IMPLIED, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF NON INFRINGEMENT, MERCHANTABILITY OR FITNESS FOR A PARTICULAR PURPOSE.
+QiNGCLOUD DATA SOLUTIONS, INC. PROVIDES THIS GUIDE "AS IS" WITHOUT WARRANTY OF ANY KIND, EITHER EXPRESS OR IMPLIED, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF NON INFRINGEMENT, MERCHANTABILITY OR FITNESS FOR A PARTICULAR PURPOSE.
 
-Crunchy, Crunchy Data Solutions, Inc. and the Crunchy Hippo Logo are trademarks of Crunchy Data Solutions, Inc.
+Qingcloud, Qingcloud Data Solutions, Inc. and the Qingcloud Hippo Logo are trademarks of Qingcloud Data Solutions, Inc.

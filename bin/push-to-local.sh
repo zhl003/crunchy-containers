@@ -2,24 +2,24 @@
 
 set -e -u
 
-REGISTRY=192.168.0.117:5000
+REGISTRY=docker.io/radondb
 VERSION=${CCP_IMAGE_TAG?}
 GIS_VERSION=${CCP_POSTGIS_IMAGE_TAG?}
 IMAGES=(
-    crucnhy-pgbackrest
-    crunchy-pgbackrest-repo
-    crunchy-pgadmin4
-    crunchy-pgbadger
-    crunchy-pgbouncer
-    crunchy-pgpool
-    crunchy-postgres
-    crunchy-upgrade
-    crunchy-postgres-ha
+    qingcloud-pgbackrest
+    qingcloud-pgbackrest-repo
+    qingcloud-pgadmin4
+    qingcloud-pgbadger
+    qingcloud-pgbouncer
+    qingcloud-pgpool
+    qingcloud-postgres
+    qingcloud-upgrade
+    qingcloud-postgres-ha
 )
 
 GIS_IMAGES=(
-    crunchy-postgres-gis
-    crunchy-postgres-gis-ha
+    qingcloud-postgres-gis
+    qingcloud-postgres-gis-ha
 )
 
 function echo_green() {
@@ -31,15 +31,19 @@ function echo_green() {
 for image in "${IMAGES[@]}"
 do
     echo_green "=> Pushing ${REGISTRY?}/$CCP_IMAGE_PREFIX/${image?}:${VERSION?}.."
-    docker tag $CCP_IMAGE_PREFIX/${image?}:${VERSION?} ${REGISTRY?}/$CCP_IMAGE_PREFIX/${image?}:${VERSION?}
-    docker push ${REGISTRY?}/$CCP_IMAGE_PREFIX/${image?}:${VERSION?}
+#    docker tag $CCP_IMAGE_PREFIX/${image?}:${VERSION?} ${REGISTRY?}/$CCP_IMAGE_PREFIX/${image?}:${VERSION?}
+#    docker push ${REGISTRY?}/$CCP_IMAGE_PREFIX/${image?}:${VERSION?}
+docker tag $CCP_IMAGE_PREFIX/${image?}:${VERSION?} ${REGISTRY?}/${image?}:${VERSION?}
+docker push ${REGISTRY?}/${image?}:${VERSION?}
 done
 
-for gis_image in "${IMAGES[@]}"
+for gis_image in "${GIS_IMAGES[@]}"
 do
     echo_green "=> Pushing ${REGISTRY?}/$CCP_IMAGE_PREFIX/${gis_image?}:${GIS_VERSION?}.."
-    docker tag $CCP_IMAGE_PREFIX/${image?}:${GIS_VERSION?} ${REGISTRY?}/$CCP_IMAGE_PREFIX/${gis_image?}:${GIS_VERSION?}
-    docker push ${REGISTRY?}/$CCP_IMAGE_PREFIX/${gis_image?}:${GIS_VERSION?}
+#    docker tag $CCP_IMAGE_PREFIX/${gis_image?}:${GIS_VERSION?} ${REGISTRY?}/$CCP_IMAGE_PREFIX/${gis_image?}:${GIS_VERSION?}
+#    docker push ${REGISTRY?}/$CCP_IMAGE_PREFIX/${gis_image?}:${GIS_VERSION?}
+docker tag $CCP_IMAGE_PREFIX/${gis_image?}:${GIS_VERSION?} ${REGISTRY?}/${gis_image?}:${GIS_VERSION?}
+docker push ${REGISTRY?}/${gis_image?}:${GIS_VERSION?}
 done
 
 echo_green "=> Done!"

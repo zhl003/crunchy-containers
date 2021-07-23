@@ -1,4 +1,4 @@
-# Crunchy Container Env
+# Qingcloud Container Env
 TEMP_BUFFERS=9MB
 PGHOST=/tmp
 MAX_CONNECTIONS=100
