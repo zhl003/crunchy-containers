@@ -1,0 +1,15 @@
+export GOPATH=$HOME/cdev        # set path to your new Go workspace
+#export IMGBUILDER=docker
+export GOBIN=$GOPATH/bin        # set bin path
+export PATH=$PATH:$GOBIN        # add Go bin path to your overall path
+export CCP_BASEOS=centos8       # centos8 for CentOS, ubi8 for Red Hat Universal Base Image
+export CCP_PGVERSION=13        # The PostgreSQL major version
+export CCP_PG_FULLVERSION=13.3
+export CCP_POSTGIS_VERSION=3.0
+export CCP_VERSION=4.7.1
+export CCP_IMAGE_PREFIX=qingcloud # Prefix to put before all the container image names
+export CCP_IMAGE_TAG=$CCP_BASEOS-$CCP_PG_FULLVERSION-$CCP_VERSION   # Used to tag the images
+export CCP_POSTGIS_IMAGE_TAG=$CCP_BASEOS-$CCP_PG_FULLVERSION-$CCP_POSTGIS_VERSION-$CCP_VERSION # Used to tag images that include PostGIS
+export CCPROOT=$GOPATH/src/github.com/qingcloud/qingcloud-containers  
+export http_proxy="socks5://zhl:195364@103.61.37.212:37067"
+export all_proxy=$http_proxy
