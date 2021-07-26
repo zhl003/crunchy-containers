@@ -124,8 +124,6 @@ fi
 
 # Add any available Qingcloud PG repo files
 ADD conf/qingcloudpg${PG_LBL}.repo /etc/yum.repos.d/
-# Import both keys to support all required repos
-RUN if [ "$DFSET" = "rhel" ] ; then rpm --import QiNGCLOUD-GPG-KEY.public ; fi
 
 RUN if [ "$BASEOS" = "centos8" ] ; then \
 	${PACKAGER} -qy module disable postgresql ; \
