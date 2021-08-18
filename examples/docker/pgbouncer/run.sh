@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# Copyright 2016 - 2021 Qingcloud Data Solutions, Inc.
+# Copyright 2016 - 2021 Crunchy Data Solutions, Inc.
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
 # You may obtain a copy of the License at
@@ -25,7 +25,7 @@ docker run \
     --network=pgnet \
     --name='pgbouncer-primary' \
     --hostname='pgbouncer-primary' \
-    -d ${CCP_IMAGE_PREFIX?}/qingcloud-pgbouncer:${CCP_IMAGE_TAG?}
+    -d ${CCP_IMAGE_PREFIX?}/radondb-pgbouncer:${CCP_IMAGE_TAG?}
 
 docker run \
     -p 6433:6432 \
@@ -33,7 +33,7 @@ docker run \
     --network=pgnet \
     --name='pgbouncer-replica' \
     --hostname='pgbouncer-replica' \
-    -d ${CCP_IMAGE_PREFIX?}/qingcloud-pgbouncer:${CCP_IMAGE_TAG?}
+    -d ${CCP_IMAGE_PREFIX?}/radondb-pgbouncer:${CCP_IMAGE_TAG?}
 
 docker run \
     -p 5432:5432 \
@@ -43,7 +43,7 @@ docker run \
     --env-file=${DIR?}/env/pgsql-primary.list \
     --name=pg-primary \
     --hostname=pg-primary \
-    -d ${CCP_IMAGE_PREFIX?}/qingcloud-postgres:${CCP_IMAGE_TAG?}
+    -d ${CCP_IMAGE_PREFIX?}/radondb-postgres:${CCP_IMAGE_TAG?}
 
 docker run \
     -p 5433:5432 \
@@ -52,6 +52,6 @@ docker run \
     --env-file=${DIR?}/env/pgsql-replica.list \
     --name=pg-replica \
     --hostname=pg-replica \
-    -d ${CCP_IMAGE_PREFIX?}/qingcloud-postgres:${CCP_IMAGE_TAG?}
+    -d ${CCP_IMAGE_PREFIX?}/radondb-postgres:${CCP_IMAGE_TAG?}
 
 exit 0

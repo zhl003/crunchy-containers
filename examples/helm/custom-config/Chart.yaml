@@ -9,7 +9,7 @@ keywords:
 - database
 - sql
 - custom-config
-home: https://www.qingcloud.com/
-icon: https://www.qingcloud.com/images/logo.svg
+home: https://www.radondb.com/
+icon: https://www.radondb.com/images/logo.svg
 sources:
-- https://github.com/QingcloudData/qingcloud-containers
+- https://github.com/RadondbData/radondb-containers

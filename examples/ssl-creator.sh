@@ -1,5 +1,5 @@
 #!/bin/bash
-# Copyright 2018 - 2021 Qingcloud Data Solutions, Inc.
+# Copyright 2018 - 2021 Crunchy Data Solutions, Inc.
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
 # You may obtain a copy of the License at
@@ -35,7 +35,7 @@ fi
 certstrap --depot-path ${OUTPUT_DIR?}/out \
     init --common-name RootCA \
   --key-bits 4096 \
-  --organization "Qingcloud Data" \
+  --organization "Radondb Data" \
   --locality "Charleston" \
   --province "SC" \
   --country "US" \

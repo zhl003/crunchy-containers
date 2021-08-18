@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# Copyright 2021 Qingcloud Data Solutions, Inc.
+# Copyright 2021 Crunchy Data Solutions, Inc.
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
 # You may obtain a copy of the License at
@@ -23,9 +23,9 @@
 # This accepts one argument, the value of "%p" that is used as part of the
 # PostgreSQL archiving process. This is referenced as $1
 
-QiNGCLOUD_DIR=${QiNGCLOUD_DIR:-'/opt/qingcloud'}
+RADONDB_DIR=${RADONDB_DIR:-'/opt/radondb'}
 # Load the pgBackRest environmental variables
-source "${QiNGCLOUD_DIR}/bin/postgres-ha/pgbackrest/pgbackrest-set-env.sh"
+source "${RADONDB_DIR}/bin/postgres-ha/pgbackrest/pgbackrest-set-env.sh"
 
 # first try local
 pgbackrest archive-push $1

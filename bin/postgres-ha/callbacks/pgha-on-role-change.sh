@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# Copyright 2019 - 2021 Qingcloud Data Solutions, Inc.
+# Copyright 2019 - 2021 Crunchy Data Solutions, Inc.
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
 # You may obtain a copy of the License at
@@ -13,12 +13,12 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-QiNGCLOUD_DIR=${QiNGCLOUD_DIR:-'/opt/qingcloud'}
-source "${QiNGCLOUD_DIR}/bin/common_lib.sh"
+RADONDB_DIR=${RADONDB_DIR:-'/opt/radondb'}
+source "${RADONDB_DIR}/bin/common_lib.sh"
 enable_debugging
 
-source "${QiNGCLOUD_DIR}/bin/postgres-ha/common/pgha-common.sh"
-source "${QiNGCLOUD_DIR}/bin/postgres-ha/common/pgha-tablespaces.sh"
+source "${RADONDB_DIR}/bin/postgres-ha/common/pgha-common.sh"
+source "${RADONDB_DIR}/bin/postgres-ha/common/pgha-tablespaces.sh"
 
 # set the Patroni port
 export $(get_patroni_port)
@@ -34,7 +34,7 @@ cluster="${3}"
 echo_info "${action} callback called (action=${action} role=${role} cluster=${cluster})"
 
 # get pgbackrest env vars
-source "${QiNGCLOUD_DIR}/bin/postgres-ha/pgbackrest/pgbackrest-set-env.sh"
+source "${RADONDB_DIR}/bin/postgres-ha/pgbackrest/pgbackrest-set-env.sh"
 
 # if pgBackRest is enabled and the node has been promoted to "primary" (i.e. "master"), and if
 # pgBackRest is enabled and is not utilizing a dedicated repository host, then take a new backup

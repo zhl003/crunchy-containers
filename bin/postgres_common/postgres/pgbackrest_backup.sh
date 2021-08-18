@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# Copyright 2016 - 2021 Qingcloud Data Solutions, Inc.
+# Copyright 2016 - 2021 Crunchy Data Solutions, Inc.
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
 # You may obtain a copy of the License at
@@ -17,8 +17,8 @@
 
 set -e -u
 
-QiNGCLOUD_DIR=${QiNGCLOUD_DIR:-'/opt/qingcloud'}
-source "${QiNGCLOUD_DIR}/bin/postgres/pgbackrest_env.sh"
+RADONDB_DIR=${RADONDB_DIR:-'/opt/radondb'}
+source "${RADONDB_DIR}/bin/postgres/pgbackrest_env.sh"
 pgbackrest backup --type=${1?}
 
 exit 0

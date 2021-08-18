@@ -29,7 +29,7 @@
                 "containers": [
                     {
                         "name": "pgrestore",
-                        "image": "$CCP_IMAGE_PREFIX/qingcloud-pgrestore:$CCP_IMAGE_TAG",
+                        "image": "$CCP_IMAGE_PREFIX/radondb-pgrestore:$CCP_IMAGE_TAG",
                         "volumeMounts": [
                             {
                                 "mountPath": "/pgdata",

@@ -4,7 +4,7 @@
 download_only_flag="${DOWNLOAD_ONLY-0}"
 
 _topdir=/home/zhl/rpmbuild
-repo_name="qingclouddevpg"${1}
+repo_name="radondbdevpg"${1}
 repo=$2
 repo_full_name="${repo_name}-${repo}"
 build_args='-bb'
@@ -29,10 +29,10 @@ build_root_dir=${_topdir}/BUILDROOT
 
 download_source() {
 
-    # curl https://api.developers.qingcloud.com/downloads/repo/rpm-centos/postgresql13/qingcloudpg13.repo >/etc/yum.repos.d/qingcloudpg13.repo
-    # curl https://api.developers.qingcloud.com/downloads/repo/rpm-centos/postgresql12/qingcloudpg12.repo >/etc/yum.repos.d/qingcloudpg12.repo
+    # curl https://api.developers.radondb.com/downloads/repo/rpm-centos/postgresql13/radondbpg13.repo >/etc/yum.repos.d/radondbpg13.repo
+    # curl https://api.developers.radondb.com/downloads/repo/rpm-centos/postgresql12/radondbpg12.repo >/etc/yum.repos.d/radondbpg12.repo
 
-    # sed -i 's/$releasever/8/g' qingcloudpg1*.repo
+    # sed -i 's/$releasever/8/g' radondbpg1*.repo
     #13 debug
     yum repo-pkgs "${repo_full_name}" list |grep -E '.x86_64|.noarch'| awk '{print $1}' | while read -r line; do
         if yumdownloader "${extra_args}" $line --disablerepo=* --enablerepo="${repo_name}"* --destdir="${source_rpm_dir}" &>/dev/null; then
@@ -65,21 +65,21 @@ replace_name() {
     pkg_file=$1
     pkg_name=${pkg_file##*/}
     spec_file=${spec_dir}/${pkg_name/.rpm/.spec}
-    new_spec_file="${spec_file//[Cc]runchy/qingcloud}"
+    new_spec_file="${spec_file//[Cc]runchy/radondb}"
     [[ ${pkg_name} =~ .noarch ]] && pkg_name=${pkg_name/.noarch/.x86_64}
     #replace file
     find ${build_root_dir}/"${pkg_name/.rpm/}" -type f | while read -r line; do
-        sed -i "s/[Cc]runchy/qingcloud/g" "${line}"
+        sed -i "s/[Cc]runchy/radondb/g" "${line}"
         dir=$(dirname "${line}")
         file_name=$(basename "${line}")
         if [[ ${file_name} =~ [Cc]runchy ]]; then
-            mv "${dir}"/"${file_name}" "${dir}"/"${file_name//[Cc]runchy/qingcloud}" || exit
+            mv "${dir}"/"${file_name}" "${dir}"/"${file_name//[Cc]runchy/radondb}" || exit
         fi
     done
 
     #replace forder
     mapfile -t old_forder < <(find ${build_root_dir}/"${pkg_name/.rpm/}" -type d -name "*[Cc]runchy*" | tac)
-    new_forder=(${old_forder[@]//[Cc]runchy/qingcloud})
+    new_forder=(${old_forder[@]//[Cc]runchy/radondb})
     for forder in $(seq 0 "$((${#old_forder[@]} - 1))"); do
         if [ ! -d "${new_forder[${forder}]}" ]; then
             mkdir -p "${new_forder[${forder}]}"
@@ -89,13 +89,13 @@ replace_name() {
             rm -rf "${old_forder[${forder}]}" || exit
     done
     mv "${spec_file}" "${new_spec_file}" || exit
-    sed -i "s/[Cc]runchy/qingcloud/g" "${new_spec_file}"
+    sed -i "s/[Cc]runchy/radondb/g" "${new_spec_file}"
 }
 
 build_and_push() {
     pkg_file=$1
     pkg_name=${pkg_file##*/}
-    new_pkgname=${pkg_name//[Cc]runchy/qingcloud}
+    new_pkgname=${pkg_name//[Cc]runchy/radondb}
     [[ ${pkg_name} =~ .noarch ]] && pkg_name=${pkg_name/.noarch/.x86_64}
     spec_file=${spec_dir}/${new_pkgname/.rpm/.spec}
     rpmbuild "${build_args}" "${spec_file}" || exit
@@ -122,4 +122,4 @@ for pkg in "${source_rpm_dir}"/*.rpm; do
 done
 
 #test docker image
-# docker run -d qingcloud/qingcloud-postgres-ha:centos8-13.3-4.7.0 --entrypoint /bin/sh -c "while true; do sleep 3600; done"
+# docker run -d radondb/radondb-postgres-ha:centos8-13.3-4.7.0 --entrypoint /bin/sh -c "while true; do sleep 3600; done"

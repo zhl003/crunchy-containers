@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# Copyright 2016 - 2021 Qingcloud Data Solutions, Inc.
+# Copyright 2016 - 2021 Crunchy Data Solutions, Inc.
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
 # You may obtain a copy of the License at
@@ -13,11 +13,11 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-QiNGCLOUD_DIR=${QiNGCLOUD_DIR:-'/opt/qingcloud'}
-source "${QiNGCLOUD_DIR}/bin/common_lib.sh"
+RADONDB_DIR=${RADONDB_DIR:-'/opt/radondb'}
+source "${RADONDB_DIR}/bin/common_lib.sh"
 enable_debugging
 
-export PATH="${PATH}:${QiNGCLOUD_DIR}/bin"
+export PATH="${PATH}:${RADONDB_DIR}/bin"
 export PIDFILE=/tmp/badgerserver.pid
 
 function trap_sigterm() {
@@ -31,7 +31,7 @@ trap 'trap_sigterm' SIGINT SIGTERM
 env_check_info "BADGER_TARGET" "Overriding BADGER_TARGET environment variable and setting to ${BADGER_TARGET}."
 
 echo_info "Starting pgBadger server.."
-"${QiNGCLOUD_DIR}/bin/badgerserver" &
+"${RADONDB_DIR}/bin/badgerserver" &
 echo $! > $PIDFILE
 
 wait

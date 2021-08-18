@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# Copyright 2017 - 2021 Qingcloud Data Solutions, Inc.
+# Copyright 2017 - 2021 Crunchy Data Solutions, Inc.
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
 # You may obtain a copy of the License at
@@ -25,8 +25,8 @@
 # $NEW_VERSION (e.g. 9.6)
 #
 
-QiNGCLOUD_DIR=${QiNGCLOUD_DIR:-'/opt/qingcloud'}
-source "${QiNGCLOUD_DIR}/bin/common_lib.sh"
+RADONDB_DIR=${RADONDB_DIR:-'/opt/radondb'}
+source "${RADONDB_DIR}/bin/common_lib.sh"
 enable_debugging
 
 function trap_sigterm() {
@@ -116,7 +116,7 @@ case $OLD_VERSION in
     ;;
 esac
 
-export PATH="${QiNGCLOUD_DIR}/bin:${PGBINNEW?}:$PATH"
+export PATH="${RADONDB_DIR}/bin:${PGBINNEW?}:$PATH"
 
 # Create a clean new data directory
 options=" "

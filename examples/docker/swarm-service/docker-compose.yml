@@ -4,7 +4,7 @@ version: "3.3"
 services:
   primary:
     hostname: 'primary'
-    image: qingcloud/qingcloud-postgres:centos8-13.3-4.7.1
+    image: radondb/radondb-postgres:centos8-13.3-4.7.1
     environment:
     - PGHOST=/tmp
     - MAX_CONNECTIONS=10
@@ -22,14 +22,14 @@ services:
     ports:
     - "5432"
     networks:
-    - qingcloudnet
+    - radondbnet
     deploy:
       placement:
         constraints:
         - node.labels.type == primary
         - node.role == worker
   replica:
-    image: qingcloud/qingcloud-postgres:centos8-13.3-4.7.1
+    image: radondb/radondb-postgres:centos8-13.3-4.7.1
     environment:
     - PGHOST=/tmp
     - MAX_CONNECTIONS=10
@@ -48,14 +48,14 @@ services:
     ports:
     - "5432"
     networks:
-    - qingcloudnet
+    - radondbnet
     deploy:
       placement:
         constraints:
         - node.labels.type != primary
         - node.role == worker
 networks:
-  qingcloudnet:
+  radondbnet:
 
 volumes:
   pg-primary-vol:

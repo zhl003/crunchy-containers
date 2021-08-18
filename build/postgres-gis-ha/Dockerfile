@@ -3,8 +3,8 @@ ARG BASEVER
 ARG PG_FULL
 ARG PREFIX
 ARG POSTGIS_VER
-FROM ${PREFIX}/qingcloud-postgres-gis:${BASEOS}-${PG_FULL}-${POSTGIS_VER}-${BASEVER}
-# qingcloud-postgres image runs as USER 26, switch back to install packages
+FROM ${PREFIX}/radondb-postgres-gis:${BASEOS}-${PG_FULL}-${POSTGIS_VER}-${BASEVER}
+# radondb-postgres image runs as USER 26, switch back to install packages
 USER 0
 
 # ===== Early lines ordered for leveraging cache, reorder carefully =====
@@ -22,11 +22,11 @@ ENV PGROOT="/usr/pgsql-${PG_MAJOR}" PGVERSION="${PG_MAJOR}"
 ARG PATRONI_VER
 
 LABEL name="postgres-gis-ha" \
-	summary="Includes PostGIS extensions on top of qingcloud-postgres-ha" \
-	description="An identical image of qingcloud-postgres with the extra PostGIS packages added for users that require PostGIS, optimized for high-availability." \
+	summary="Includes PostGIS extensions on top of radondb-postgres-ha" \
+	description="An identical image of radondb-postgres with the extra PostGIS packages added for users that require PostGIS, optimized for high-availability." \
 	io.k8s.description="PostGIS enabled PostgreSQL container" \
-	io.k8s.display-name="Qingcloud PostGIS HA" \
-	io.openshift.tags="postgresql,postgres,postgis,spatial,geospatial,gis,map,database,ha,qingcloud"
+	io.k8s.display-name="Radondb PostGIS HA" \
+	io.openshift.tags="postgresql,postgres,postgis,spatial,geospatial,gis,map,database,ha,radondb"
 
 RUN if [ "$DFSET" = "centos" ] ; then \
 	${PACKAGER} -y install \
@@ -83,18 +83,18 @@ RUN chown -R postgres:postgres /tablespaces && \
 # open up the postgres port
 EXPOSE 5432
 
-ADD bin/postgres-ha /opt/qingcloud/bin/postgres-ha
-ADD bin/postgres-gis-ha /opt/qingcloud/bin/postgres-ha
-ADD conf/postgres-ha /opt/qingcloud/conf/postgres-ha
+ADD bin/postgres-ha /opt/radondb/bin/postgres-ha
+ADD bin/postgres-gis-ha /opt/radondb/bin/postgres-ha
+ADD conf/postgres-ha /opt/radondb/conf/postgres-ha
 
-ADD yq /opt/qingcloud/bin
-RUN chmod +x /opt/qingcloud/bin/yq
+ADD yq /opt/radondb/bin
+RUN chmod +x /opt/radondb/bin/yq
 
 # The VOLUME directive must appear after all RUN directives to ensure the proper
 # volume permissions are applied when building the image
 VOLUME ["/pgdata", "/pgwal", "/pgconf", "/backrestrepo", "/sshd"]
 
-ENTRYPOINT ["/opt/qingcloud/bin/postgres-ha/bootstrap-postgres-ha.sh"]
+ENTRYPOINT ["/opt/radondb/bin/postgres-ha/bootstrap-postgres-ha.sh"]
 
 USER 26
 

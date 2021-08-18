@@ -1,12 +1,12 @@
-= qingcloud-containers (1)
-Qingcloud Data
+= radondb-containers (1)
+Radondb Data
 December 23, 2019
 
 == NAME
-qingcloud-containers - Essential open source microservices for production PostgreSQL
+radondb-containers - Essential open source microservices for production PostgreSQL
 
 == DESCRIPTION
-The Qingcloud Container Suite provides the essential microservices for running a
+The Radondb Container Suite provides the essential microservices for running a
 enterprise-grade PostgreSQL cluster. These include:
 
 - PostgreSQL
@@ -17,8 +17,8 @@ enterprise-grade PostgreSQL cluster. These include:
 and more.
 
 == USAGE
-For more information on the Qingcloud Container Suite, see the official
-[Qingcloud Container Suite Documentation](https://access.qingcloud.com/documentation/qingcloud-containers/)
+For more information on the Radondb Container Suite, see the official
+[Radondb Container Suite Documentation](https://access.radondb.com/documentation/radondb-containers/)
 
 == LABELS
 The starter container includes the following LABEL settings:
@@ -27,7 +27,7 @@ That atomic command runs the Docker command set in this label:
 
 `Name=`
 
-The registry location and name of the image. For example, Name="qingcloud/qingcloud-postgres".
+The registry location and name of the image. For example, Name="radondb/radondb-postgres".
 
 `Version=`
 

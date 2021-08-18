@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# Copyright 2016 - 2021 Qingcloud Data Solutions, Inc.
+# Copyright 2016 - 2021 Crunchy Data Solutions, Inc.
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
 # You may obtain a copy of the License at
@@ -18,16 +18,16 @@ restore pgdump pgrestore postgres-gis pgbadger pgpool \
 watch backup postgres pgbouncer pgadmin4 upgrade pgbench \
 pgbasebackup-restore postgres-ha postgres-gis-ha
 do
-	docker rmi -f  $CCP_IMAGE_PREFIX/qingcloud-$i:$CCP_IMAGE_TAG
-	docker rmi -f  qingcloud-$i
-#	docker rmi -f  registry.qingcloud.openshift.com/jeff-project/qingcloud-$i:$CCP_IMAGE_TAG
+	docker rmi -f  $CCP_IMAGE_PREFIX/radondb-$i:$CCP_IMAGE_TAG
+	docker rmi -f  radondb-$i
+#	docker rmi -f  registry.radondb.openshift.com/jeff-project/radondb-$i:$CCP_IMAGE_TAG
 done
 
 for i in \
 postgres-gis postgres-gis-ha
 do
-	docker rmi -f  $CCP_IMAGE_PREFIX/qingcloud-$i:$CCP_POSTGIS_IMAGE_TAG
-	docker rmi -f  qingcloud-$i
+	docker rmi -f  $CCP_IMAGE_PREFIX/radondb-$i:$CCP_POSTGIS_IMAGE_TAG
+	docker rmi -f  radondb-$i
 done
 
 exit

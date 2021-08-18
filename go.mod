@@ -1,4 +1,4 @@
-module github.com/qingcloud/qingcloud-containers
+module github.com/radondb/radondb-containers
 
 go 1.13
 

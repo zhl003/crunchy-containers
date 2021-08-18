@@ -2,7 +2,7 @@ ARG BASEOS
 ARG BASEVER
 ARG PG_FULL
 ARG PREFIX
-FROM ${PREFIX}/qingcloud-base:${BASEOS}-${PG_FULL}-${BASEVER}
+FROM ${PREFIX}/radondb-base:${BASEOS}-${PG_FULL}-${BASEVER}
 
 # For RHEL8 all arguments used in main code has to be specified after FROM
 ARG BASEOS
@@ -17,9 +17,9 @@ LABEL name="pgadmin4" \
 	description="Provides GUI for the pgAdmin 4 utility." \
 	io.k8s.description="pgadmin4 container" \
 	io.k8s.display-name="pgAdmin 4" \
-	io.openshift.tags="postgresql,postgres,monitoring,pgadmin4,pgadmin,database,qingcloud"
+	io.openshift.tags="postgresql,postgres,monitoring,pgadmin4,pgadmin,database,radondb"
 
-RUN mkdir -p /opt/qingcloud/bin /opt/qingcloud/conf /var/lib/pgadmin /var/log/pgadmin \
+RUN mkdir -p /opt/radondb/bin /opt/radondb/conf /var/lib/pgadmin /var/log/pgadmin \
         /certs /run/httpd
 
 RUN if [ "$BASEOS" = "centos7" ] ; then \
@@ -102,11 +102,11 @@ fi
 # Preserving PGVERSION out of paranoia
 ENV PGROOT="/usr/pgsql-${PG_MAJOR}" PGVERSION="${PG_MAJOR}"
 
-ADD bin/pgadmin4/ /opt/qingcloud/bin
-ADD bin/common /opt/qingcloud/bin
-ADD conf/pgadmin4/ /opt/qingcloud/conf
+ADD bin/pgadmin4/ /opt/radondb/bin
+ADD bin/common /opt/radondb/bin
+ADD conf/pgadmin4/ /opt/radondb/conf
 
-RUN cp /opt/qingcloud/conf/httpd.conf /etc/httpd/conf/httpd.conf \
+RUN cp /opt/radondb/conf/httpd.conf /etc/httpd/conf/httpd.conf \
 	&& rm /etc/httpd/conf.d/welcome.conf /etc/httpd/conf.d/ssl.conf
 
 EXPOSE 5050
@@ -118,8 +118,8 @@ VOLUME ["/var/lib/pgadmin", "/certs", "/run/httpd"]
 # Defines a unique directory name that will be utilized by the nss_wrapper in the UID script
 ENV NSS_WRAPPER_SUBDIR="pgadmin"
 
-ENTRYPOINT ["opt/qingcloud/bin/uid_daemon.sh"]
+ENTRYPOINT ["opt/radondb/bin/uid_daemon.sh"]
 
 USER 2
 
-CMD ["/opt/qingcloud/bin/start-pgadmin4.sh"]
+CMD ["/opt/radondb/bin/start-pgadmin4.sh"]

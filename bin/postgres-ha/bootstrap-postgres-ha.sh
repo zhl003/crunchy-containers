@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# Copyright 2019 - 2021 Qingcloud Data Solutions, Inc.
+# Copyright 2019 - 2021 Crunchy Data Solutions, Inc.
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
 # You may obtain a copy of the License at
@@ -16,8 +16,8 @@
 export PGHOST="/tmp"
 export PGPORT="$PGHA_PG_PORT"
 
-QiNGCLOUD_DIR=${QiNGCLOUD_DIR:-'/opt/qingcloud'}
-source "${QiNGCLOUD_DIR}/bin/common_lib.sh"
+RADONDB_DIR=${RADONDB_DIR:-'/opt/radondb'}
+source "${RADONDB_DIR}/bin/common_lib.sh"
 enable_debugging
 
 trap_sigterm() {
@@ -57,7 +57,7 @@ initialization_monitor() {
         # Enable pgbackrest
         if [[ "${PGHA_PGBACKREST}" == "true" ]]
         then
-            source "${QiNGCLOUD_DIR}/bin/postgres-ha/pgbackrest/pgbackrest-post-bootstrap.sh"
+            source "${RADONDB_DIR}/bin/postgres-ha/pgbackrest/pgbackrest-post-bootstrap.sh"
         fi
 
         if [[ "${PGHA_INIT}" == "true" ]]
@@ -106,7 +106,7 @@ initialization_monitor() {
             then
                 # Apply enhancement modules
                 echo_info "Applying enahncement modules"
-                for module in "${QiNGCLOUD_DIR}"/bin/modules/*.sh
+                for module in "${RADONDB_DIR}"/bin/modules/*.sh
                 do
                     echo_info "Applying module ${module}"
                     source "${module}"
@@ -114,7 +114,7 @@ initialization_monitor() {
 
                 # If there are any tablespaces, create them as a convenience to the user, both
                 # the directories and the PostgreSQL objects
-                source "${QiNGCLOUD_DIR}/bin/postgres-ha/common/pgha-tablespaces.sh"
+                source "${RADONDB_DIR}/bin/postgres-ha/common/pgha-tablespaces.sh"
                 tablespaces_create_postgresql_objects "${PGHA_USER}"
 
                 # Run audit.sql file if exists
@@ -156,7 +156,7 @@ primary_initialization_monitor() {
     echo_info "Primary host specified, checking if Primary is ready before initializing replica"
     env_check_err "PGHA_PRIMARY_HOST"
     while [[ $(curl --silent "${PGHA_PRIMARY_HOST}:${PGHA_PATRONI_PORT}/master" --stderr - \
-        | "${QiNGCLOUD_DIR}/bin/yq" r - state 2> /dev/null) != "running" ]]
+        | "${RADONDB_DIR}/bin/yq" r - state 2> /dev/null) != "running" ]]
     do
         echo_info "Primary is not ready, retrying"
         sleep 1
@@ -199,22 +199,22 @@ then
 fi
 
 # Configure users and groups
-source "${QiNGCLOUD_DIR}/bin/uid_postgres_no_exec.sh"
+source "${RADONDB_DIR}/bin/uid_postgres_no_exec.sh"
 
 # remove the "initialized" file and initialize logs if they already exist (e.g. after a restart)
 rm -f "/tmp/pgha_initialized" "/tmp/patroni_initialize_check.log"
 
 # Perform cluster pre-initialization (set defaults, load secrets, peform validation, log config details, etc.)
-source "${QiNGCLOUD_DIR}/bin/postgres-ha/bootstrap/pre-bootstrap.sh"
+source "${RADONDB_DIR}/bin/postgres-ha/bootstrap/pre-bootstrap.sh"
 
 # Enable pgbackrest
 if [[ "${PGHA_PGBACKREST}" == "true" ]]
 then
-    source "${QiNGCLOUD_DIR}/bin/postgres-ha/pgbackrest/pgbackrest-pre-bootstrap.sh"
+    source "${RADONDB_DIR}/bin/postgres-ha/pgbackrest/pgbackrest-pre-bootstrap.sh"
 fi
 
 # Enable SSHD if needed for a pgBackRest dedicated repository prior to bootstrapping
-source "${QiNGCLOUD_DIR}/bin/postgres-ha/bootstrap/sshd.sh"
+source "${RADONDB_DIR}/bin/postgres-ha/bootstrap/sshd.sh"
 
 if [[ -v PGHA_PRIMARY_HOST ]]
 then

@@ -1,5 +1,5 @@
 ifndef CCPROOT
-	export CCPROOT=$(GOPATH)/src/github.com/qingcloud/qingcloud-containers
+	export CCPROOT=$(GOPATH)/src/github.com/radondb/radondb-containers
 endif
 
 # Default values if not already set
@@ -68,15 +68,15 @@ endif
 .PHONY:	all license pgbackrest-images pg-independent-images pgimages
 
 # list of image names, helpful in pushing
-images = qingcloud-postgres \
-	qingcloud-postgres-ha \
-	qingcloud-upgrade \
-	qingcloud-pgbackrest \
-	qingcloud-pgbackrest-repo \
-	qingcloud-pgadmin4 \
-	qingcloud-pgbadger \
-	qingcloud-pgbouncer \
-	qingcloud-pgpool
+images = radondb-postgres \
+	radondb-postgres-ha \
+	radondb-upgrade \
+	radondb-pgbackrest \
+	radondb-pgbackrest-repo \
+	radondb-pgadmin4 \
+	radondb-pgbadger \
+	radondb-pgbouncer \
+	radondb-pgpool
 
 # Default target
 all: pgimages pg-independent-images pgbackrest-images
@@ -118,7 +118,7 @@ ccbase-image: ccbase-image-$(IMGBUILDER)
 ccbase-image-build: build-pgbackrest license $(CCPROOT)/build/base/Dockerfile
 	$(IMGCMDSTEM) \
 		-f $(CCPROOT)/build/base/Dockerfile \
-		-t $(CCP_IMAGE_PREFIX)/qingcloud-base:$(CCP_IMAGE_TAG) \
+		-t $(CCP_IMAGE_PREFIX)/radondb-base:$(CCP_IMAGE_TAG) \
 		--build-arg BASEOS=$(CCP_BASEOS) \
 		--build-arg RELVER=$(CCP_VERSION) \
 		--build-arg DFSET=$(DFSET) \
@@ -131,7 +131,7 @@ ccbase-image-build: build-pgbackrest license $(CCPROOT)/build/base/Dockerfile
 ccbase-image-buildah: ccbase-image-build ;
 # only push to docker daemon if variable IMG_PUSH_TO_DOCKER_DAEMON is set to "true"
 ifeq ("$(IMG_PUSH_TO_DOCKER_DAEMON)", "true")
-	sudo --preserve-env buildah push $(CCP_IMAGE_PREFIX)/qingcloud-base:$(CCP_IMAGE_TAG) docker-daemon:$(CCP_IMAGE_PREFIX)/qingcloud-base:$(CCP_IMAGE_TAG)
+	sudo --preserve-env buildah push $(CCP_IMAGE_PREFIX)/radondb-base:$(CCP_IMAGE_TAG) docker-daemon:$(CCP_IMAGE_PREFIX)/radondb-base:$(CCP_IMAGE_TAG)
 endif
 
 ccbase-image-docker: ccbase-image-build
@@ -140,7 +140,7 @@ ccbase-image-docker: ccbase-image-build
 ccbase-ext-image-build: ccbase-image $(CCPROOT)/build/base-ext/Dockerfile
 	$(IMGCMDSTEM) \
 		-f $(CCPROOT)/build/base-ext/Dockerfile \
-		-t $(CCP_IMAGE_PREFIX)/qingcloud-base-ext:$(CCP_IMAGE_TAG) \
+		-t $(CCP_IMAGE_PREFIX)/radondb-base-ext:$(CCP_IMAGE_TAG) \
 		--build-arg BASEOS=$(CCP_BASEOS) \
 		--build-arg BASEVER=$(CCP_VERSION) \
 		--build-arg PACKAGER=$(PACKAGER) \
@@ -151,7 +151,7 @@ ccbase-ext-image-build: ccbase-image $(CCPROOT)/build/base-ext/Dockerfile
 ccbase-ext-image-buildah: ccbase-ext-image-build ;
 # only push to docker daemon if variable IMG_PUSH_TO_DOCKER_DAEMON is set to "true"
 ifeq ("$(IMG_PUSH_TO_DOCKER_DAEMON)", "true")
-	sudo --preserve-env buildah push $(CCP_IMAGE_PREFIX)/qingcloud-base-ext:$(CCP_IMAGE_TAG) docker-daemon:$(CCP_IMAGE_PREFIX)/qingcloud-base-ext:$(CCP_IMAGE_TAG)
+	sudo --preserve-env buildah push $(CCP_IMAGE_PREFIX)/radondb-base-ext:$(CCP_IMAGE_TAG) docker-daemon:$(CCP_IMAGE_PREFIX)/radondb-base-ext:$(CCP_IMAGE_TAG)
 endif
 
 ccbase-ext-image-docker: ccbase-ext-image-build
@@ -161,7 +161,7 @@ ccbase-ext-image-docker: ccbase-ext-image-build
 postgres-pgimg-build: ccbase-image $(CCPROOT)/build/postgres/Dockerfile
 	$(IMGCMDSTEM) \
 		-f $(CCPROOT)/build/postgres/Dockerfile \
-		-t $(CCP_IMAGE_PREFIX)/qingcloud-postgres:$(CCP_IMAGE_TAG) \
+		-t $(CCP_IMAGE_PREFIX)/radondb-postgres:$(CCP_IMAGE_TAG) \
 		--build-arg BASEOS=$(CCP_BASEOS) \
 		--build-arg BASEVER=$(CCP_VERSION) \
 		--build-arg PG_FULL=$(CCP_PG_FULLVERSION) \
@@ -171,13 +171,13 @@ postgres-pgimg-build: ccbase-image $(CCPROOT)/build/postgres/Dockerfile
 		--build-arg BACKREST_VER=$(CCP_BACKREST_VERSION) \
 		--build-arg DFSET=$(DFSET) \
 		--build-arg PACKAGER=$(PACKAGER) \
-		--build-arg BASE_IMAGE_NAME=qingcloud-base \
+		--build-arg BASE_IMAGE_NAME=radondb-base \
 		$(CCPROOT)
 
 postgres-pgimg-buildah: postgres-pgimg-build ;
 # only push to docker daemon if variable IMG_PUSH_TO_DOCKER_DAEMON is set to "true"
 ifeq ("$(IMG_PUSH_TO_DOCKER_DAEMON)", "true")
-	sudo --preserve-env buildah push $(CCP_IMAGE_PREFIX)/qingcloud-postgres:$(CCP_IMAGE_TAG) docker-daemon:$(CCP_IMAGE_PREFIX)/qingcloud-postgres:$(CCP_IMAGE_TAG)
+	sudo --preserve-env buildah push $(CCP_IMAGE_PREFIX)/radondb-postgres:$(CCP_IMAGE_TAG) docker-daemon:$(CCP_IMAGE_PREFIX)/radondb-postgres:$(CCP_IMAGE_TAG)
 endif
 
 postgres-pgimg-docker: postgres-pgimg-build
@@ -187,7 +187,7 @@ postgres-pgimg-docker: postgres-pgimg-build
 postgres-gis-base-pgimg-build: ccbase-ext-image-build $(CCPROOT)/build/postgres/Dockerfile
 	$(IMGCMDSTEM) \
 		-f $(CCPROOT)/build/postgres/Dockerfile \
-		-t $(CCP_IMAGE_PREFIX)/qingcloud-postgres-gis-base:$(CCP_IMAGE_TAG) \
+		-t $(CCP_IMAGE_PREFIX)/radondb-postgres-gis-base:$(CCP_IMAGE_TAG) \
 		--build-arg BASEOS=$(CCP_BASEOS) \
 		--build-arg BASEVER=$(CCP_VERSION) \
 		--build-arg PG_FULL=$(CCP_PG_FULLVERSION) \
@@ -197,13 +197,13 @@ postgres-gis-base-pgimg-build: ccbase-ext-image-build $(CCPROOT)/build/postgres/
 		--build-arg BACKREST_VER=$(CCP_BACKREST_VERSION) \
 		--build-arg DFSET=$(DFSET) \
 		--build-arg PACKAGER=$(PACKAGER) \
-		--build-arg BASE_IMAGE_NAME=qingcloud-base-ext \
+		--build-arg BASE_IMAGE_NAME=radondb-base-ext \
 		$(CCPROOT)
 
 postgres-gis-base-pgimg-buildah: postgres-gis-base-pgimg-build ;
 # only push to docker daemon if variable IMG_PUSH_TO_DOCKER_DAEMON is set to "true"
 ifeq ("$(IMG_PUSH_TO_DOCKER_DAEMON)", "true")
-	sudo --preserve-env buildah push $(CCP_IMAGE_PREFIX)/qingcloud-postgres-gis-base:$(CCP_IMAGE_TAG) docker-daemon:$(CCP_IMAGE_PREFIX)/qingcloud-postgres-gis-base:$(CCP_IMAGE_TAG)
+	sudo --preserve-env buildah push $(CCP_IMAGE_PREFIX)/radondb-postgres-gis-base:$(CCP_IMAGE_TAG) docker-daemon:$(CCP_IMAGE_PREFIX)/radondb-postgres-gis-base:$(CCP_IMAGE_TAG)
 endif
 
 # ----- Special case pg-based image (postgres-gis) -----
@@ -211,7 +211,7 @@ endif
 postgres-gis-pgimg-build: postgres-gis-base-pgimg-build $(CCPROOT)/build/postgres-gis/Dockerfile
 	$(IMGCMDSTEM) \
 		-f $(CCPROOT)/build/postgres-gis/Dockerfile \
-		-t $(CCP_IMAGE_PREFIX)/qingcloud-postgres-gis:$(CCP_POSTGIS_IMAGE_TAG) \
+		-t $(CCP_IMAGE_PREFIX)/radondb-postgres-gis:$(CCP_POSTGIS_IMAGE_TAG) \
 		--build-arg BASEOS=$(CCP_BASEOS) \
 		--build-arg BASEVER=$(CCP_VERSION) \
 		--build-arg PG_FULL=$(CCP_PG_FULLVERSION) \
@@ -225,7 +225,7 @@ postgres-gis-pgimg-build: postgres-gis-base-pgimg-build $(CCPROOT)/build/postgre
 postgres-gis-pgimg-buildah: postgres-gis-pgimg-build ;
 # only push to docker daemon if variable IMG_PUSH_TO_DOCKER_DAEMON is set to "true"
 ifeq ("$(IMG_PUSH_TO_DOCKER_DAEMON)", "true")
-	sudo --preserve-env buildah push $(CCP_IMAGE_PREFIX)/qingcloud-postgres-gis:$(CCP_POSTGIS_IMAGE_TAG) docker-daemon:$(CCP_IMAGE_PREFIX)/qingcloud-postgres-gis:$(CCP_POSTGIS_IMAGE_TAG)
+	sudo --preserve-env buildah push $(CCP_IMAGE_PREFIX)/radondb-postgres-gis:$(CCP_POSTGIS_IMAGE_TAG) docker-daemon:$(CCP_IMAGE_PREFIX)/radondb-postgres-gis:$(CCP_POSTGIS_IMAGE_TAG)
 endif
 
 postgres-gis-pgimg-docker: postgres-gis-pgimg-build
@@ -235,7 +235,7 @@ postgres-gis-pgimg-docker: postgres-gis-pgimg-build
 postgres-ha-pgimg-build: postgres-pgimg-build $(CCPROOT)/build/postgres-ha/Dockerfile
 	$(IMGCMDSTEM) \
 		-f $(CCPROOT)/build/postgres-ha/Dockerfile \
-		-t $(CCP_IMAGE_PREFIX)/qingcloud-postgres-ha:$(CCP_IMAGE_TAG) \
+		-t $(CCP_IMAGE_PREFIX)/radondb-postgres-ha:$(CCP_IMAGE_TAG) \
 		--build-arg BASEOS=$(CCP_BASEOS) \
 		--build-arg BASEVER=$(CCP_VERSION) \
 		--build-arg PG_FULL=$(CCP_PG_FULLVERSION) \
@@ -249,7 +249,7 @@ postgres-ha-pgimg-build: postgres-pgimg-build $(CCPROOT)/build/postgres-ha/Docke
 postgres-ha-pgimg-buildah: postgres-ha-pgimg-build ;
 # only push to docker daemon if variable IMG_PUSH_TO_DOCKER_DAEMON is set to "true"
 ifeq ("$(IMG_PUSH_TO_DOCKER_DAEMON)", "true")
-	sudo --preserve-env buildah push $(CCP_IMAGE_PREFIX)/qingcloud-postgres-ha:$(CCP_IMAGE_TAG) docker-daemon:$(CCP_IMAGE_PREFIX)/qingcloud-postgres-ha:$(CCP_IMAGE_TAG)
+	sudo --preserve-env buildah push $(CCP_IMAGE_PREFIX)/radondb-postgres-ha:$(CCP_IMAGE_TAG) docker-daemon:$(CCP_IMAGE_PREFIX)/radondb-postgres-ha:$(CCP_IMAGE_TAG)
 endif
 
 postgres-ha-pgimg-docker: postgres-ha-pgimg-build
@@ -259,7 +259,7 @@ postgres-ha-pgimg-docker: postgres-ha-pgimg-build
 postgres-gis-ha-pgimg-build: postgres-gis-pgimg-build $(CCPROOT)/build/postgres-gis-ha/Dockerfile
 	$(IMGCMDSTEM) \
 		-f $(CCPROOT)/build/postgres-gis-ha/Dockerfile \
-		-t $(CCP_IMAGE_PREFIX)/qingcloud-postgres-gis-ha:$(CCP_POSTGIS_IMAGE_TAG) \
+		-t $(CCP_IMAGE_PREFIX)/radondb-postgres-gis-ha:$(CCP_POSTGIS_IMAGE_TAG) \
 		--build-arg BASEOS=$(CCP_BASEOS) \
 		--build-arg BASEVER=$(CCP_VERSION) \
 		--build-arg PG_FULL=$(CCP_PG_FULLVERSION) \
@@ -274,7 +274,7 @@ postgres-gis-ha-pgimg-build: postgres-gis-pgimg-build $(CCPROOT)/build/postgres-
 postgres-gis-ha-pgimg-buildah: postgres-gis-ha-pgimg-build ;
 # only push to docker daemon if variable IMG_PUSH_TO_DOCKER_DAEMON is set to "true"
 ifeq ("$(IMG_PUSH_TO_DOCKER_DAEMON)", "true")
-	sudo --preserve-env buildah push $(CCP_IMAGE_PREFIX)/qingcloud-postgres-gis-ha:$(CCP_POSTGIS_IMAGE_TAG) docker-daemon:$(CCP_IMAGE_PREFIX)/qingcloud-postgres-gis-ha:$(CCP_POSTGIS_IMAGE_TAG)
+	sudo --preserve-env buildah push $(CCP_IMAGE_PREFIX)/radondb-postgres-gis-ha:$(CCP_POSTGIS_IMAGE_TAG) docker-daemon:$(CCP_IMAGE_PREFIX)/radondb-postgres-gis-ha:$(CCP_POSTGIS_IMAGE_TAG)
 endif
 
 postgres-gis-ha-pgimg-docker: postgres-gis-ha-pgimg-build
@@ -290,7 +290,7 @@ build-pgbackrest:
 pgbackrest-pgimg-build: ccbase-image build-pgbackrest $(CCPROOT)/build/pgbackrest/Dockerfile
 	$(IMGCMDSTEM) \
 		-f $(CCPROOT)/build/pgbackrest/Dockerfile \
-		-t $(CCP_IMAGE_PREFIX)/qingcloud-pgbackrest:$(CCP_IMAGE_TAG) \
+		-t $(CCP_IMAGE_PREFIX)/radondb-pgbackrest:$(CCP_IMAGE_TAG) \
 		--build-arg BASEOS=$(CCP_BASEOS) \
 		--build-arg BASEVER=$(CCP_VERSION) \
 		--build-arg PG_FULL=$(CCP_PG_FULLVERSION) \
@@ -303,7 +303,7 @@ pgbackrest-pgimg-build: ccbase-image build-pgbackrest $(CCPROOT)/build/pgbackres
 pgbackrest-pgimg-buildah: pgbackrest-pgimg-build ;
 # only push to docker daemon if variable IMG_PUSH_TO_DOCKER_DAEMON is set to "true"
 ifeq ("$(IMG_PUSH_TO_DOCKER_DAEMON)", "true")
-	sudo --preserve-env buildah push $(CCP_IMAGE_PREFIX)/qingcloud-pgbackrest:$(CCP_IMAGE_TAG) docker-daemon:$(CCP_IMAGE_PREFIX)/qingcloud-pgbackrest:$(CCP_IMAGE_TAG)
+	sudo --preserve-env buildah push $(CCP_IMAGE_PREFIX)/radondb-pgbackrest:$(CCP_IMAGE_TAG) docker-daemon:$(CCP_IMAGE_PREFIX)/radondb-pgbackrest:$(CCP_IMAGE_TAG)
 endif
 
 pgbackrest-pgimg-docker: pgbackrest-pgimg-build
@@ -315,7 +315,7 @@ pgbackrest-pgimg-docker: pgbackrest-pgimg-build
 pgbackrest-repo-pgimg-build: ccbase-image build-pgbackrest pgbackrest $(CCPROOT)/build/pgbackrest-repo/Dockerfile
 	$(IMGCMDSTEM) \
 		-f $(CCPROOT)/build/pgbackrest-repo/Dockerfile \
-		-t $(CCP_IMAGE_PREFIX)/qingcloud-pgbackrest-repo:$(CCP_IMAGE_TAG) \
+		-t $(CCP_IMAGE_PREFIX)/radondb-pgbackrest-repo:$(CCP_IMAGE_TAG) \
 		--build-arg BASEOS=$(CCP_BASEOS) \
 		--build-arg BASEVER=$(CCP_VERSION) \
 		--build-arg PG_FULL=$(CCP_PG_FULLVERSION) \
@@ -325,7 +325,7 @@ pgbackrest-repo-pgimg-build: ccbase-image build-pgbackrest pgbackrest $(CCPROOT)
 pgbackrest-repo-pgimg-buildah: pgbackrest-repo-pgimg-build ;
 # only push to docker daemon if variable IMG_PUSH_TO_DOCKER_DAEMON is set to "true"
 ifeq ("$(IMG_PUSH_TO_DOCKER_DAEMON)", "true")
-	sudo --preserve-env buildah push $(CCP_IMAGE_PREFIX)/qingcloud-pgbackrest-repo:$(CCP_IMAGE_TAG) docker-daemon:$(CCP_IMAGE_PREFIX)/qingcloud-pgbackrest-repo:$(CCP_IMAGE_TAG)
+	sudo --preserve-env buildah push $(CCP_IMAGE_PREFIX)/radondb-pgbackrest-repo:$(CCP_IMAGE_TAG) docker-daemon:$(CCP_IMAGE_PREFIX)/radondb-pgbackrest-repo:$(CCP_IMAGE_TAG)
 endif
 
 pgbackrest-repo-pgimg-docker: pgbackrest-repo-pgimg-build
@@ -334,7 +334,7 @@ pgbackrest-repo-pgimg-docker: pgbackrest-repo-pgimg-build
 %-img-build: ccbase-image $(CCPROOT)/build/%/Dockerfile
 	$(IMGCMDSTEM) \
 		-f $(CCPROOT)/build/$*/Dockerfile \
-		-t $(CCP_IMAGE_PREFIX)/qingcloud-$*:$(CCP_IMAGE_TAG) \
+		-t $(CCP_IMAGE_PREFIX)/radondb-$*:$(CCP_IMAGE_TAG) \
 		--build-arg BASEOS=$(CCP_BASEOS) \
 		--build-arg BASEVER=$(CCP_VERSION) \
 		--build-arg PG_FULL=$(CCP_PG_FULLVERSION) \
@@ -347,7 +347,7 @@ pgbackrest-repo-pgimg-docker: pgbackrest-repo-pgimg-build
 %-img-buildah: %-img-build ;
 # only push to docker daemon if variable IMG_PUSH_TO_DOCKER_DAEMON is set to "true"
 ifeq ("$(IMG_PUSH_TO_DOCKER_DAEMON)", "true")
-	sudo --preserve-env buildah push $(CCP_IMAGE_PREFIX)/qingcloud-$*:$(CCP_IMAGE_TAG) docker-daemon:$(CCP_IMAGE_PREFIX)/qingcloud-$*:$(CCP_IMAGE_TAG)
+	sudo --preserve-env buildah push $(CCP_IMAGE_PREFIX)/radondb-$*:$(CCP_IMAGE_TAG) docker-daemon:$(CCP_IMAGE_PREFIX)/radondb-$*:$(CCP_IMAGE_TAG)
 endif
 
 %-img-docker: %-img-build ;
@@ -375,8 +375,8 @@ license:
 push: push-gis $(images:%=push-%) ;
 
 push-gis:
-	$(IMG_PUSHER_PULLER) push $(CCP_IMAGE_PREFIX)/qingcloud-postgres-gis:$(CCP_POSTGIS_IMAGE_TAG)
-	$(IMG_PUSHER_PULLER) push $(CCP_IMAGE_PREFIX)/qingcloud-postgres-gis-ha:$(CCP_POSTGIS_IMAGE_TAG)
+	$(IMG_PUSHER_PULLER) push $(CCP_IMAGE_PREFIX)/radondb-postgres-gis:$(CCP_POSTGIS_IMAGE_TAG)
+	$(IMG_PUSHER_PULLER) push $(CCP_IMAGE_PREFIX)/radondb-postgres-gis-ha:$(CCP_POSTGIS_IMAGE_TAG)
 
 push-%:
 	$(IMG_PUSHER_PULLER) push $(CCP_IMAGE_PREFIX)/$*:$(CCP_IMAGE_TAG)

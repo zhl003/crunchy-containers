@@ -17,8 +17,8 @@ ARG PG_MAJOR
 ARG PG_LBL
 
 RUN ${PACKAGER} -y install \
-	--disablerepo=qingcloudpg* \
-	--enablerepo="qingcloudpg${PG_LBL}" \
+	--disablerepo=radondbpg* \
+	--enablerepo="radondbpg${PG_LBL}" \
 	postgresql${PG_LBL} \
  && ${PACKAGER} -y clean all
 
@@ -37,7 +37,7 @@ RUN if [ "$DFSET" = "centos" ] ; then \
         	pgaudit${PG_MAJOR//.}_set_user \
         	pg_partman_${PG_MAJOR//.} \
         	pg_cron_${PG_MAJOR//.} \
-        	qingcloud-backrest-${BACKREST_VER} \
+        	radondb-backrest-${BACKREST_VER} \
         	postgresql${PG_MAJOR//.}-contrib \
         	postgresql${PG_MAJOR//.}-server \
         	postgresql${PG_MAJOR//.}-plpython* \
@@ -65,7 +65,7 @@ else \
 		pgaudit${PG_MAJOR//.}_set_user \
 		pg_partman_${PG_MAJOR//.} \
 		pg_cron_${PG_MAJOR//.} \
-		qingcloud-backrest-${BACKREST_VER} \
+		radondb-backrest-${BACKREST_VER} \
 		postgresql${PG_MAJOR//.}-contrib \
 		postgresql${PG_MAJOR//.}-server \
 		postgresql${PG_MAJOR//.}-plpython* \
@@ -91,28 +91,28 @@ fi
 LABEL name="postgres" \
 	summary="PostgreSQL ${PG_FULL}" \
 	description="Allows multiple deployment methods for PostgreSQL, including basic single primary, streaming replication with synchronous and asynchronous replicas. Includes utilities and tools for Auditing (pgaudit), statement tracking,  Backup/Restore (pgbackrest, pg_basebackup, pgdump, pgrestore) and Benchmarking (pgbench)." \
-	io.k8s.description="Qingcloud PostgreSQL is the trusted open source distribution of PostgreSQL" \
-	io.k8s.display-name="Qingcloud PostgreSQL" \
-	io.openshift.tags="postgresql,postgres,sql,nosql,database,qingcloud" \
+	io.k8s.description="Radondb PostgreSQL is the trusted open source distribution of PostgreSQL" \
+	io.k8s.display-name="Radondb PostgreSQL" \
+	io.openshift.tags="postgresql,postgres,sql,nosql,database,radondb" \
 	postgresql.version.major="${PG_MAJOR}" \
 	postgresql.version="${PG_FULL}"
 
-# set up qingcloud directory
-RUN mkdir -p /opt/qingcloud/bin /opt/qingcloud/conf /pgdata /pgwal /pgconf /recover /backrestrepo
+# set up radondb directory
+RUN mkdir -p /opt/radondb/bin /opt/radondb/conf /pgdata /pgwal /pgconf /recover /backrestrepo
 
-RUN chown -R postgres:postgres /opt/qingcloud /var/lib/pgsql \
+RUN chown -R postgres:postgres /opt/radondb /var/lib/pgsql \
 		/pgdata /pgwal /pgconf /recover /backrestrepo &&  \
-	chmod -R g=u /opt/qingcloud /var/lib/pgsql \
+	chmod -R g=u /opt/radondb /var/lib/pgsql \
 		/pgdata /pgwal /pgconf /recover /backrestrepo
 
 # open up the postgres port
 EXPOSE 5432
 
-ADD bin/postgres_common /opt/qingcloud/bin
-ADD bin/common /opt/qingcloud/bin
-ADD conf/postgres_common /opt/qingcloud/conf
-ADD tools/pgmonitor/postgres_exporter/common /opt/qingcloud/bin/modules/pgexporter
-ADD tools/pgmonitor/postgres_exporter/linux /opt/qingcloud/bin/modules/pgexporter
+ADD bin/postgres_common /opt/radondb/bin
+ADD bin/common /opt/radondb/bin
+ADD conf/postgres_common /opt/radondb/conf
+ADD tools/pgmonitor/postgres_exporter/common /opt/radondb/bin/modules/pgexporter
+ADD tools/pgmonitor/postgres_exporter/linux /opt/radondb/bin/modules/pgexporter
 
 RUN mkdir /.ssh && chown 26:0 /.ssh && chmod g+rwx /.ssh && rm -f /run/nologin
 
@@ -128,8 +128,8 @@ VOLUME ["/sshd", "/pgconf", "/pgdata", "/pgwal", "/recover", "/backrestrepo"]
 # Defines a unique directory name that will be utilized by the nss_wrapper in the UID script
 ENV NSS_WRAPPER_SUBDIR="postgres"
 
-ENTRYPOINT ["/opt/qingcloud/bin/uid_postgres.sh"]
+ENTRYPOINT ["/opt/radondb/bin/uid_postgres.sh"]
 
 USER 26
 
-CMD ["/opt/qingcloud/bin/start.sh"]
+CMD ["/opt/radondb/bin/start.sh"]

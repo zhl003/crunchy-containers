@@ -1,7 +1,7 @@
 #!/bin/bash
 
-QiNGCLOUD_DIR=${QiNGCLOUD_DIR:-'/opt/qingcloud'}
-source "${QiNGCLOUD_DIR}/bin/common_lib.sh"
+RADONDB_DIR=${RADONDB_DIR:-'/opt/radondb'}
+source "${RADONDB_DIR}/bin/common_lib.sh"
 
 # Set default pgbackrest env vars if not explicity provided
 set_pgbackrest_env_vars() {
@@ -10,14 +10,14 @@ set_pgbackrest_env_vars() {
     then
         patroni_cluster_name="${PATRONI_SCOPE}"
     else
-        patroni_cluster_name=$("${QiNGCLOUD_DIR}/bin/yq" r /tmp/postgres-ha-bootstrap.yaml scope)
+        patroni_cluster_name=$("${RADONDB_DIR}/bin/yq" r /tmp/postgres-ha-bootstrap.yaml scope)
     fi
 
     if [[ -v PATRONI_POSTGRESQL_DATA_DIR ]]
     then
         pg_data_dir="${PATRONI_POSTGRESQL_DATA_DIR}"
     else
-        pg_data_dir=$("${QiNGCLOUD_DIR}/bin/yq" r /tmp/postgres-ha-bootstrap.yaml postgresql.data_dir)
+        pg_data_dir=$("${RADONDB_DIR}/bin/yq" r /tmp/postgres-ha-bootstrap.yaml postgresql.data_dir)
     fi
 
     if [[ ! -v PGBACKREST_STANZA ]]

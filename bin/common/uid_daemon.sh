@@ -1,6 +1,6 @@
 #!/bin/sh
 
-# Copyright 2018 - 2021 Qingcloud Data Solutions, Inc.
+# Copyright 2018 - 2021 Crunchy Data Solutions, Inc.
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
 # You may obtain a copy of the License at
@@ -13,11 +13,11 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-QiNGCLOUD_DIR=${QiNGCLOUD_DIR:-'/opt/qingcloud'}
+RADONDB_DIR=${RADONDB_DIR:-'/opt/radondb'}
     
-export QiNGCLOUD_NSS_USERNAME="${USER_NAME:-default}"
-export QiNGCLOUD_NSS_USER_DESC="${USER_NAME:-default} user"
+export RADONDB_NSS_USERNAME="${USER_NAME:-default}"
+export RADONDB_NSS_USER_DESC="${USER_NAME:-default} user"
     
-source "${QiNGCLOUD_DIR}/bin/nss_wrapper.sh"
+source "${RADONDB_DIR}/bin/nss_wrapper.sh"
 
 exec "$@"

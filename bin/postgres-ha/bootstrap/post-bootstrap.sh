@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# Copyright 2019 - 2021 Qingcloud Data Solutions, Inc.
+# Copyright 2019 - 2021 Crunchy Data Solutions, Inc.
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
 # You may obtain a copy of the License at
@@ -15,8 +15,8 @@
 
 export PGHOST="/tmp"
 
-QiNGCLOUD_DIR=${QiNGCLOUD_DIR:-'/opt/qingcloud'}
-source "${QiNGCLOUD_DIR}/bin/common_lib.sh"
+RADONDB_DIR=${RADONDB_DIR:-'/opt/radondb'}
+source "${RADONDB_DIR}/bin/common_lib.sh"
 enable_debugging
 
 echo_info "postgres-ha post-bootstrap starting"
@@ -30,7 +30,7 @@ then
         setup_file="/pgconf/setup.sql"
     else
         echo_info "Using default setup.sql"
-        setup_file="${QiNGCLOUD_DIR}/bin/postgres-ha/sql/setup.sql"
+        setup_file="${RADONDB_DIR}/bin/postgres-ha/sql/setup.sql"
     fi
 else
     if [[ -f "/pgconf/post-existing-init.sql" ]]
@@ -39,7 +39,7 @@ else
         setup_file="/pgconf/post-existing-init.sql"
     else
         echo_info "Using default post-existing-init.sql"
-        setup_file="${QiNGCLOUD_DIR}/bin/postgres-ha/sql/post-existing-init.sql"
+        setup_file="${RADONDB_DIR}/bin/postgres-ha/sql/post-existing-init.sql"
     fi
 fi
 

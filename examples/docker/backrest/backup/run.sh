@@ -20,4 +20,4 @@ docker run \
     --env PGBACKREST=true \
     --name=backrest \
     --hostname=backrest \
-    --detach ${CCP_IMAGE_PREFIX?}/qingcloud-postgres:${CCP_IMAGE_TAG?}
+    --detach ${CCP_IMAGE_PREFIX?}/radondb-postgres:${CCP_IMAGE_TAG?}

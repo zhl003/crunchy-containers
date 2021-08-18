@@ -1,4 +1,4 @@
-Qingcloud Data Small Template Helm Example
+Radondb Data Small Template Helm Example
 =======
 
 [PostgreSQL](https://postgresql.org) is a powerful, open source object-relational database system. It has more than 15 years of active development and a proven architecture that has earned it a strong reputation for reliability, data integrity, and correctness.
@@ -14,7 +14,7 @@ $ helm install template-small --name template-small
 Introduction
 ------------
 
-This is an example of running the Qingcloud PostgreSQL containers using the Helm project! More examples of the Qingcloud Containers for PostgreSQL can be found at the [GitHub repository](https://github.com/QingcloudData/qingcloud-containers).
+This is an example of running the Radondb PostgreSQL containers using the Helm project! More examples of the Radondb Containers for PostgreSQL can be found at the [GitHub repository](https://github.com/RadondbData/radondb-containers).
 
 There are 3 different profiles of PostgreSQL deployment configurations - template-small, template-medium, and template-large. These templates are representative of what can be built for a typical user wanting to implement a self-service database-as-a-service.
 
@@ -89,8 +89,8 @@ $ helm install template-small --name template-small \
 | `.credentials.root`            | Password for the root user        | `password`                                                      |
 | `.credentials.user`            | Password for the standard user   | `password`                                                      |
 | `.serviceType`      | The type of service      | `ClusterIP`               
-| `.image.repository` | The repository on DockerHub where the images are found.    | `qingcloud`                                           |
-| `.image.container` | The container to be pulled from the repository.    | `qingcloud-postgres`                                                    |
+| `.image.repository` | The repository on DockerHub where the images are found.    | `radondb`                                           |
+| `.image.container` | The container to be pulled from the repository.    | `radondb-postgres`                                                    |
 | `.image.tag` | The image tag to be used.    | `centos8-13.3-4.7.1`                                                    |
 | `.resources.cpu` | Defines a limit for CPU    | `200m`                                                    |
 | `.resources.memory` | Defines a limit for memory    | `512Mi`                                                    |
@@ -105,8 +105,8 @@ $ helm install template-small --name template-small  \
 Legal Notices
 -------------
 
-Copyright 2017 - 2021 Qingcloud Data Solutions, Inc.
+Copyright 2017 - 2021 Crunchy Data Solutions, Inc.
 
-QiNGCLOUD DATA SOLUTIONS, INC. PROVIDES THIS GUIDE "AS IS" WITHOUT WARRANTY OF ANY KIND, EITHER EXPRESS OR IMPLIED, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF NON INFRINGEMENT, MERCHANTABILITY OR FITNESS FOR A PARTICULAR PURPOSE.
+Crunchy Data Solutions, INC. PROVIDES THIS GUIDE "AS IS" WITHOUT WARRANTY OF ANY KIND, EITHER EXPRESS OR IMPLIED, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF NON INFRINGEMENT, MERCHANTABILITY OR FITNESS FOR A PARTICULAR PURPOSE.
 
-Qingcloud, Qingcloud Data Solutions, Inc. and the Qingcloud Hippo Logo are trademarks of Qingcloud Data Solutions, Inc.
+Radondb, Crunchy Data Solutions, Inc. and the Radondb Hippo Logo are trademarks of Crunchy Data Solutions, Inc.

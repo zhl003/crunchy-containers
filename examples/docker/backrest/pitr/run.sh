@@ -29,4 +29,4 @@ docker run \
     --env PGBACKREST_LOG_PATH=/tmp \
     --name=backrest-pitr-restore \
     --hostname=backrest-pitr-restore \
-    --detach ${CCP_IMAGE_PREFIX?}/qingcloud-backrest-restore:${CCP_IMAGE_TAG?}
+    --detach ${CCP_IMAGE_PREFIX?}/radondb-backrest-restore:${CCP_IMAGE_TAG?}

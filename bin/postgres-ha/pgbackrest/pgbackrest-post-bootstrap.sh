@@ -1,7 +1,7 @@
 #!/bin/bash
 
-QiNGCLOUD_DIR=${QiNGCLOUD_DIR:-'/opt/qingcloud'}
-source "${QiNGCLOUD_DIR}/bin/common_lib.sh"
+RADONDB_DIR=${RADONDB_DIR:-'/opt/radondb'}
+source "${RADONDB_DIR}/bin/common_lib.sh"
 
 # Create default pgbackrest directories if they don't already exist
 create_pgbackrest_dirs() {
@@ -75,7 +75,7 @@ create_initial_backup() {
 }
 
 # First load pgBackRest env vars set during pre-bootstrap
-source "${QiNGCLOUD_DIR}/bin/postgres-ha/pgbackrest/pgbackrest-set-env.sh"
+source "${RADONDB_DIR}/bin/postgres-ha/pgbackrest/pgbackrest-set-env.sh"
 
 create_pgbackrest_dirs
 

@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# Copyright 2016 - 2021 Qingcloud Data Solutions, Inc.
+# Copyright 2016 - 2021 Crunchy Data Solutions, Inc.
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
 # You may obtain a copy of the License at
@@ -45,7 +45,7 @@ sudo docker run \
 	-e PG_DATABASE=userdb \
 	--name=$CONTAINER_NAME \
 	--hostname=$CONTAINER_NAME \
-	-d $CCP_IMAGE_PREFIX/qingcloud-postgres:$CCP_IMAGE_TAG
+	-d $CCP_IMAGE_PREFIX/radondb-postgres:$CCP_IMAGE_TAG
 
 echo "Sleeping for 20s to allow time for the ${CONTAINER_NAME} container to get into a ready state."
 sleep 20

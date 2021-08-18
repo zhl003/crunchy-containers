@@ -3,8 +3,8 @@ ARG BASEVER
 ARG PG_FULL
 ARG PREFIX
 
-FROM ${PREFIX}/qingcloud-postgres:${BASEOS}-${PG_FULL}-${BASEVER}
-# qingcloud-postgres image runs as USER 26, switch back to install packages
+FROM ${PREFIX}/radondb-postgres:${BASEOS}-${PG_FULL}-${BASEVER}
+# radondb-postgres image runs as USER 26, switch back to install packages
 USER 0
 
 # ===== Early lines ordered for leveraging cache, reorder carefully =====
@@ -24,9 +24,9 @@ ARG PATRONI_VER
 LABEL name="postgres-ha" \
 	summary="PostgreSQL ${PG_FULL} with Patroni" \
 	description="Used for the deployment and management of highly-available PostgreSQL clusters using Patroni." \
-	io.k8s.description="Qingcloud PostgreSQL optimized for high-availability (HA)" \
-	io.k8s.display-name="Qingcloud PostgreSQL - HA Optimized" \
-	io.openshift.tags="postgresql,postgres,postgis,sql,nosql,database,ha,qingcloud"
+	io.k8s.description="Radondb PostgreSQL optimized for high-availability (HA)" \
+	io.k8s.display-name="Radondb PostgreSQL - HA Optimized" \
+	io.openshift.tags="postgresql,postgres,postgis,sql,nosql,database,ha,radondb"
 
 RUN if [ "$DFSET" = "centos" ] ; then \
 	${PACKAGER} -y install \
@@ -83,17 +83,17 @@ RUN chown -R postgres:postgres /tablespaces && \
 # open up the postgres port
 EXPOSE 5432
 
-ADD bin/postgres-ha /opt/qingcloud/bin/postgres-ha
-ADD conf/postgres-ha /opt/qingcloud/conf/postgres-ha
+ADD bin/postgres-ha /opt/radondb/bin/postgres-ha
+ADD conf/postgres-ha /opt/radondb/conf/postgres-ha
 
-ADD yq /opt/qingcloud/bin
-RUN chmod +x /opt/qingcloud/bin/yq
+ADD yq /opt/radondb/bin
+RUN chmod +x /opt/radondb/bin/yq
 
 # The VOLUME directive must appear after all RUN directives to ensure the proper
 # volume permissions are applied when building the image
 VOLUME ["/pgdata", "/pgwal", "/pgconf", "/backrestrepo", "/sshd"]
 
-ENTRYPOINT ["/opt/qingcloud/bin/postgres-ha/bootstrap-postgres-ha.sh"]
+ENTRYPOINT ["/opt/radondb/bin/postgres-ha/bootstrap-postgres-ha.sh"]
 
 USER 26
 

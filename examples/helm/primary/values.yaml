@@ -8,8 +8,8 @@ credentials:
   user: password
 serviceType: ClusterIP
 image:
-  repository: qingcloud
-  container: qingcloud-postgres
+  repository: radondb
+  container: radondb-postgres
   tag: centos8-13.3-4.7.1
 resources:
   cpu: 200m

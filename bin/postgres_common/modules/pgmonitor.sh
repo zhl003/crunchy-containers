@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# Copyright 2019 - 2021 Qingcloud Data Solutions, Inc.
+# Copyright 2019 - 2021 Crunchy Data Solutions, Inc.
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
 # You may obtain a copy of the License at
@@ -13,15 +13,15 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-QiNGCLOUD_DIR=${QiNGCLOUD_DIR:-'/opt/qingcloud'}
+RADONDB_DIR=${RADONDB_DIR:-'/opt/radondb'}
 if [[ -v PGMONITOR_PASSWORD ]]
 then
     echo_info "PGMONITOR_PASSWORD detected.  Enabling pgMonitor support."
 
-    source "${QiNGCLOUD_DIR}/bin/common_lib.sh"
+    source "${RADONDB_DIR}/bin/common_lib.sh"
     export PGHOST="/tmp"
 
-    source "${QiNGCLOUD_DIR}/bin/exporter/install.sh"
+    source "${RADONDB_DIR}/bin/exporter/install.sh"
 
     psql -U postgres --port="${PG_PRIMARY_PORT}" -d postgres \
         -c "SET log_statement TO 'none'; ALTER ROLE ccp_monitoring PASSWORD '${PGMONITOR_PASSWORD?}'" \

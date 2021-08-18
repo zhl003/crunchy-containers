@@ -1,4 +1,4 @@
-# Qingcloud Container Env
+# Radondb Container Env
 TEMP_BUFFERS=9MB
 PGHOST=/tmp
 MAX_CONNECTIONS=100

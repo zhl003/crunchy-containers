@@ -6,20 +6,20 @@ REGISTRY=docker.io/radondb
 VERSION=${CCP_IMAGE_TAG?}
 GIS_VERSION=${CCP_POSTGIS_IMAGE_TAG?}
 IMAGES=(
-    qingcloud-pgbackrest
-    qingcloud-pgbackrest-repo
-    qingcloud-pgadmin4
-    qingcloud-pgbadger
-    qingcloud-pgbouncer
-    qingcloud-pgpool
-    qingcloud-postgres
-    qingcloud-upgrade
-    qingcloud-postgres-ha
+    radondb-pgbackrest
+    radondb-pgbackrest-repo
+    radondb-pgadmin4
+    radondb-pgbadger
+    radondb-pgbouncer
+    radondb-pgpool
+    radondb-postgres
+    radondb-upgrade
+    radondb-postgres-ha
 )
 
 GIS_IMAGES=(
-    qingcloud-postgres-gis
-    qingcloud-postgres-gis-ha
+    radondb-postgres-gis
+    radondb-postgres-gis-ha
 )
 
 function echo_green() {

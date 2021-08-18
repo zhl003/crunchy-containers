@@ -21,7 +21,7 @@
                 "containers": [
                     {
                         "name": "backrest-restore",
-                        "image": "$CCP_IMAGE_PREFIX/qingcloud-backrest-restore:$CCP_IMAGE_TAG",
+                        "image": "$CCP_IMAGE_PREFIX/radondb-backrest-restore:$CCP_IMAGE_TAG",
                         "env": [
                             {
                                 "name": "PGBACKREST_STANZA",

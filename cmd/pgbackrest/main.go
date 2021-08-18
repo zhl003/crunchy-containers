@@ -1,7 +1,7 @@
 package main
 
 /*
- Copyright 2018 - 2021 Qingcloud Data Solutions, Inc.
+ Copyright 2018 - 2021 Crunchy Data Solutions, Inc.
  Licensed under the Apache License, Version 2.0 (the "License");
  you may not use this file except in compliance with the License.
  You may obtain a copy of the License at
@@ -68,9 +68,9 @@ type config struct {
 
 func main() {
 	ctx := context.Background()
-	log.Info("qingcloud-pgbackrest starts")
+	log.Info("radondb-pgbackrest starts")
 
-	debugFlag, _ := strconv.ParseBool(os.Getenv("QiNGCLOUD_DEBUG"))
+	debugFlag, _ := strconv.ParseBool(os.Getenv("RADONDB_DEBUG"))
 	if debugFlag {
 		log.SetLevel(log.DebugLevel)
 	}
@@ -109,7 +109,7 @@ func main() {
 		log.Fatal(err)
 	}
 
-	log.Info("qingcloud-pgbackrest ends")
+	log.Info("radondb-pgbackrest ends")
 }
 
 // Exec returns the stdout and stderr from running a command inside an existing

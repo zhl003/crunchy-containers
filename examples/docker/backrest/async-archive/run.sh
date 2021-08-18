@@ -21,4 +21,4 @@ docker run \
     --env PGBACKREST_ARCHIVE_ASYNC=y \
     --name=backrest-async-archive \
     --hostname=backrest-async-archive \
-    --detach ${CCP_IMAGE_PREFIX?}/qingcloud-postgres:${CCP_IMAGE_TAG?}
+    --detach ${CCP_IMAGE_PREFIX?}/radondb-postgres:${CCP_IMAGE_TAG?}

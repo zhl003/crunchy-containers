@@ -9,12 +9,12 @@ ARG DFSET
 ARG PACKAGER
 ARG PG_LBL
 
-MAINTAINER Qingcloud Data <info@qingcloud.com>
+MAINTAINER Radondb Data <info@radondb.com>
 
-LABEL vendor="Qingcloud Data" \
-	url="https://qingcloud.com" \
+LABEL vendor="Radondb Data" \
+	url="https://radondb.com" \
 	release="${RELVER}" \
-	org.opencontainers.image.vendor="Qingcloud Data" \
+	org.opencontainers.image.vendor="Radondb Data" \
 	os.version="7.7"
 
 COPY redhat/atomic/help.1 /help.1
@@ -117,13 +117,13 @@ RUN if [ "$BASEOS" = "centos8" ] ; then \
 	&& ${PACKAGER} -y clean all ; \
 fi
 
-# Qingcloud Postgres repo GPG Keys
+# Radondb Postgres repo GPG Keys
 # Both keys are added to support building all PG versions
-# of this container. PG 11+ requires RPM-GPG-KEY-qingcloud
-# PG 9.5, 9.6 and 10 require QiNGCLOUD-GPG-KEY.public on RHEL machines
+# of this container. PG 11+ requires RPM-GPG-KEY-radondb
+# PG 9.5, 9.6 and 10 require RADONDB-GPG-KEY.public on RHEL machines
 
-# Add any available Qingcloud PG repo files
-ADD conf/qingcloudpg${PG_LBL}.repo /etc/yum.repos.d/
+# Add any available Radondb PG repo files
+ADD conf/radondbpg${PG_LBL}.repo /etc/yum.repos.d/
 
 RUN if [ "$BASEOS" = "centos8" ] ; then \
 	${PACKAGER} -qy module disable postgresql ; \
