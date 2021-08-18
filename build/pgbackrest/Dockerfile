@@ -10,10 +10,10 @@ ARG BACKREST_VER
 ARG BASEOS
 
 LABEL name="pgbackrest" \
-	summary="Radondb pgBackRest ${BACKREST_VER}" \
-	description="The Radondb pgBackRest container that supports pgBackRest backups, restores, and repo functionality modes." \
+	summary="RadonDB pgBackRest ${BACKREST_VER}" \
+	description="The RadonDB pgBackRest container that supports pgBackRest backups, restores, and repo functionality modes." \
 	io.k8s.description="pgBackRest" \
-	io.k8s.display-name="Radondb pgBackRest" \
+	io.k8s.display-name="RadonDB pgBackRest" \
 	io.openshift.tags="postgresql,postgres,pgbackrest,backup,database,radondb"
 
 # Run postgres install in separate transaction ahead of backrest for postgres user

@@ -24,8 +24,8 @@ ARG PATRONI_VER
 LABEL name="postgres-ha" \
 	summary="PostgreSQL ${PG_FULL} with Patroni" \
 	description="Used for the deployment and management of highly-available PostgreSQL clusters using Patroni." \
-	io.k8s.description="Radondb PostgreSQL optimized for high-availability (HA)" \
-	io.k8s.display-name="Radondb PostgreSQL - HA Optimized" \
+	io.k8s.description="RadonDB PostgreSQL optimized for high-availability (HA)" \
+	io.k8s.display-name="RadonDB PostgreSQL - HA Optimized" \
 	io.openshift.tags="postgresql,postgres,postgis,sql,nosql,database,ha,radondb"
 
 RUN if [ "$DFSET" = "centos" ] ; then \

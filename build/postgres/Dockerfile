@@ -91,8 +91,8 @@ fi
 LABEL name="postgres" \
 	summary="PostgreSQL ${PG_FULL}" \
 	description="Allows multiple deployment methods for PostgreSQL, including basic single primary, streaming replication with synchronous and asynchronous replicas. Includes utilities and tools for Auditing (pgaudit), statement tracking,  Backup/Restore (pgbackrest, pg_basebackup, pgdump, pgrestore) and Benchmarking (pgbench)." \
-	io.k8s.description="Radondb PostgreSQL is the trusted open source distribution of PostgreSQL" \
-	io.k8s.display-name="Radondb PostgreSQL" \
+	io.k8s.description="RadonDB PostgreSQL is the trusted open source distribution of PostgreSQL" \
+	io.k8s.display-name="RadonDB PostgreSQL" \
 	io.openshift.tags="postgresql,postgres,sql,nosql,database,radondb" \
 	postgresql.version.major="${PG_MAJOR}" \
 	postgresql.version="${PG_FULL}"

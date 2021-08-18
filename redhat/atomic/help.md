@@ -1,12 +1,12 @@
 = radondb-containers (1)
-Radondb Data
+RadonDB Data
 December 23, 2019
 
 == NAME
 radondb-containers - Essential open source microservices for production PostgreSQL
 
 == DESCRIPTION
-The Radondb Container Suite provides the essential microservices for running a
+The RadonDB Container Suite provides the essential microservices for running a
 enterprise-grade PostgreSQL cluster. These include:
 
 - PostgreSQL
@@ -17,8 +17,8 @@ enterprise-grade PostgreSQL cluster. These include:
 and more.
 
 == USAGE
-For more information on the Radondb Container Suite, see the official
-[Radondb Container Suite Documentation](https://access.radondb.com/documentation/radondb-containers/)
+For more information on the RadonDB Container Suite, see the official
+[RadonDB Container Suite Documentation](https://access.radondb.com/documentation/radondb-containers/)
 
 == LABELS
 The starter container includes the following LABEL settings:

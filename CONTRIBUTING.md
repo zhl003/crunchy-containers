@@ -1,11 +1,11 @@
-The Radondb Container Suite is an open source project primarily authored and
-maintained by the team at Radondb Data. All contributions are welcome: the
-Radondb Container Suite uses the Apache 2.0 license and does not require any
+The RadonDB Container Suite is an open source project primarily authored and
+maintained by the team at RadonDB Data. All contributions are welcome: the
+RadonDB Container Suite uses the Apache 2.0 license and does not require any
 contributor agreement to submit patches.
 
 Our contributors try to follow good software development practices to help
 ensure that the code that we ship to our users is stable. If you wish to
-contribute to the Radondb Container Suite, be it code or documentation, please
+contribute to the RadonDB Container Suite, be it code or documentation, please
 follow the guidelines below.
 
 Thanks! We look forward to your contribution.
@@ -116,9 +116,9 @@ for what you're working on.
 # Releases & Versioning
 
 Overall, release tags attempt to follow the
-[semantic versioning](https://semver.org) scheme. The Radondb Container Suite is
+[semantic versioning](https://semver.org) scheme. The RadonDB Container Suite is
 closely related to the
-[PostgreSQL Operator](https://github.com/RadondbData/postgres-operator) and in
+[PostgreSQL Operator](https://github.com/RadonDBData/postgres-operator) and in
 some cases may not fully follow semantic versioning if a change in the
 PostgreSQL Operator project necessitates a major or minor version change.
 

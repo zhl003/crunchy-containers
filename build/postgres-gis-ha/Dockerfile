@@ -25,7 +25,7 @@ LABEL name="postgres-gis-ha" \
 	summary="Includes PostGIS extensions on top of radondb-postgres-ha" \
 	description="An identical image of radondb-postgres with the extra PostGIS packages added for users that require PostGIS, optimized for high-availability." \
 	io.k8s.description="PostGIS enabled PostgreSQL container" \
-	io.k8s.display-name="Radondb PostGIS HA" \
+	io.k8s.display-name="RadonDB PostGIS HA" \
 	io.openshift.tags="postgresql,postgres,postgis,spatial,geospatial,gis,map,database,ha,radondb"
 
 RUN if [ "$DFSET" = "centos" ] ; then \

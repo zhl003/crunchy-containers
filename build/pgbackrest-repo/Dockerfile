@@ -5,10 +5,10 @@ ARG PREFIX
 FROM ${PREFIX}/radondb-pgbackrest:${BASEOS}-${PG_FULL}-${BASEVER}
 
 LABEL name="pgbackrest-repo" \
-	summary="Radondb pgBackRest-repo" \
+	summary="RadonDB pgBackRest-repo" \
 	description="Capable of mounting the /backrestrepo for access to pgbackrest archives, while allowing for the configuration of pgBackRest using applicable pgBackRest environment variables." \
 	io.k8s.description="pgBackRest-repo" \
-	io.k8s.display-name="Radondb pgBackRest-repo" \
+	io.k8s.display-name="RadonDB pgBackRest-repo" \
 	io.openshift.tags="postgresql,postgres,pgbackrest,backup,database,radondb"
 
 # run the following at root user

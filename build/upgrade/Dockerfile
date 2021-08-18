@@ -14,7 +14,7 @@ LABEL name="upgrade" \
 	summary="Provides a pg_upgrade capability that performs a major PostgreSQL upgrade." \
 	description="Provides a means to perform a major PostgreSQL upgrade from an earlier version to PostgreSQL ${PG_MAJOR}." \
 	io.k8s.description="postgres upgrade container" \
-	io.k8s.display-name="Radondb PostgreSQL upgrade container" \
+	io.k8s.display-name="RadonDB PostgreSQL upgrade container" \
 	io.openshift.tags="postgresql,postgres,upgrade,database,radondb"
 
 # Add in the repository files with the correct PostgreSQL versions

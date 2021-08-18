@@ -15,7 +15,7 @@ LABEL name="postgres-gis" \
 	summary="Includes PostGIS extensions on top of radondb-postgres" \
 	description="An identical image of radondb-postgres with the extra PostGIS packages added for users that require PostGIS." \
 	io.k8s.description="postgres-gis container" \
-	io.k8s.display-name="Radondb PostGIS" \
+	io.k8s.display-name="RadonDB PostGIS" \
 	io.openshift.tags="postgresql,postgres,postgis,spatial,geospatial,gis,map,database,ha,radondb"
 
 USER 0

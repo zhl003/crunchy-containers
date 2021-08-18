@@ -9,12 +9,11 @@ ARG DFSET
 ARG PACKAGER
 ARG PG_LBL
 
-MAINTAINER Radondb Data <info@radondb.com>
 
-LABEL vendor="Radondb Data" \
+LABEL vendor="RadonDB Data" \
 	url="https://radondb.com" \
 	release="${RELVER}" \
-	org.opencontainers.image.vendor="Radondb Data" \
+	org.opencontainers.image.vendor="RadonDB Data" \
 	os.version="7.7"
 
 COPY redhat/atomic/help.1 /help.1
@@ -117,12 +116,12 @@ RUN if [ "$BASEOS" = "centos8" ] ; then \
 	&& ${PACKAGER} -y clean all ; \
 fi
 
-# Radondb Postgres repo GPG Keys
+# RadonDB Postgres repo GPG Keys
 # Both keys are added to support building all PG versions
 # of this container. PG 11+ requires RPM-GPG-KEY-radondb
 # PG 9.5, 9.6 and 10 require RADONDB-GPG-KEY.public on RHEL machines
 
-# Add any available Radondb PG repo files
+# Add any available RadonDB PG repo files
 ADD conf/radondbpg${PG_LBL}.repo /etc/yum.repos.d/
 
 RUN if [ "$BASEOS" = "centos8" ] ; then \

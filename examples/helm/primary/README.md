@@ -1,4 +1,4 @@
-Radondb Data Primary Helm Example
+RadonDB Data Primary Helm Example
 =======
 
 [PostgreSQL](https://postgresql.org) is a powerful, open source object-relational database system. It has more than 15 years of active development and a proven architecture that has earned it a strong reputation for reliability, data integrity, and correctness.
@@ -14,7 +14,7 @@ $ helm install primary --name primary
 Introduction
 ------------
 
-This is an example of running the Radondb PostgreSQL containers using the Helm project! More examples of the Radondb Containers for PostgreSQL can be found at the [GitHub repository](https://github.com/RadondbData/radondb-containers).
+This is an example of running the RadonDB PostgreSQL containers using the Helm project! More examples of the RadonDB Containers for PostgreSQL can be found at the [GitHub repository](https://github.com/RadonDBData/radondb-containers).
 
 This example will create the following in your Kubernetes cluster:
 
@@ -99,4 +99,4 @@ Copyright 2017 - 2021 Crunchy Data Solutions, Inc.
 
 Crunchy Data Solutions, INC. PROVIDES THIS GUIDE "AS IS" WITHOUT WARRANTY OF ANY KIND, EITHER EXPRESS OR IMPLIED, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF NON INFRINGEMENT, MERCHANTABILITY OR FITNESS FOR A PARTICULAR PURPOSE.
 
-Radondb, Crunchy Data Solutions, Inc. and the Radondb Hippo Logo are trademarks of Crunchy Data Solutions, Inc.
+RadonDB, Crunchy Data Solutions, Inc. and the RadonDB Hippo Logo are trademarks of Crunchy Data Solutions, Inc.
