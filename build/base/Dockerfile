@@ -10,10 +10,10 @@ ARG PACKAGER
 ARG PG_LBL
 
 
-LABEL vendor="RadonDB Data" \
+LABEL vendor="RadonDB" \
 	url="https://radondb.com" \
 	release="${RELVER}" \
-	org.opencontainers.image.vendor="RadonDB Data" \
+	org.opencontainers.image.vendor="RadonDB " \
 	os.version="7.7"
 
 COPY redhat/atomic/help.1 /help.1

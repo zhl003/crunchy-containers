@@ -35,7 +35,7 @@ fi
 certstrap --depot-path ${OUTPUT_DIR?}/out \
     init --common-name RootCA \
   --key-bits 4096 \
-  --organization "RadonDB Data" \
+  --organization "RadonDB " \
   --locality "Charleston" \
   --province "SC" \
   --country "US" \
