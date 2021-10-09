@@ -108,7 +108,9 @@ replace_name() {
 build_and_push() {
     pkg_file=$1
     pkg_name=${pkg_file##*/}
-    new_pkgname=${pkg_name//[Cc]runchy/radondb}
+    old_release_name=$(awk '/^Release:/{print $2}' "${spec_file}")
+    new_release_name="radondb.el8.centos"    
+    new_pkgname=${pkg_name//${old_release_name}/${new_release_name}}
     [[ ${pkg_name} =~ .noarch ]] && pkg_name=${pkg_name/.noarch/.x86_64}
     spec_file=${spec_dir}/${new_pkgname/.rpm/.spec}
     rpmbuild "${build_args}" "${spec_file}" || exit
@@ -130,6 +132,7 @@ for pkg in "${source_rpm_dir}"/*.rpm; do
     # pkg=${pkg_file##*/}
     gen_spec_file "${pkg}" || exit $?
     unarchive_rpm "${pkg}" || exit $?
+    replase_release_name "${pkg}" || exit $?
     replace_name "${pkg}" || exit $?
     build_and_push "${pkg}" || exit $?
 done
