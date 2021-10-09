@@ -63,7 +63,7 @@ unarchive_rpm() {
 replase_release_name(){
     pkg_file=$1
     pkg_name=${pkg_file##*/}
-    spec_file=${spec_dir}/${pkg_name/.rpm/.spec}
+   
 
     old_release_name=$(awk '/^Release:/{print $2}' "${spec_file}")
     new_release_name="radondb.el8.centos"
@@ -76,7 +76,7 @@ replace_name() {
     pkg_file=$1
     pkg_name=${pkg_file##*/}
     spec_file=${spec_dir}/${pkg_name/.rpm/.spec}
-    old_release_name=$(awk '/^Release:/{print $2}' "${spec_file}")
+    
     new_release_name="radondb.el8.centos"
     new_spec_file=$(echo ${spec_file}|sed "s/${old_release_name}/${new_release_name}/g")
     [[ ${pkg_name} =~ .noarch ]] && pkg_name=${pkg_name/.noarch/.x86_64}
@@ -109,7 +109,6 @@ build_and_push() {
     pkg_file=$1
     pkg_name=${pkg_file##*/}
     spec_file=${spec_dir}/${pkg_name/.rpm/.spec}
-    old_release_name=$(awk '/^Release:/{print $2}' "${spec_file}")
     new_release_name="radondb.el8.centos"    
     new_pkgname=${pkg_name//${old_release_name}/${new_release_name}}
     [[ ${pkg_name} =~ .noarch ]] && pkg_name=${pkg_name/.noarch/.x86_64}
@@ -131,6 +130,8 @@ fi
 
 for pkg in "${source_rpm_dir}"/*.rpm; do
     # pkg=${pkg_file##*/}
+    spec_file=${spec_dir}/${pkg_name/.rpm/.spec}
+    old_release_name=$(awk '/^Release:/{print $2}' "${spec_file}")
     gen_spec_file "${pkg}" || exit $?
     unarchive_rpm "${pkg}" || exit $?
     replase_release_name "${pkg}" || exit $?
