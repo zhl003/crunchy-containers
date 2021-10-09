@@ -108,6 +108,7 @@ replace_name() {
 build_and_push() {
     pkg_file=$1
     pkg_name=${pkg_file##*/}
+    spec_file=${spec_dir}/${pkg_name/.rpm/.spec}
     old_release_name=$(awk '/^Release:/{print $2}' "${spec_file}")
     new_release_name="radondb.el8.centos"    
     new_pkgname=${pkg_name//${old_release_name}/${new_release_name}}
