@@ -1,4 +1,4 @@
-[radondbpg12]
+[radondbpg11]
 #Config Version 1.0
 name=radondb Data Development PostgreSQL 11 $releasever - $basearch
 baseurl=http://139.198.30.182/postgresql11/centos/EL$releasever/$basearch/
@@ -6,7 +6,7 @@ enabled=1
 gpgcheck=0
 
 
-[radondbpg12-source]
+[radondbpg11-source]
 #Config Version 1.0
 name=radondb Data Development PostgreSQL 11 $releasever - Source
 baseurl=http://139.198.30.182/postgresql11/centos/EL$releasever/SRPMS/
@@ -14,7 +14,7 @@ enabled=1
 gpgcheck=0
 
 
-[radondbpg12-debuginfo]
+[radondbpg11-debuginfo]
 #Config Version 1.0
 name=radondb Data Development PostgreSQL 12 $releasever - Debug
 baseurl=http://139.198.30.182/postgresql11/centos/EL$releasever/debug/

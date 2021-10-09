@@ -34,12 +34,12 @@ download_source() {
 
     # sed -i 's/$releasever/8/g' radondbpg1*.repo
     #13 debug
-    yum repo-pkgs "${repo_full_name}" list |grep -E '.x86_64|.noarch'| awk '{print $1}' | while read -r line; do
+    yum repo-pkgs "${repo_full_name}" list | grep -E '.x86_64|.noarch' | awk '{print $1}' | while read -r line; do
         if yumdownloader "${extra_args}" $line --disablerepo=* --enablerepo="${repo_name}"* --destdir="${source_rpm_dir}" &>/dev/null; then
             echo "OK[$line]"
         else
             echo "FAILD[$line]"
-          exit
+            exit
         fi
     done
 }
@@ -58,27 +58,28 @@ unarchive_rpm() {
     [[ ${pkg_name} =~ .noarch ]] && pkg_name=${pkg_name/.noarch/.x86_64}
     mkdir "${pkg_name/.rpm/}"
     cd "${pkg_name/.rpm/}" || exit
-    rpm2cpio "${pkg_file}" | cpio -idmv
+    rm -rf ./*
+    rpm2cpio "${pkg_file}" | sudo cpio -idmv
+    sudo chown zhl:zhl -R ${build_root_dir}
 }
-replase_release_name(){
+replase_release_name() {
     pkg_file=$1
     pkg_name=${pkg_file##*/}
-   
 
     old_release_name=$(awk '/^Release:/{print $2}' "${spec_file}")
     new_release_name="radondb.el8.centos"
     #replace release name
     sed -i "s/${old_release_name}/${new_release_name}/g" "${spec_file}"
-    new_spec_file=$(echo ${spec_file}|sed "s/${old_release_name}/${new_release_name}/g")
+    new_spec_file=$(echo ${spec_file} | sed "s/${old_release_name}/${new_release_name}/g")
     mv "${spec_file}" "${new_spec_file}" || exit
 }
 replace_name() {
     pkg_file=$1
     pkg_name=${pkg_file##*/}
     spec_file=${spec_dir}/${pkg_name/.rpm/.spec}
-    
+
     new_release_name="radondb.el8.centos"
-    new_spec_file=$(echo ${spec_file}|sed "s/${old_release_name}/${new_release_name}/g")
+    new_spec_file=$(echo ${spec_file} | sed "s/${old_release_name}/${new_release_name}/g")
     [[ ${pkg_name} =~ .noarch ]] && pkg_name=${pkg_name/.noarch/.x86_64}
     #replace file
     # find ${build_root_dir}/"${pkg_name/.rpm/}" -type f | while read -r line; do
@@ -98,8 +99,9 @@ replace_name() {
             mkdir -p "${new_forder[${forder}]}"
         fi
         # mv "${old_forder[${forder}]}" "${new_forder[${forder}]}" || exit
-        rsync -axvvES "${old_forder[${forder}]}/" "${new_forder[${forder}]}/" --remove-source-files &&
+        sudo rsync -axvvES "${old_forder[${forder}]}/" "${new_forder[${forder}]}/" --remove-source-files &&
             rm -rf "${old_forder[${forder}]}" || exit
+        chown zhl:zhl -R "${new_forder[@]}"
     done
     # mv "${spec_file}" "${new_spec_file}" || exit
     # sed -i "s/[Cc]runchy/radondb/g" "${new_spec_file}"
@@ -107,9 +109,9 @@ replace_name() {
 
 build_and_push() {
     pkg_file=$1
-    
+    pkg_name=${pkg_file##*/}
     spec_file=${spec_dir}/${pkg_name/.rpm/.spec}
-    new_release_name="radondb.el8.centos"    
+    new_release_name="radondb.el8.centos"
     new_pkgname=${pkg_name//${old_release_name}/${new_release_name}}
     [[ ${pkg_name} =~ .noarch ]] && pkg_name=${pkg_name/.noarch/.x86_64}
     spec_file=${spec_dir}/${new_pkgname/.rpm/.spec}
@@ -121,6 +123,7 @@ build_and_push() {
     else
         sudo cp -rp ${_topdir}/RPMS/x86_64/"${new_pkgname}" ${repo_dir}
     fi
+     echo "${pkg_file}" |sudo tee -a "${source_rpm_dir}"/.done
 }
 #main
 if [ "${download_only_flag}" == 1 ]; then
@@ -129,15 +132,17 @@ if [ "${download_only_flag}" == 1 ]; then
 fi
 
 for pkg in "${source_rpm_dir}"/*.rpm; do
-    # pkg=${pkg_file##*/}
-    pkg_name=${pkg##*/}
-    spec_file=${spec_dir}/${pkg_name/.rpm/.spec}
-    old_release_name=$(awk '/^Release:/{print $2}' "${spec_file}")
-    gen_spec_file "${pkg}" || exit $?
-    unarchive_rpm "${pkg}" || exit $?
-    replase_release_name "${pkg}" || exit $?
-    replace_name "${pkg}" || exit $?
-    build_and_push "${pkg}" || exit $?
+    if ! sudo grep "${pkg}" "${source_rpm_dir}"/.done &>/dev/null; then
+        # pkg=${pkg_file##*/}
+        pkg_name=${pkg##*/}
+        spec_file=${spec_dir}/${pkg_name/.rpm/.spec}
+        old_release_name=$(awk '/^Release:/{print $2}' "${spec_file}")
+        gen_spec_file "${pkg}" || exit $?
+        unarchive_rpm "${pkg}" || exit $?
+        replase_release_name "${pkg}" || exit $?
+        replace_name "${pkg}" || exit $?
+        build_and_push "${pkg}" || exit $?
+    fi
 done
 
 #test docker image
