@@ -31,6 +31,7 @@ ARG BACKREST_VER
 RUN if [ "$DFSET" = "centos" ] ; then \
         ${PACKAGER} -y install \
         	--setopt=skip_missing_names_on_install=False \
+            --disablerepo=appstream \
         	openssh-clients \
         	openssh-server \
         	pgaudit${PG_MAJOR//.} \
@@ -42,10 +43,10 @@ RUN if [ "$DFSET" = "centos" ] ; then \
         	postgresql${PG_MAJOR//.}-server \
         	postgresql${PG_MAJOR//.}-plpython* \
         	pgnodemx${PG_MAJOR//.} \
-        	$( printf '11\n'${PG_MAJOR} | sort -VC && echo postgresql${PG_MAJOR}-llvmjit ) \
+        	$( printf '12\n'${PG_MAJOR} | sort -VC && echo postgresql${PG_MAJOR}-llvmjit ) \
         	psmisc \
         	rsync \
-        	$( printf '11\n'${PG_MAJOR} | sort -VC && echo timescaledb_${PG_MAJOR} ) \
+        	$( printf '12\n'${PG_MAJOR} | sort -VC && echo timescaledb_${PG_MAJOR} ) \
         	wal2json${PG_MAJOR//.} \
         	file \
         	gettext \
@@ -70,10 +71,10 @@ else \
 		postgresql${PG_MAJOR//.}-server \
 		postgresql${PG_MAJOR//.}-plpython* \
 		pgnodemx${PG_MAJOR//.} \
-		$( printf '11\n'${PG_MAJOR} | sort -VC && echo postgresql${PG_MAJOR}-llvmjit ) \
+		$( printf '12\n'${PG_MAJOR} | sort -VC && echo postgresql${PG_MAJOR}-llvmjit ) \
 		psmisc \
 		rsync \
-		$( printf '11\n'${PG_MAJOR} | sort -VC && echo timescaledb_${PG_MAJOR} ) \
+		$( printf '12\n'${PG_MAJOR} | sort -VC && echo timescaledb_${PG_MAJOR} ) \
 		wal2json${PG_MAJOR//.} \
 		file \
 		unzip \
