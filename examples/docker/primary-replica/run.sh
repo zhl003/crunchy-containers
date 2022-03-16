@@ -46,7 +46,7 @@ docker run \
 	-e PG_DATABASE=userdb \
 	--name=$PRIMARY_CONTAINER_NAME \
 	--hostname=$PRIMARY_CONTAINER_NAME \
-	-d $CCP_IMAGE_PREFIX/crunchy-postgres:$CCP_IMAGE_TAG
+	-d $CCP_IMAGE_PREFIX/radondb-postgres:$CCP_IMAGE_TAG
 
 REPLICA_CONTAINER_NAME=replica
 
@@ -79,4 +79,4 @@ docker run \
 	-e PG_DATABASE=userdb \
 	--name=${REPLICA_CONTAINER_NAME} \
 	--hostname=${REPLICA_CONTAINER_NAME} \
-	-d $CCP_IMAGE_PREFIX/crunchy-postgres:$CCP_IMAGE_TAG
+	-d $CCP_IMAGE_PREFIX/radondb-postgres:$CCP_IMAGE_TAG

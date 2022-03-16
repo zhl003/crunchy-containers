@@ -75,7 +75,7 @@
                 "containers": [
                     {
                         "name": "postgres",
-                        "image": "$CCP_IMAGE_PREFIX/crunchy-postgres:$CCP_IMAGE_TAG",
+                        "image": "$CCP_IMAGE_PREFIX/radondb-postgres:$CCP_IMAGE_TAG",
                         "readinessProbe": {
                             "exec": {
                                 "command": [
@@ -212,7 +212,7 @@
                 "containers": [
                     {
                         "name": "postgres",
-                        "image": "$CCP_IMAGE_PREFIX/crunchy-postgres:$CCP_IMAGE_TAG",
+                        "image": "$CCP_IMAGE_PREFIX/radondb-postgres:$CCP_IMAGE_TAG",
                         "readinessProbe": {
                             "exec": {
                                 "command": [

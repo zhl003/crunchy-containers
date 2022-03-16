@@ -72,7 +72,7 @@
         "containers": [
             {
                 "name": "pgadmin",
-                "image": "$CCP_IMAGE_PREFIX/crunchy-pgadmin4:$CCP_IMAGE_TAG",
+                "image": "$CCP_IMAGE_PREFIX/radondb-pgadmin4:$CCP_IMAGE_TAG",
                 "ports": [
                     {
                         "containerPort": 5050,

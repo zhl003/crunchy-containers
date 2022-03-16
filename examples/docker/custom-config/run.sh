@@ -47,4 +47,4 @@ docker run \
     --env=PGHOST=/tmp \
     --env=XLOGDIR=true \
     --env=PGBACKREST=true \
-    --detach ${CCP_IMAGE_PREFIX?}/crunchy-postgres:${CCP_IMAGE_TAG?}
+    --detach ${CCP_IMAGE_PREFIX?}/radondb-postgres:${CCP_IMAGE_TAG?}

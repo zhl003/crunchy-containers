@@ -32,4 +32,4 @@ docker run \
 	--env PGDATA_PATH=pgbasebackup-full-restored \
 	--name="${CONTAINER_NAME}" \
 	--hostname="${CONTAINER_NAME}" \
-	--detach "${CCP_IMAGE_PREFIX}"/crunchy-pgbasebackup-restore:"${CCP_IMAGE_TAG}"
+	--detach "${CCP_IMAGE_PREFIX}"/radondb-pgbasebackup-restore:"${CCP_IMAGE_TAG}"

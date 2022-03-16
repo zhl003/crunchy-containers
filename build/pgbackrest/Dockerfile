@@ -2,7 +2,7 @@ ARG BASEOS
 ARG BASEVER
 ARG PG_FULL
 ARG PREFIX
-FROM ${PREFIX}/crunchy-base:${BASEOS}-${PG_FULL}-${BASEVER}
+FROM ${PREFIX}/radondb-base:${BASEOS}-${PG_FULL}-${BASEVER}
 
 # For RHEL8 all arguments used in main code has to be specified after FROM
 ARG PACKAGER
@@ -10,55 +10,41 @@ ARG BACKREST_VER
 ARG BASEOS
 
 LABEL name="pgbackrest" \
-	summary="Crunchy pgBackRest ${BACKREST_VER}" \
-	description="The Crunchy pgBackRest container that supports pgBackRest backups, restores, and repo functionality modes." \
+	summary="RadonDB pgBackRest ${BACKREST_VER}" \
+	description="The RadonDB pgBackRest container that supports pgBackRest backups, restores, and repo functionality modes." \
 	io.k8s.description="pgBackRest" \
-	io.k8s.display-name="Crunchy pgBackRest" \
-	io.openshift.tags="postgresql,postgres,pgbackrest,backup,database,crunchy"
+	io.k8s.display-name="RadonDB pgBackRest" \
+	io.openshift.tags="postgresql,postgres,pgbackrest,backup,database,radondb"
 
 # Run postgres install in separate transaction ahead of backrest for postgres user
-RUN if [ "$BASEOS" = "ubi8" ] ; then \
-	${PACKAGER} -y install --nodocs \
-		openssh-clients \
-		openssh-server \
-		shadow-utils \
-		tar \
-		bzip2 \
-		lz4 \
-		crunchy-backrest-${BACKREST_VER} \
-		&& ${PACKAGER} -y clean all ; \
-else \
-	${PACKAGER} -y install --nodocs  \
+RUN ${PACKAGER} -y install --nodocs  \
 		--setopt=skip_missing_names_on_install=False \
 		openssh-clients \
 		openssh-server \
 		bzip2 \
 		lz4 \
-		crunchy-backrest-${BACKREST_VER} \
-		&& ${PACKAGER} -y clean all ; \
-fi
-
-
+		radondb-backrest-${BACKREST_VER} \
+		&& ${PACKAGER} -y clean all ;
 # add postgres user and group
 RUN groupadd postgres -g 26 && useradd postgres -u 26 -g 26
 
-# set up crunchy directory
-RUN mkdir -p /opt/crunchy/bin /opt/crunchy/conf /pgdata /backrestrepo \
+# set up radondb directory
+RUN mkdir -p /opt/radondb/bin /opt/radondb/conf /pgdata /backrestrepo \
 	/var/log/pgbackrest
 
 # add pgbackrest-restore files
-ADD bin/pgbackrest-restore /opt/crunchy/bin
-ADD conf/pgbackrest-restore /opt/crunchy/conf
+ADD bin/pgbackrest-restore /opt/radondb/bin
+ADD conf/pgbackrest-restore /opt/radondb/conf
 
 # add pgbackrest files
-ADD bin/pgbackrest /opt/crunchy/bin
+ADD bin/pgbackrest /opt/radondb/bin
 
 # add pgbackrest-common files
-ADD bin/common /opt/crunchy/bin
-ADD bin/pgbackrest-common /opt/crunchy/bin
+ADD bin/common /opt/radondb/bin
+ADD bin/pgbackrest-common /opt/radondb/bin
 
 # set user and group ownership
-RUN chown -R postgres:postgres /opt/crunchy  \
+RUN chown -R postgres:postgres /opt/radondb  \
 	/backrestrepo /var/log/pgbackrest /pgdata
 
 # add the pgbackrest-repo specific files and directories, and
@@ -92,6 +78,6 @@ USER 26
 # Defines a unique directory name that will be utilized by the nss_wrapper in the UID script
 ENV NSS_WRAPPER_SUBDIR="pgbackrest"
 
-ENTRYPOINT ["/opt/crunchy/bin/uid_postgres.sh"]
+ENTRYPOINT ["/opt/radondb/bin/uid_postgres.sh"]
 
-CMD ["/opt/crunchy/bin/start.sh"]
+CMD ["/opt/radondb/bin/start.sh"]

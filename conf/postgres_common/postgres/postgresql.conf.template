@@ -1,5 +1,5 @@
 # -----------------------------
-# crunchy PostgreSQL configuration file
+# radondb PostgreSQL configuration file
 # -----------------------------
 #
 # This file consists of lines of the form:

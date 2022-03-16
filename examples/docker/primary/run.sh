@@ -36,4 +36,4 @@ docker run \
     --name=primary \
     --hostname=primary \
     --network=pgnet \
-    -d $CCP_IMAGE_PREFIX/crunchy-postgres:$CCP_IMAGE_TAG
+    -d $CCP_IMAGE_PREFIX/radondb-postgres:$CCP_IMAGE_TAG

@@ -2,7 +2,7 @@ ARG BASEOS
 ARG BASEVER
 ARG PG_FULL
 ARG PREFIX
-FROM ${PREFIX}/crunchy-base:${BASEOS}-${PG_FULL}-${BASEVER}
+FROM ${PREFIX}/radondb-base:${BASEOS}-${PG_FULL}-${BASEVER}
 
 # For RHEL8 all arguments used in main code has to be specified after FROM
 ARG BASEOS
@@ -17,9 +17,9 @@ LABEL name="pgadmin4" \
 	description="Provides GUI for the pgAdmin 4 utility." \
 	io.k8s.description="pgadmin4 container" \
 	io.k8s.display-name="pgAdmin 4" \
-	io.openshift.tags="postgresql,postgres,monitoring,pgadmin4,pgadmin,database,crunchy"
+	io.openshift.tags="postgresql,postgres,monitoring,pgadmin4,pgadmin,database,radondb"
 
-RUN mkdir -p /opt/crunchy/bin /opt/crunchy/conf /var/lib/pgadmin /var/log/pgadmin \
+RUN mkdir -p /opt/radondb/bin /opt/radondb/conf /var/lib/pgadmin /var/log/pgadmin \
         /certs /run/httpd
 
 RUN if [ "$BASEOS" = "centos8" ] ; then \
@@ -41,35 +41,14 @@ RUN if [ "$BASEOS" = "centos8" ] ; then \
         && ln -sf /var/lib/pgadmin/pgadmin.conf /etc/httpd/conf.d/pgadmin.conf \
         && alternatives --set python /usr/bin/python3 ; \
 fi
-
-RUN if [ "$BASEOS" = "ubi8" ] ; then \
-        ${PACKAGER} -y install --nodocs \
-                --enablerepo="epel" \
-                mod_ssl \
-                python3-mod_wsgi \
-                openssl \
-                sqlite \
-                pgadmin4 \
-                postgresql${PG_MAJOR//.}-server \
-        && ${PACKAGER} -y clean all --enablerepo="epel" \
-        && chown -R 2:0 /usr/lib/python3.6/site-packages/pgadmin4-web \
-                /var/lib/pgadmin /var/log/pgadmin /certs /etc/httpd /run/httpd \
-                /var/log/httpd \
-        && chmod -R g=u /usr/lib/python3.6/site-packages/pgadmin4-web \
-                /var/lib/pgadmin /var/log/pgadmin /certs /etc/httpd /run/httpd /var/log/httpd \
-        && ln -sf /var/lib/pgadmin/config_local.py /usr/lib/python3.6/site-packages/pgadmin4-web/config_local.py \
-        && ln -sf /var/lib/pgadmin/pgadmin.conf /etc/httpd/conf.d/pgadmin.conf \
-        && alternatives --set python /usr/bin/python3 ; \
-fi
-
 # Preserving PGVERSION out of paranoia
 ENV PGROOT="/usr/pgsql-${PG_MAJOR}" PGVERSION="${PG_MAJOR}"
 
-ADD bin/pgadmin4/ /opt/crunchy/bin
-ADD bin/common /opt/crunchy/bin
-ADD conf/pgadmin4/ /opt/crunchy/conf
+ADD bin/pgadmin4/ /opt/radondb/bin
+ADD bin/common /opt/radondb/bin
+ADD conf/pgadmin4/ /opt/radondb/conf
 
-RUN cp /opt/crunchy/conf/httpd.conf /etc/httpd/conf/httpd.conf \
+RUN cp /opt/radondb/conf/httpd.conf /etc/httpd/conf/httpd.conf \
 	&& rm /etc/httpd/conf.d/welcome.conf /etc/httpd/conf.d/ssl.conf
 
 EXPOSE 5050
@@ -81,8 +60,8 @@ VOLUME ["/var/lib/pgadmin", "/certs", "/run/httpd"]
 # Defines a unique directory name that will be utilized by the nss_wrapper in the UID script
 ENV NSS_WRAPPER_SUBDIR="pgadmin"
 
-ENTRYPOINT ["opt/crunchy/bin/uid_daemon.sh"]
+ENTRYPOINT ["opt/radondb/bin/uid_daemon.sh"]
 
 USER 2
 
-CMD ["/opt/crunchy/bin/start-pgadmin4.sh"]
+CMD ["/opt/radondb/bin/start-pgadmin4.sh"]

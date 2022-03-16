@@ -28,7 +28,7 @@ docker run \
     --env-file=${DIR?}/env/pgsql-primary.list \
     --name=pg-primary \
     --hostname=pg-primary \
-    -d ${CCP_IMAGE_PREFIX?}/crunchy-postgres:${CCP_IMAGE_TAG?}
+    -d ${CCP_IMAGE_PREFIX?}/radondb-postgres:${CCP_IMAGE_TAG?}
 
 docker run \
     -p 10000:10000 \
@@ -39,6 +39,6 @@ docker run \
     --network=pgnet \
     --name='pgbadger' \
     --hostname='pgbadger' \
-    -d ${CCP_IMAGE_PREFIX?}/crunchy-pgbadger:${CCP_IMAGE_TAG?}
+    -d ${CCP_IMAGE_PREFIX?}/radondb-pgbadger:${CCP_IMAGE_TAG?}
 
 exit 0

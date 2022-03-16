@@ -17,8 +17,8 @@ ARG PG_MAJOR
 ARG PG_LBL
 
 RUN ${PACKAGER} -y install --nodocs \
-	--disablerepo=crunchypg* \
-	--enablerepo="crunchypg${PG_LBL}" \
+	--disablerepo=radondbpg* \
+	--enablerepo="radondbpg${PG_LBL}" \
 	postgresql${PG_LBL} \
  && ${PACKAGER} -y clean all
 
@@ -38,7 +38,7 @@ RUN if [ "$DFSET" = "centos" ] ; then \
         	pgaudit${PG_MAJOR//.}_set_user \
         	pg_partman_${PG_MAJOR//.} \
         	pg_cron_${PG_MAJOR//.} \
-        	crunchy-backrest-${BACKREST_VER} \
+        	radondb-backrest-${BACKREST_VER} \
         	postgresql${PG_MAJOR//.}-contrib \
         	postgresql${PG_MAJOR//.}-server \
         	postgresql${PG_MAJOR//.}-plpython* \
@@ -70,7 +70,7 @@ else \
 		pgaudit${PG_MAJOR//.}_set_user \
 		pg_partman_${PG_MAJOR//.} \
 		pg_cron_${PG_MAJOR//.} \
-		crunchy-backrest-${BACKREST_VER} \
+		radondb-backrest-${BACKREST_VER} \
 		postgresql${PG_MAJOR//.}-contrib \
 		postgresql${PG_MAJOR//.}-server \
 		postgresql${PG_MAJOR//.}-plpython* \
@@ -103,30 +103,30 @@ RUN pip3 install --upgrade python-dateutil \
 ENV PATH="${PGROOT}/bin:${PATH}"
 
 LABEL name="postgres" \
-	summary="Crunchy PostgreSQL ${PG_FULL}" \
-	description="Postgres ready for production: high availability, disaster recovery, monitoring, security, and performance. Works with PGO, the open source Postgres Operator from Crunchy Data." \
-	io.k8s.description="Crunchy PostgreSQL is ready for production: the trusted open source distribution of PostgreSQL. Works with PGO, the open source Postgres Operator from Crunchy Data." \
-	io.k8s.display-name="Crunchy PostgreSQL" \
-	io.openshift.tags="postgresql,postgres,postgis,sql,nosql,database,ha,crunchy" \
+	summary="RadonDB PostgreSQL ${PG_FULL}" \
+	description="Postgres ready for production: high availability, disaster recovery, monitoring, security, and performance. Works with PGO, the open source Postgres Operator from RadonDB Data." \
+	io.k8s.description="RadonDB PostgreSQL is ready for production: the trusted open source distribution of PostgreSQL. Works with PGO, the open source Postgres Operator from RadonDB Data." \
+	io.k8s.display-name="RadonDB PostgreSQL" \
+	io.openshift.tags="postgresql,postgres,postgis,sql,nosql,database,ha,radondb" \
 	postgresql.version.major="${PG_MAJOR}" \
 	postgresql.version="${PG_FULL}"
 
-# set up crunchy directory
-RUN mkdir -p /opt/crunchy/bin /opt/crunchy/conf /pgdata /pgwal /pgconf /backrestrepo
+# set up radondb directory
+RUN mkdir -p /opt/radondb/bin /opt/radondb/conf /pgdata /pgwal /pgconf /backrestrepo
 
-RUN chown -R postgres:postgres /opt/crunchy /var/lib/pgsql \
+RUN chown -R postgres:postgres /opt/radondb /var/lib/pgsql \
 		/pgdata /pgwal /pgconf /backrestrepo &&  \
-	chmod -R g=u /opt/crunchy /var/lib/pgsql \
+	chmod -R g=u /opt/radondb /var/lib/pgsql \
 		/pgdata /pgwal /pgconf /backrestrepo
 
 # open up the postgres port
 EXPOSE 5432
 
-ADD bin/postgres_common /opt/crunchy/bin
-ADD bin/common /opt/crunchy/bin
-ADD conf/postgres_common /opt/crunchy/conf
-ADD tools/pgmonitor/postgres_exporter/common /opt/crunchy/bin/modules/pgexporter
-ADD tools/pgmonitor/postgres_exporter/linux /opt/crunchy/bin/modules/pgexporter
+ADD bin/postgres_common /opt/radondb/bin
+ADD bin/common /opt/radondb/bin
+ADD conf/postgres_common /opt/radondb/conf
+ADD tools/pgmonitor/postgres_exporter/common /opt/radondb/bin/modules/pgexporter
+ADD tools/pgmonitor/postgres_exporter/linux /opt/radondb/bin/modules/pgexporter
 
 RUN mkdir /.ssh && chown 26:0 /.ssh && chmod g+rwx /.ssh && rm -f /run/nologin
 
@@ -145,8 +145,8 @@ VOLUME ["/pgdata", "/pgwal", "/pgconf", "/backrestrepo", "/sshd"]
 # Defines a unique directory name that will be utilized by the nss_wrapper in the UID script
 ENV NSS_WRAPPER_SUBDIR="postgres"
 
-ENTRYPOINT ["/opt/crunchy/bin/uid_postgres.sh"]
+ENTRYPOINT ["/opt/radondb/bin/uid_postgres.sh"]
 
 USER 26
 
-CMD ["/opt/crunchy/bin/start.sh"]
+CMD ["/opt/radondb/bin/start.sh"]

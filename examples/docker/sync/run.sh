@@ -45,7 +45,7 @@ sudo docker run \
 	-e PG_DATABASE=userdb \
 	--name=${PRIMARY_CONTAINER_NAME} \
 	--hostname=${PRIMARY_CONTAINER_NAME} \
-	-d $CCP_IMAGE_PREFIX/crunchy-postgres:$CCP_IMAGE_TAG
+	-d $CCP_IMAGE_PREFIX/radondb-postgres:$CCP_IMAGE_TAG
 
 echo "Sleeping in order to let the ${PRIMARY_CONTAINER_NAME} container start..."
 sleep 20
@@ -78,7 +78,7 @@ sudo docker run \
 	-e PG_DATABASE=userdb \
 	--name=${SYNC_CONTAINER_NAME} \
 	--hostname=${SYNC_CONTAINER_NAME} \
-	-d $CCP_IMAGE_PREFIX/crunchy-postgres:$CCP_IMAGE_TAG
+	-d $CCP_IMAGE_PREFIX/radondb-postgres:$CCP_IMAGE_TAG
 
 echo "Starting the ${ASYNC_CONTAINER_NAME} container..."
 
@@ -107,4 +107,4 @@ sudo docker run \
 	-e PG_DATABASE=userdb \
 	--name=${ASYNC_CONTAINER_NAME} \
 	--hostname=${ASYNC_CONTAINER_NAME} \
-	-d $CCP_IMAGE_PREFIX/crunchy-postgres:$CCP_IMAGE_TAG
+	-d $CCP_IMAGE_PREFIX/radondb-postgres:$CCP_IMAGE_TAG

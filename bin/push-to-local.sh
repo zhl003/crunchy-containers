@@ -7,16 +7,16 @@ VERSION=${CCP_IMAGE_TAG?}
 GIS_VERSION=${CCP_POSTGIS_IMAGE_TAG?}
 IMAGES=(
     crucnhy-pgbackrest
-    crunchy-pgbouncer
-    crunchy-postgres
-    crunchy-upgrade
-    # crunchy-pgadmin4
-    # crunchy-pgbadger
-    # crunchy-pgpool
+    radondb-pgbouncer
+    radondb-postgres
+    radondb-upgrade
+    # radondb-pgadmin4
+    # radondb-pgbadger
+    # radondb-pgpool
 )
 
 GIS_IMAGES=(
-    crunchy-postgres-gis
+    radondb-postgres-gis
 )
 
 function echo_green() {

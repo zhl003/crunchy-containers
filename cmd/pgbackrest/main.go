@@ -68,9 +68,9 @@ type config struct {
 
 func main() {
 	ctx := context.Background()
-	log.Info("crunchy-pgbackrest starts")
+	log.Info("radondb-pgbackrest starts")
 
-	debugFlag, _ := strconv.ParseBool(os.Getenv("CRUNCHY_DEBUG"))
+	debugFlag, _ := strconv.ParseBool(os.Getenv("RADONDB_DEBUG"))
 	if debugFlag {
 		log.SetLevel(log.DebugLevel)
 	}
@@ -109,7 +109,7 @@ func main() {
 		log.Fatal(err)
 	}
 
-	log.Info("crunchy-pgbackrest ends")
+	log.Info("radondb-pgbackrest ends")
 }
 
 // Exec returns the stdout and stderr from running a command inside an existing
@@ -328,7 +328,7 @@ sha1sum "${files[@]}" | sha1sum
 	// the script to run remotely via exec
 	execScript := baseScript + `
 declare -r hash="$1"
-local_hash="$(sha1sum "${files[@]}" | sha1sum)" 
+local_hash="$(sha1sum "${files[@]}" | sha1sum)"
 if [[ "${local_hash}" != "${hash}" ]]; then
 	printf >&2 "hash %s does not match local hash %s" "${hash}" "${local_hash}"; exit 1;
 else

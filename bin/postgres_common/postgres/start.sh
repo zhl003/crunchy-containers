@@ -13,8 +13,8 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-CRUNCHY_DIR=${CRUNCHY_DIR:-'/opt/crunchy'}
-source "${CRUNCHY_DIR}/bin/common_lib.sh"
+RADONDB_DIR=${RADONDB_DIR:-'/opt/radondb'}
+source "${RADONDB_DIR}/bin/common_lib.sh"
 enable_debugging
 
 function trap_sigterm() {
@@ -37,7 +37,7 @@ function trap_sigterm() {
 
 trap 'trap_sigterm' SIGINT SIGTERM
 
-source "${CRUNCHY_DIR}/bin/postgres/setenv.sh"
+source "${RADONDB_DIR}/bin/postgres/setenv.sh"
 source check-for-secrets.sh
 
 env_check_err "PG_MODE"
@@ -124,7 +124,7 @@ function initdb_logic() {
     echo_info "Overlaying PostgreSQL's default configuration with customized settings.."
     cp /tmp/postgresql.conf $PGDATA
 
-    cp "${CRUNCHY_DIR}/conf/postgres/pg_hba.conf" /tmp
+    cp "${RADONDB_DIR}/conf/postgres/pg_hba.conf" /tmp
     sed -i "s/PG_PRIMARY_USER/$PG_PRIMARY_USER/g" /tmp/pg_hba.conf
     cp /tmp/pg_hba.conf $PGDATA
 }
@@ -138,7 +138,7 @@ function fill_conf_file() {
     env_check_info "WORK_MEM" "Setting WORK_MEM to ${WORK_MEM:-4MB}."
     env_check_info "MAX_WAL_SENDERS" "Setting MAX_WAL_SENDERS to ${MAX_WAL_SENDERS:-6}."
 
-    cp "${CRUNCHY_DIR}/conf/postgres/postgresql.conf.template" /tmp/postgresql.conf
+    cp "${RADONDB_DIR}/conf/postgres/postgresql.conf.template" /tmp/postgresql.conf
 
     sed -i "s/TEMP_BUFFERS/${TEMP_BUFFERS:-8MB}/g" /tmp/postgresql.conf
     sed -i "s/LOG_MIN_DURATION_STATEMENT/${LOG_MIN_DURATION_STATEMENT:-60000}/g" /tmp/postgresql.conf
@@ -173,7 +173,7 @@ function waitforpg() {
     done
 
     while true; do
-        psql -h $PG_PRIMARY_HOST -p $PG_PRIMARY_PORT -U $PG_PRIMARY_USER $PG_DATABASE -f "${CRUNCHY_DIR}/bin/postgres/readiness.sql"
+        psql -h $PG_PRIMARY_HOST -p $PG_PRIMARY_PORT -U $PG_PRIMARY_USER $PG_DATABASE -f "${RADONDB_DIR}/bin/postgres/readiness.sql"
         if [ $? -eq 0 ]; then
             echo_info "The database is ready."
             CONNECTED=true
@@ -272,7 +272,7 @@ function initialize_replica_pre12() {
     echo_info "Setting up recovery using methodology for PostgreSQL 11 and below."
     # Basically, we have a preconfigured recovery file with some settings in it,
     # And we substitute out some of the settings
-    cp "${CRUNCHY_DIR}/conf/postgres/pgrepl-recovery.conf" /tmp
+    cp "${RADONDB_DIR}/conf/postgres/pgrepl-recovery.conf" /tmp
     sed -i "s/PG_PRIMARY_USER/$PG_PRIMARY_USER/g" /tmp/pgrepl-recovery.conf
     sed -i "s/PG_PRIMARY_HOST/$PG_PRIMARY_HOST/g" /tmp/pgrepl-recovery.conf
     sed -i "s/PG_PRIMARY_PORT/$PG_PRIMARY_PORT/g" /tmp/pgrepl-recovery.conf
@@ -316,7 +316,7 @@ function initialize_primary() {
 
 
         echo_info "Loading setup.sql.." >> /tmp/start-db.log
-        cp "${CRUNCHY_DIR}/bin/postgres/setup.sql" /tmp
+        cp "${RADONDB_DIR}/bin/postgres/setup.sql" /tmp
         if [ -f /pgconf/setup.sql ]; then
             echo_info "Using setup.sql from /pgconf.."
             cp /pgconf/setup.sql /tmp
@@ -360,17 +360,17 @@ configure_archiving() {
         echo_info "Setting pgbackrest archive command.."
         if [[ "${BACKREST_LOCAL_AND_S3_STORAGE}" == "true" ]]
         then
-            cat "${CRUNCHY_DIR}/conf/postgres/backrest-archive-command-local-and-s3" >> /"${PGDATA?}"/postgresql.conf
+            cat "${RADONDB_DIR}/conf/postgres/backrest-archive-command-local-and-s3" >> /"${PGDATA?}"/postgresql.conf
         elif [[ "${BACKREST_LOCAL_AND_GCS_STORAGE}" == "true" ]]
         then
-            cat "${CRUNCHY_DIR}/conf/postgres/backrest-archive-command-local-and-gcs" >> /"${PGDATA?}"/postgresql.conf
+            cat "${RADONDB_DIR}/conf/postgres/backrest-archive-command-local-and-gcs" >> /"${PGDATA?}"/postgresql.conf
         else
-            cat "${CRUNCHY_DIR}/conf/postgres/backrest-archive-command" >> /"${PGDATA?}"/postgresql.conf
+            cat "${RADONDB_DIR}/conf/postgres/backrest-archive-command" >> /"${PGDATA?}"/postgresql.conf
         fi
     elif [[ "${ARCHIVE_MODE}" == "on" ]] && [[ ! "${PGBACKREST}" == "true" ]]
     then
         echo_info "Setting standard archive command.."
-        cat "${CRUNCHY_DIR}/conf/postgres/archive-command" >> /"${PGDATA?}"/postgresql.conf
+        cat "${RADONDB_DIR}/conf/postgres/archive-command" >> /"${PGDATA?}"/postgresql.conf
     fi
 
     echo_info "Setting ARCHIVE_MODE to ${ARCHIVE_MODE?}."
@@ -415,12 +415,12 @@ esac
 if [[ ${PGBACKREST} == "true" ]]
 then
     echo_info "pgBackRest: Enabling pgbackrest.."
-    source "${CRUNCHY_DIR}/bin/postgres/pgbackrest.sh"
+    source "${RADONDB_DIR}/bin/postgres/pgbackrest.sh"
 fi
 
 configure_archiving
 
-source "${CRUNCHY_DIR}/bin/postgres/custom-configs.sh"
+source "${RADONDB_DIR}/bin/postgres/custom-configs.sh"
 
 # Run pre-start hook if it exists
 if [ -f /pgconf/pre-start-hook.sh ]
@@ -429,13 +429,13 @@ then
 fi
 
 # Start SSHD if necessary prior to starting PG
-source "${CRUNCHY_DIR}/bin/postgres/sshd.sh"
+source "${RADONDB_DIR}/bin/postgres/sshd.sh"
 
 echo_info "Starting PostgreSQL.."
 postgres -D $PGDATA &
 
 # Apply enhancement modules
-for module in "${CRUNCHY_DIR}"/bin/modules/*.sh
+for module in "${RADONDB_DIR}"/bin/modules/*.sh
 do
     source ${module?}
 done

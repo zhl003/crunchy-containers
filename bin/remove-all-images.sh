@@ -17,8 +17,8 @@
 for i in \
 postgres-gis postgres pgbouncer upgrade
 do
-	docker rmi -f  $CCP_IMAGE_PREFIX/crunchy-$i:$CCP_IMAGE_TAG
-	docker rmi -f  crunchy-$i
+	docker rmi -f  $CCP_IMAGE_PREFIX/radondb-$i:$CCP_IMAGE_TAG
+	docker rmi -f  radondb-$i
 done
 
 exit

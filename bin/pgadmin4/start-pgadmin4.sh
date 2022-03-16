@@ -13,8 +13,8 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-CRUNCHY_DIR=${CRUNCHY_DIR:-'/opt/crunchy'}
-source "${CRUNCHY_DIR}/bin/common_lib.sh"
+RADONDB_DIR=${RADONDB_DIR:-'/opt/radondb'}
+source "${RADONDB_DIR}/bin/common_lib.sh"
 enable_debugging
 
 export PATH=$PATH:/usr/pgsql-*/bin
@@ -41,13 +41,13 @@ then
         echo_err "ENABLE_TLS true but /certs/server.key or /certs/server.crt not found, aborting"
         exit 1
     fi
-    cp "${CRUNCHY_DIR}/conf/pgadmin-https.conf" /var/lib/pgadmin/pgadmin.conf
+    cp "${RADONDB_DIR}/conf/pgadmin-https.conf" /var/lib/pgadmin/pgadmin.conf
 else
     echo_info "TLS disabled. Applying http configuration.."
-    cp "${CRUNCHY_DIR}/conf/pgadmin-http.conf" /var/lib/pgadmin/pgadmin.conf
+    cp "${RADONDB_DIR}/conf/pgadmin-http.conf" /var/lib/pgadmin/pgadmin.conf
 fi
 
-cp "${CRUNCHY_DIR}/conf/config_local.py" /var/lib/pgadmin/config_local.py
+cp "${RADONDB_DIR}/conf/config_local.py" /var/lib/pgadmin/config_local.py
 
 if [[ -z "${SERVER_PATH}" ]]
 then

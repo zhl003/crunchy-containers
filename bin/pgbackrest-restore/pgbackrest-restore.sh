@@ -15,20 +15,20 @@
 
 set -e
 
-CRUNCHY_DIR=${CRUNCHY_DIR:-'/opt/crunchy'}
-source "${CRUNCHY_DIR}/bin/restore_common_lib.sh"
+RADONDB_DIR=${RADONDB_DIR:-'/opt/radondb'}
+source "${RADONDB_DIR}/bin/restore_common_lib.sh"
 enable_debugging
 
-# Warn the user of any deprecated env vars due to full transition to env vars for configuring 
+# Warn the user of any deprecated env vars due to full transition to env vars for configuring
 check_for_deprecated_env_vars()  {
-    
+
     if [[ -v STANZA ]] && [[ ! -v PGBACKREST_STANZA ]]
     then
         echo_warn "STANZA has been deprecated and will be removed in a future release - please use PGBACKREST_STANZA instead."
         echo_warn "PGBACKREST_STANZA will be set to '${STANZA}' for this restore."
         export PGBACKREST_STANZA="${STANZA}"
     fi
-    
+
     if [[ -v DELTA ]] && [[ ! -v PGBACKREST_DELTA ]]
     then
         echo_warn "DELTA has been deprecated and will be removed in a future release - please use PGBACKREST_DELTA instead."
@@ -63,10 +63,10 @@ display_config_details()  {
     then
         echo_info "Delta restore detected."
     fi
-    
+
     if [[ -v PGBACKREST_TYPE ]]
     then
-        echo_info "The following type of recovery will be attempted: ${PGBACKREST_TYPE:-default}" 
+        echo_info "The following type of recovery will be attempted: ${PGBACKREST_TYPE:-default}"
         if [[ -v PGBACKREST_TARGET ]]
         then
             echo_info "The target for the restore is: ${PGBACKREST_TARGET}"

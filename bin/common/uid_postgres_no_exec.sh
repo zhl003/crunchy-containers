@@ -13,9 +13,9 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-CRUNCHY_DIR=${CRUNCHY_DIR:-'/opt/crunchy'}
-    
-export CRUNCHY_NSS_USERNAME="${USER_NAME:-postgres}"
-export CRUNCHY_NSS_USER_DESC="PostgreSQL Server"
-    
-source "${CRUNCHY_DIR}/bin/nss_wrapper.sh"
+RADONDB_DIR=${RADONDB_DIR:-'/opt/radondb'}
+
+export RADONDB_NSS_USERNAME="${USER_NAME:-postgres}"
+export RADONDB_NSS_USER_DESC="PostgreSQL Server"
+
+source "${RADONDB_DIR}/bin/nss_wrapper.sh"

@@ -1,4 +1,4 @@
-module github.com/crunchydata/crunchy-containers
+module github.com/radondb/radondb-containers
 
 go 1.17
 

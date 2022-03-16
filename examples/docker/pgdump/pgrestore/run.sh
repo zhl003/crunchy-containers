@@ -27,4 +27,4 @@ docker run \
     --name=pgrestore \
     --hostname=pgrestore \
     --network=pgnet \
-    -d $CCP_IMAGE_PREFIX/crunchy-pgrestore:$CCP_IMAGE_TAG
+    -d $CCP_IMAGE_PREFIX/radondb-pgrestore:$CCP_IMAGE_TAG

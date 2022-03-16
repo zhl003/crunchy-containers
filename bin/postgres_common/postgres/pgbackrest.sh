@@ -1,7 +1,7 @@
 #!/bin/bash
 
-CRUNCHY_DIR=${CRUNCHY_DIR:-'/opt/crunchy'}
-source "${CRUNCHY_DIR}/bin/common_lib.sh"
+RADONDB_DIR=${RADONDB_DIR:-'/opt/radondb'}
+source "${RADONDB_DIR}/bin/common_lib.sh"
 NAMESPACE=${HOSTNAME?}
 
 if [[ -v PGDATA_PATH_OVERRIDE ]]
@@ -66,13 +66,13 @@ create_pgbackrest_dirs() {
     else
         repo_dir="${PGBACKREST_REPO1_PATH}"
     fi
-    
+
     if [[ ! -d "${repo_dir}" ]]
     then
         mkdir -p "${repo_dir}"
         echo_info "pgBackRest: Created pgbackrest repository directory ${repo_dir}"
     fi
-    
+
     if [[ ! -d "${PGBACKREST_LOG_PATH}" ]]
     then
         mkdir -p "${PGBACKREST_LOG_PATH}"
@@ -112,7 +112,7 @@ fi
 # Create stanza
 if [[ "${BACKREST_SKIP_CREATE_STANZA}" == "true" ]]
 then
-    echo_info "pgBackRest: BACKREST_SKIP_CREATE_STANZA is 'true'.  Skipping stanza creation.." 
+    echo_info "pgBackRest: BACKREST_SKIP_CREATE_STANZA is 'true'.  Skipping stanza creation.."
 else
     echo_info "pgBackRest: The following pgbackrest env vars have been set:"
     ( set -o posix ; set | grep -oP "^PGBACKREST.*" | sed -e 's/\(KEY\|PASS\|SECRET\)=.*/\1=*********/' )

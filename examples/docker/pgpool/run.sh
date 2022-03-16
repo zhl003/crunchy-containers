@@ -32,4 +32,4 @@ docker run \
 	-e PG_DATABASE=postgres \
 	--name=$CONTAINER_NAME \
 	--hostname=$CONTAINER_NAME \
-	-d $CCP_IMAGE_PREFIX/crunchy-pgpool:$CCP_IMAGE_TAG
+	-d $CCP_IMAGE_PREFIX/radondb-pgpool:$CCP_IMAGE_TAG

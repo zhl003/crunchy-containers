@@ -13,15 +13,15 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-CRUNCHY_DIR=${CRUNCHY_DIR:-'/opt/crunchy'}
+RADONDB_DIR=${RADONDB_DIR:-'/opt/radondb'}
 if [[ -v PGMONITOR_PASSWORD ]]
 then
     echo_info "PGMONITOR_PASSWORD detected.  Enabling pgMonitor support."
 
-    source "${CRUNCHY_DIR}/bin/common_lib.sh"
+    source "${RADONDB_DIR}/bin/common_lib.sh"
     export PGHOST="/tmp"
 
-    source "${CRUNCHY_DIR}/bin/exporter/install.sh"
+    source "${RADONDB_DIR}/bin/exporter/install.sh"
 
     psql -U postgres --port="${PG_PRIMARY_PORT}" -d postgres \
         -c "SET log_statement TO 'none'; ALTER ROLE ccp_monitoring PASSWORD '${PGMONITOR_PASSWORD?}'" \

@@ -38,4 +38,4 @@ docker run \
 	--name=$CONTAINER_NAME \
 	--hostname=$CONTAINER_NAME \
 	--network=pgnet \
-	-d $CCP_IMAGE_PREFIX/crunchy-backup:$CCP_IMAGE_TAG
+	-d $CCP_IMAGE_PREFIX/radondb-backup:$CCP_IMAGE_TAG

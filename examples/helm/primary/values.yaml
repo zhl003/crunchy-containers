@@ -8,8 +8,8 @@ credentials:
   user: password
 serviceType: ClusterIP
 image:
-  repository: crunchydata
-  container: crunchy-postgres
+  repository: radondb
+  container: radondb-postgres
   tag: centos8-13.6-5.0.5-0
 resources:
   cpu: 200m

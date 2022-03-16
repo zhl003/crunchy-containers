@@ -19,7 +19,7 @@ PGDATA_VOL="${CONTAINER_NAME?}-pgdata"
 BACKUP_VOL="${CONTAINER_NAME?}-backup"
 
 ${DIR?}/cleanup.sh
-${DIR?}/../../ssl-creator.sh "testuser@crunchydata.com" "${CONTAINER_NAME?}" "$(pwd)"
+${DIR?}/../../ssl-creator.sh "testuser@radondb.com" "${CONTAINER_NAME?}" "$(pwd)"
 if [[ $? -ne 0 ]]
 then
     echo "Failed to create certs, exiting.."
@@ -53,7 +53,7 @@ docker run \
     --env=PGHOST=/tmp \
     --env=XLOGDIR=true \
     --env=PGBACKREST=true \
-    --detach ${CCP_IMAGE_PREFIX?}/crunchy-postgres:${CCP_IMAGE_TAG?}
+    --detach ${CCP_IMAGE_PREFIX?}/radondb-postgres:${CCP_IMAGE_TAG?}
 
 echo ""
 echo "To connect via SSL, run the following once the DB is ready: "

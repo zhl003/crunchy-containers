@@ -13,12 +13,12 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-# This script is used by the Scheduler to run pgBackRest backups.  
+# This script is used by the Scheduler to run pgBackRest backups.
 
 set -e -u
 
-CRUNCHY_DIR=${CRUNCHY_DIR:-'/opt/crunchy'}
-source "${CRUNCHY_DIR}/bin/postgres/pgbackrest_env.sh"
+RADONDB_DIR=${RADONDB_DIR:-'/opt/radondb'}
+source "${RADONDB_DIR}/bin/postgres/pgbackrest_env.sh"
 pgbackrest backup --type=${1?}
 
 exit 0

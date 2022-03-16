@@ -13,9 +13,9 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-CRUNCHY_DIR=${CRUNCHY_DIR:-'/opt/crunchy'}
-source "${CRUNCHY_DIR}/bin/common_lib.sh"
+RADONDB_DIR=${RADONDB_DIR:-'/opt/radondb'}
+source "${RADONDB_DIR}/bin/common_lib.sh"
 enable_debugging
-source "${CRUNCHY_DIR}/bin/postgres/setenv.sh"
+source "${RADONDB_DIR}/bin/postgres/setenv.sh"
 
-$PGROOT/bin/psql -f "${CRUNCHY_DIR}/bin/postgres/readiness.sql" -U $PG_USER --port="${PG_PRIMARY_PORT}" postgres
+$PGROOT/bin/psql -f "${RADONDB_DIR}/bin/postgres/readiness.sql" -U $PG_USER --port="${PG_PRIMARY_PORT}" postgres

@@ -13,10 +13,10 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-CRUNCHY_DIR=${CRUNCHY_DIR:-'/opt/crunchy'}
-source "${CRUNCHY_DIR}/bin/common_lib.sh"
+RADONDB_DIR=${RADONDB_DIR:-'/opt/radondb'}
+source "${RADONDB_DIR}/bin/common_lib.sh"
 enable_debugging
 
-source "${CRUNCHY_DIR}/bin/postgres/setenv.sh"
+source "${RADONDB_DIR}/bin/postgres/setenv.sh"
 
 PGCTLTIMEOUT=${PG_CTL_PROMOTE_TIMEOUT} pg_ctl promote

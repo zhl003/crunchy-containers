@@ -15,8 +15,8 @@
 
 set -e -u
 
-CRUNCHY_DIR=${CRUNCHY_DIR:-'/opt/crunchy'}
-source "${CRUNCHY_DIR}/bin/common_lib.sh"
+RADONDB_DIR=${RADONDB_DIR:-'/opt/radondb'}
+source "${RADONDB_DIR}/bin/common_lib.sh"
 enable_debugging
 
 export PGBENCH_BENCHMARK_OPTS=${PGBENCH_BENCHMARK_OPTS:-}

@@ -48,7 +48,7 @@
                 "containers": [
                     {
                         "name": "backrest",
-                        "image": "$CCP_IMAGE_PREFIX/crunchy-postgres$CCP_PG_IMAGE:$CCP_IMAGE_TAG",
+                        "image": "$CCP_IMAGE_PREFIX/radondb-postgres$CCP_PG_IMAGE:$CCP_IMAGE_TAG",
                         "readinessProbe": {
                             "exec": {
                                 "command": [
@@ -123,8 +123,8 @@
                             {
                                 "name": "PGBACKREST_COMPRESS_LEVEL",
                                 "value": "3"
-                            },  
-                            {                         
+                            },
+                            {
                                 "name": "PGDATA_PATH_OVERRIDE",
                                 "value": "backrest-async-archive"
                             }

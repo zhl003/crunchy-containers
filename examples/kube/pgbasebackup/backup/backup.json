@@ -29,7 +29,7 @@
                 "containers": [
                     {
                         "name": "backup",
-                        "image": "$CCP_IMAGE_PREFIX/crunchy-backup:$CCP_IMAGE_TAG",
+                        "image": "$CCP_IMAGE_PREFIX/radondb-backup:$CCP_IMAGE_TAG",
                         "volumeMounts": [
                             {
                                 "mountPath": "/pgdata",

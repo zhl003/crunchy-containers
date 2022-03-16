@@ -27,4 +27,4 @@ docker run \
     --name=pgdump \
     --hostname=pgdump \
     --network=pgnet \
-    -d $CCP_IMAGE_PREFIX/crunchy-pgdump:$CCP_IMAGE_TAG
+    -d $CCP_IMAGE_PREFIX/radondb-pgdump:$CCP_IMAGE_TAG

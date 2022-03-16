@@ -20,7 +20,7 @@ CONTAINER_NAME='custom-config-ssl'
 
 ${DIR?}/cleanup.sh
 
-${DIR?}/../../ssl-creator.sh "testuser@crunchydata.com" "${CONTAINER_NAME?}" "${DIR}"
+${DIR?}/../../ssl-creator.sh "testuser@radondb.com" "${CONTAINER_NAME?}" "${DIR}"
 if [[ $? -ne 0 ]]
 then
     echo_err "Failed to create certs, exiting.."

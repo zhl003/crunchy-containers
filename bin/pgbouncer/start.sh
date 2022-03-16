@@ -13,8 +13,8 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-CRUNCHY_DIR=${CRUNCHY_DIR:-'/opt/crunchy'}
-source "${CRUNCHY_DIR}/bin/common_lib.sh"
+RADONDB_DIR=${RADONDB_DIR:-'/opt/radondb'}
+source "${RADONDB_DIR}/bin/common_lib.sh"
 enable_debugging
 
 
@@ -40,7 +40,7 @@ then
     echo_info "Custom users.txt file detected.."
 else
     echo_info "No custom users.txt detected.  Apply default config.."
-    cp "${CRUNCHY_DIR}/conf/users.txt" "${CONF_DIR?}/users.txt"
+    cp "${RADONDB_DIR}/conf/users.txt" "${CONF_DIR?}/users.txt"
     env_check_err "PGBOUNCER_PASSWORD"
     sed -i "s/PGBOUNCER_PASSWORD/${PGBOUNCER_PASSWORD?}/g" ${CONF_DIR?}/users.txt
 fi
@@ -50,7 +50,7 @@ then
     echo_info "Custom pgbouncer.ini file detected.."
 else
     echo_info "No custom pgbouncer.ini detected.  Applying default config.."
-    cp "${CRUNCHY_DIR}/conf/pgbouncer.ini" "${CONF_DIR?}/pgbouncer.ini"
+    cp "${RADONDB_DIR}/conf/pgbouncer.ini" "${CONF_DIR?}/pgbouncer.ini"
 
     env_check_err "PG_SERVICE"
 

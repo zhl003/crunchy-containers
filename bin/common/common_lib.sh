@@ -18,10 +18,10 @@ GREEN="\033[0;32m"
 YELLOW="\033[0;33m"
 RESET="\033[0m"
 
-CRUNCHY_DIR=${CRUNCHY_DIR:-'/opt/crunchy'}
+RADONDB_DIR=${RADONDB_DIR:-'/opt/radondb'}
 
 function enable_debugging() {
-    if [[ ${CRUNCHY_DEBUG:-false} == "true" ]]
+    if [[ ${RADONDB_DEBUG:-false} == "true" ]]
     then
         echo_info "Turning debugging on.."
         export PS4='+(${BASH_SOURCE}:${LINENO})> ${FUNCNAME[0]:+${FUNCNAME[0]}(): }'

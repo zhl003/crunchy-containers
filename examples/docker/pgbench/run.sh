@@ -33,4 +33,4 @@ docker run \
     --name=pgbench \
     --hostname=pgbench \
     --network=pgnet \
-    -d $CCP_IMAGE_PREFIX/crunchy-pgbench:$CCP_IMAGE_TAG
+    -d $CCP_IMAGE_PREFIX/radondb-pgbench:$CCP_IMAGE_TAG

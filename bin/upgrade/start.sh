@@ -25,8 +25,8 @@
 # $NEW_VERSION (e.g. 9.6)
 #
 
-CRUNCHY_DIR=${CRUNCHY_DIR:-'/opt/crunchy'}
-source "${CRUNCHY_DIR}/bin/common_lib.sh"
+RADONDB_DIR=${RADONDB_DIR:-'/opt/radondb'}
+source "${RADONDB_DIR}/bin/common_lib.sh"
 enable_debugging
 
 function trap_sigterm() {
@@ -116,7 +116,7 @@ case $OLD_VERSION in
     ;;
 esac
 
-export PATH="${CRUNCHY_DIR}/bin:${PGBINNEW?}:$PATH"
+export PATH="${RADONDB_DIR}/bin:${PGBINNEW?}:$PATH"
 
 # Create a clean new data directory
 options=" "

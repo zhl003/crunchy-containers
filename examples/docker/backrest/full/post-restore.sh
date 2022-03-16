@@ -19,4 +19,4 @@ docker run \
     --env PGBACKREST_REPO1_PATH=/backrestrepo/backrest-backups \
     --name=backrest-full-restored \
     --hostname=backrest-full-restored \
-    --detach ${CCP_IMAGE_PREFIX?}/crunchy-postgres:${CCP_IMAGE_TAG?}
+    --detach ${CCP_IMAGE_PREFIX?}/radondb-postgres:${CCP_IMAGE_TAG?}

@@ -12,9 +12,9 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
-REG_CCP_IMAGE_PREFIX=registry.crunchydata.com/crunchydata
-# crunchy-pgbadger crunchy-pgpool crunchy-pgadmin4
-for CONTAINER in crunchy-pgbackrest crunchy-upgrade crunchy-postgres crunchy-pgbouncer
+REG_CCP_IMAGE_PREFIX=docker.io/radondb
+# radondb-pgbadger radondb-pgpool radondb-pgadmin4
+for CONTAINER in radondb-pgbackrest radondb-upgrade radondb-postgres radondb-pgbouncer
 do
 	echo $CONTAINER is the container
 	docker pull $REG_CCP_IMAGE_PREFIX/$CONTAINER:$CCP_IMAGE_TAG
@@ -22,7 +22,7 @@ do
 done
 
 # Now pull the PostGIS containers, which are tagged to include their PostGIS version
-for GIS_CONTAINER in crunchy-postgres-gis
+for GIS_CONTAINER in radondb-postgres-gis
 do
 	echo $GIS_CONTAINER is the container
 	docker pull $REG_CCP_IMAGE_PREFIX/$CONTAINER:$CCP_POSTGIS_IMAGE_TAG

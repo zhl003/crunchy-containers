@@ -33,4 +33,4 @@ docker run \
     -e PGADMIN_SETUP_EMAIL='admin@admin.com' \
     -e PGADMIN_SETUP_PASSWORD='password' \
     -e SERVER_PORT='5050' \
-    -d ${CCP_IMAGE_PREFIX?}/crunchy-pgadmin4:${CCP_IMAGE_TAG?}
+    -d ${CCP_IMAGE_PREFIX?}/radondb-pgadmin4:${CCP_IMAGE_TAG?}
