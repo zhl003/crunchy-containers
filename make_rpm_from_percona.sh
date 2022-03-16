@@ -70,8 +70,11 @@ replase_release_name() {
     new_release_name="radondb.el8.centos"
     #replace release name
     sed -i "s/${old_release_name}/${new_release_name}/g" "${spec_file}"
+    #replace 'percona-release' to none
+    sed -i "s/percona-//g" "${spec_file}"
     new_spec_file=$(echo ${spec_file} | sed "s/${old_release_name}/${new_release_name}/g")
-    mv "${spec_file}" "${new_spec_file}" || exit
+    #replace 'percona-release' to none
+    mv "${spec_file}" "${new_spec_file//percona-/}" || exit
 }
 replace_name() {
     pkg_file=$1
@@ -79,26 +82,30 @@ replace_name() {
     spec_file=${spec_dir}/${pkg_name/.rpm/.spec}
 
     new_release_name="radondb.el8.centos"
-    new_spec_file=$(echo ${spec_file} | sed "s/${old_release_name}/${new_release_name}/g")
+    # new_spec_file=$(echo ${spec_file} | sed "s/${old_release_name}/${new_release_name}/g")
+    new_spec_file=${spec_file//${old_release_name}/${new_release_name}}
+    new_spec_file=${new_spec_file//percona-/}
     [[ ${pkg_name} =~ .noarch ]] && pkg_name=${pkg_name/.noarch/.x86_64}
     #replace file
-    # find ${build_root_dir}/"${pkg_name/.rpm/}" -type f | while read -r line; do
-    #     sed -i "s/[Cc]runchy/radondb/g" "${line}"
-    #     dir=$(dirname "${line}")
-    #     file_name=$(basename "${line}")
-    #     if [[ ${file_name} =~ [Cc]runchy ]]; then
-    #         mv "${dir}"/"${file_name}" "${dir}"/"${file_name//[Cc]runchy/radondb}" || exit
-    #     fi
-    # done
+    find ${build_root_dir}/"${pkg_name/.rpm/}" -type f | while read -r line; do
+        sed -i "s/${old_release_name}/${new_release_name}/g" "${line}"
+        sed -i "s/percona-//g" "${line}"
+        dir=$(dirname "${line}")
+        file_name=$(basename "${line}")
+        if [[ ${file_name} =~ ${old_release_name} ]]||[[ ${file_name} =~ "percona-" ]]; then
+        new_file_name=${file_name//percona-/}
+            mv "${dir}"/"${file_name}" "${dir}"/"${new_file_name//${old_release_name}/${new_release_name}}" || exit
+        fi
+    done
 
     #replace forder
-    mapfile -t old_forder < <(find ${build_root_dir}/"${pkg_name/.rpm/}" -type d -name "*${old_release_name}*" | tac)
+    mapfile -t old_forder < <(find ${build_root_dir}/"${pkg_name/.rpm/}" -type d -name "*${old_release_name}*" -or -type d -name "percona-*"| tac)
     new_forder=(${old_forder[@]//${old_release_name}/${new_release_name}})
+    new_forder=(${new_forder[@]//percona-/})
     for forder in $(seq 0 "$((${#old_forder[@]} - 1))"); do
         if [ ! -d "${new_forder[${forder}]}" ]; then
             mkdir -p "${new_forder[${forder}]}"
         fi
-        # mv "${old_forder[${forder}]}" "${new_forder[${forder}]}" || exit
         sudo rsync -axvvES "${old_forder[${forder}]}/" "${new_forder[${forder}]}/" --remove-source-files &&
             rm -rf "${old_forder[${forder}]}" || exit
         chown zhl:zhl -R "${new_forder[@]}"
@@ -115,13 +122,15 @@ build_and_push() {
     new_pkgname=${pkg_name//${old_release_name}/${new_release_name}}
     [[ ${pkg_name} =~ .noarch ]] && pkg_name=${pkg_name/.noarch/.x86_64}
     spec_file=${spec_dir}/${new_pkgname/.rpm/.spec}
-    rpmbuild "${build_args}" "${spec_file}" || exit
+    rpmbuild "${build_args}" "${spec_file//percona-/}" || exit
+    #new_pkgname
+    new_pkgname=${new_pkgname//percona-/}
     if [[ ${pkg_file} =~ .noarch ]]; then
-        sudo cp -rp ${_topdir}/RPMS/noarch/"${new_pkgname}" ${repo_dir}
+        sudo cp -rp ${_topdir}/RPMS/noarch/"${new_pkgname}" "${repo_dir}"
     elif [[ ${pkg_file} =~ .src. ]]; then
-        sudo cp -rp ${_topdir}/SRPMS/"${new_pkgname}" ${repo_dir}
+        sudo cp -rp ${_topdir}/SRPMS/"${new_pkgname}" "${repo_dir}"
     else
-        sudo cp -rp ${_topdir}/RPMS/x86_64/"${new_pkgname}" ${repo_dir}
+        sudo cp -rp ${_topdir}/RPMS/x86_64/"${new_pkgname}" "${repo_dir}"
     fi
      echo "${pkg_file}" |sudo tee -a "${source_rpm_dir}"/.done
 }

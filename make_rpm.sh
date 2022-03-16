@@ -28,14 +28,18 @@ spec_dir=${_topdir}/SPECS
 build_root_dir=${_topdir}/BUILDROOT
 
 download_source() {
+<<<<<<< HEAD
     curl https://api.developers.crunchydata.com/downloads/repo/rpm-centos/postgresql13/radondbpg14.repo >/etc/yum.repos.d/radondbpg14.repo
+=======
+    curl https://api.developers.crunchydata.com/downloads/repo/rpm-centos/postgresql14/radondbpg14.repo >/etc/yum.repos.d/radondbpg14.repo
+>>>>>>> baba25ab15deeb453074cfe0297b5a30db848a6b
     curl https://api.developers.crunchydata.com/downloads/repo/rpm-centos/postgresql13/radondbpg13.repo >/etc/yum.repos.d/radondbpg13.repo
     curl https://api.developers.crunchydata.com/downloads/repo/rpm-centos/postgresql12/radondbpg12.repo >/etc/yum.repos.d/radondbpg12.repo
 
     sed -i 's/$releasever/8/g' radondbpg1*.repo
     #13 debug
     yum repo-pkgs "${repo_full_name}" list |grep -E '.x86_64|.noarch'| awk '{print $1}' | while read -r line; do
-        if yumdownloader "${extra_args}" $line --disablerepo=* --enablerepo="${repo_name}"* --destdir="${source_rpm_dir}" &>/dev/null; then
+        if yumdownloader "${extra_args}" $line --disablerepo=* --enablerepo="${repo_full_name}" --destdir="${source_rpm_dir}" &>/dev/null; then
             echo "OK[$line]"
         else
             echo "FAILD[$line]"
@@ -123,4 +127,7 @@ done
 
 #test docker image
 # docker run -d radondb/radondb-postgres-ha:centos8-13.3-4.7.0 --entrypoint /bin/sh -c "while true; do sleep 3600; done"
+<<<<<<< HEAD
 
+=======
+>>>>>>> baba25ab15deeb453074cfe0297b5a30db848a6b

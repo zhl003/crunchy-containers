@@ -47,7 +47,11 @@ RUN if [ "$DFSET" = "centos" ] ; then \
         	psmisc \
         	rsync \
         	$( printf '12\n'${PG_MAJOR} | sort -VC && echo timescaledb_${PG_MAJOR} ) \
+<<<<<<< HEAD
         	wal2json_${PG_MAJOR//.} \
+=======
+        	wal2json${PG_MAJOR//.} \
+>>>>>>> baba25ab15deeb453074cfe0297b5a30db848a6b
         	file \
         	gettext \
         	hostname \
