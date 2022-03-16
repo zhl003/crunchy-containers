@@ -38,6 +38,9 @@ fi
 
 ENV LC_ALL en_US.utf-8
 ENV LANG en_US.utf-8
+ENV LANGUAGE en_US.UTF-8
+ENV LC_COLLATE C
+ENV LC_CTYPE en_US.UTF-8
 
 ARG EPEL7_RPM=https://dl.fedoraproject.org/pub/epel/epel-release-latest-7.noarch.rpm
 ARG EPEL8_RPM=https://dl.fedoraproject.org/pub/epel/epel-release-latest-8.noarch.rpm
@@ -127,3 +130,4 @@ ADD conf/radondbpg${PG_LBL}.repo /etc/yum.repos.d/
 RUN if [ "$BASEOS" = "centos8" ] ; then \
 	${PACKAGER} -qy module disable postgresql ; \
 fi
+
