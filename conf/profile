@@ -1,0 +1,13 @@
+export GOPATH=$HOME/cdev
+export GOBIN=/usr/local/go/bin
+export PATH=$PATH:$GOBIN
+export CCP_BASEOS=centos8
+export CCP_IMAGE_PREFIX=radondb
+export CCP_VERSION=3.0.0
+export CCP_PGVERSION=14
+export CCP_BACKREST_VERSION=2.36
+export CCP_PG_FULLVERSION=14.1
+export export CCP_POSTGIS_VERSION=3.1
+export CCPROOT=$GOPATH/src/github.com/radondb/radondb-containers
+export CCP_IMAGE_TAG=$CCP_BASEOS-$CCP_PG_FULLVERSION-$CCP_VERSION
+export CCP_POSTGIS_IMAGE_TAG=$CCP_BASEOS-$CCP_PG_FULLVERSION-$CCP_POSTGIS_VERSION-$CCP_VERSION
