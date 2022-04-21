@@ -34,7 +34,7 @@ then
     export PGBACKREST_REPO1_S3_VERIFY_TLS="n"
 fi
 # for custom pgBackRest type support
-CUSTOM_PGBACKREST_REPO1_TYPE=$(grep -r repo1-type /etc/pgbackrest/conf.d/|head -1|awk -F= '{print $2}')
+CUSTOM_PGBACKREST_REPO1_TYPE=$(grep -sr repo1-type /etc/pgbackrest/conf.d/|head -1|awk -F= '{print $2}')
 if [ "$CUSTOM_PGBACKREST_REPO1_TYPE" == "s3" ]
 then
     export PGBACKREST_REPO1_TYPE=$CUSTOM_PGBACKREST_REPO1_TYPE

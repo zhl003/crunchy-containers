@@ -24,7 +24,7 @@ sudo yum -y install net-tools bind-utils wget unzip git
 #
 # download the yq container dependency
 #
-wget -O $CCPROOT/yq https://github.com/mikefarah/yq/releases/download/${YQ_VERSION}/yq_linux_amd64
+curl -Lo $CCPROOT/yq https://github.com/mikefarah/yq/releases/download/${YQ_VERSION}/yq_linux_amd64
 
 which buildah
 if [ $? -eq 1 ]; then
@@ -34,12 +34,12 @@ if [ $? -eq 1 ]; then
 fi
 
 FILE='openshift-origin-client.tgz'
-wget -O /tmp/${FILE?} ${OPENSHIFT_CLIENT?}
+curl -Lo /tmp/${FILE?} ${OPENSHIFT_CLIENT?}
 tar xvzf /tmp/${FILE?} -C /tmp
 sudo cp /tmp/openshift-*/oc /usr/bin/oc
 
 # manually install certstrap into $GOBIN for running the SSL examples
-wget -O $CCPROOT/certstrap https://github.com/square/certstrap/releases/download/v${CERTSTRAP_VERSION}/certstrap-v${CERTSTRAP_VERSION}-linux-amd64 && \
+curl -Lo $CCPROOT/certstrap https://github.com/square/certstrap/releases/download/v${CERTSTRAP_VERSION}/certstrap-v${CERTSTRAP_VERSION}-linux-amd64 && \
     mv $CCPROOT/certstrap $GOBIN && \
     chmod +x $GOBIN/certstrap
 

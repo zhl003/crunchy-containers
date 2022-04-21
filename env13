@@ -1,4 +1,5 @@
 export GOPATH=$HOME/cdev        # set path to your new Go workspace
+export CCP_BACKREST_VERSION=2.33
 #export IMGBUILDER=docker
 export GOBIN=$GOPATH/bin        # set bin path
 export PATH=$PATH:$GOBIN        # add Go bin path to your overall path

@@ -47,7 +47,7 @@ RUN if [ "$DFSET" = "centos" ] ; then \
         	psmisc \
         	rsync \
         	$( printf '12\n'${PG_MAJOR} | sort -VC && echo timescaledb_${PG_MAJOR} ) \
-        	wal2json_${PG_MAJOR//.} \
+            $( printf '14\n'${PG_MAJOR} | sort -VC && echo wal2json_${PG_MAJOR//.} || echo wal2json${PG_MAJOR//.} ) \
         	file \
         	gettext \
         	hostname \
